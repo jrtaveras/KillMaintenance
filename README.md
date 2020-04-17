@@ -9,7 +9,7 @@ Entityframework 6.4,
 NInject http://www.ninject.org/ y
 SqlServer. Se implementa el patron de diseno MVP e Inyeccion  de Dependencias.
 ## Featues
-Multinenace,MultiLenguaje,Validaciones Automaticas obtenidas de la definicion de datos en la base de datos, CRUD y Busquedas Automaticas.
+Multitenance,MultiLenguaje,Validaciones Automaticas obtenidas de la definicion de datos en la base de datos, CRUD y Busquedas Automaticas.
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
