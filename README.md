@@ -11,6 +11,10 @@ SqlServer. Se implementa el patron de diseno MVP e Inyeccion  de Dependencias.
 ## Features
 Multitenance,MultiLenguaje,Validaciones Automaticas obtenidas de la definicion de datos en la base de datos, CRUD y Busquedas Automaticas,
 esquema para pruebas (Unit Test del presenter)
+## Restricciones
+Todas deben tener un primary key Llamado Id que puede ser Int o Long,
+todas las tablas deben tener los siguientes campos:
+Creado(Varchar),FechaCreado(DateTime),Modificado(Varchar) y FechaModificado(DateTime)
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
