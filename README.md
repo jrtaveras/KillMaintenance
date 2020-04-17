@@ -7,7 +7,7 @@ Son Wisej https://wisej.com/ (que es un Framework para desarrollo de Interfaces 
 SmartXLS http://www.smartxls.com/ (Libreria para exportar datos A excel),
 Entityframework 6.4,
 NInject http://www.ninject.org/ y
-SqlServer. Se implementa el patron de diseno MVP e Inyeccion  de Dependencias.
+SqlServer. Se implementa el patron de diseno MVP(https://es.wikipedia.org/wiki/Modelo%E2%80%93vista%E2%80%93presentador) e Inyeccion  de Dependencias.
 ## Features
 Multitenance,MultiLenguaje,Validaciones Automaticas obtenidas de la definicion de datos en la base de datos, CRUD y Busquedas Automaticas,
 esquema para pruebas (Unit Test del presenter)
