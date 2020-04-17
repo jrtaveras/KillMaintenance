@@ -1,0 +1,184 @@
+﻿<%-- 
+Name: Template de Presenter
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Assembly Name="CodeSmith.Engine" %>
+<%@ Import Namespace="CodeSmith.Engine" %>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Property Name="NameSpaceBusinessObjects" Type="System.String"%>
+<%@ Property Name="ClassName" Type="System.String"%>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Assembly Name="System.Design" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="Context" Description="Table to get the data from." %>
+<%@ Map Name="SqlCSharp" Src="Sql-CSharp" Description="System to C# Type Map" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="System.IO" %>
+<%@ Property Name="Licence" Type="System.String"%>
+
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description: Busines Object  Presenter <%= ClassName%>
+//Fecha:<%= DateTime.Now%>
+//<%=Licence%>
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using <%=NameSpaceBusinessObjects%>.Helpers;
+using <%=NameSpaceBusinessObjects%>.Models;
+using <%=NameSpaceBusinessObjects%>.Interfaces;
+using System.Data;
+
+namespace  <%=NameSpaceBusinessObjects%>.Services
+{
+    public partial class <%=ClassName%>Presenter : IPresenter
+    {
+        public  <%=ClassName%>Presenter(IContext context,I<%=ClassName%> <%=ClassNameToLower()%>Sender)
+        {
+            _context = context;
+            
+             Resource.Culture = new System.Globalization.CultureInfo(context.LocalizationName);
+            
+            _<%=ClassNameToLower()%> = <%=ClassNameToLower()%>Sender;
+            
+            _dataSource = <%=ClassNameToLower()%>Sender as IDataSource;
+            
+            _valueToSearch = <%=ClassNameToLower()%>Sender as IValueToSearch;
+             
+            Add();
+
+        }
+        
+        private void afterSetUserAndCreateDate()
+        {
+        
+        }
+        
+        private void  extendedValidations()
+        {
+
+        }
+        
+        public bool Find(params object[] sender)
+        {
+            throw new NotImplementedException("Debe implementar este metodo para poder usarlo");
+        }
+        
+        public void FillDataSource() 
+        {
+            /*
+            if (_dataSource != null)
+            {
+             _dataSource.DataGridSource = _context.<%=ClassName%>.ToList();
+            }
+            */
+        }
+        
+        public bool Save()
+        {
+          
+            gatherFields();
+
+            var validate = _<%=ClassNameToLower()%> as IValidate;
+            
+            if(validate == null)
+            {
+                throw new Exception("El control inyectado a este presenter debe implementar la interface IValidate");
+            }
+            
+            ValidationResult = new List<ValidationResult>();
+            
+            validate.ClearErrorsValidations();
+            
+            validateService();
+            
+            ValidationResult = helperValidateEntity.ValidationResult;
+
+            extendedValidations();
+			 
+			if (ValidationResult.Count != 0)
+            {
+                validate.ShowErrors();
+                return false;
+            }
+            
+            if (<%=ClassNameToLower()%>.<%= SourceTable.PrimaryKey.MemberColumns[0].Name %> == 0)
+            {
+                _context.<%=ClassName%>.Add(<%=ClassNameToLower()%>);
+            }
+            
+            var state = _context.Entry(<%=ClassNameToLower()%>).State;
+            
+            BeforeSave?.Invoke();
+
+            bool result = _context.SaveChanges() > 0;
+           
+            if (result && state == EntityState.Deleted)
+                Add();
+            
+            scatterFields();
+            
+            FillDataSource();
+
+            if(result)
+                AfterSave?.Invoke();
+                
+            return result;
+
+        }
+        
+        public bool Delete()
+        {
+            
+            if (<%=ClassNameToLower()%>.<%= SourceTable.PrimaryKey.MemberColumns[0].Name %> == 0)
+            {
+                Add();
+                
+                scatterFields();
+                
+                return false;
+            }
+            
+            _context.Entry(<%=ClassNameToLower()%>).State = EntityState.Deleted;
+            
+            bool result = Save();
+            
+            if(result)
+                 FillDataSource();
+
+            return result;
+
+        }
+        
+        public DataTable GetDataTable()
+        {
+            return _context.<%=ClassName%>.ToList().ToDataTable("<%=ClassName%>").TranslateDataTable(_context.ResourceManager);
+        }
+        
+        private void translate(DataTable sender)
+        {
+            foreach (DataColumn item in sender.Columns)
+            {
+                item.Caption = _context.ResourceManager.GetString(item.ColumnName) ?? item.Caption;
+            }
+        }
+    
+    }
+}
+
+<script runat="template">
+   private string ClassNameToLower(){
+        return StringUtil.ToCamelCase(ClassName);
+      
+    }
+</script>

@@ -1,0 +1,32 @@
+﻿<%-- 
+Name: Template de Presenter
+Author:Jose Roberto Taveras
+Description: Helper para instanciar el kernel de Niject
+--%>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Property Name="NameSpaceUI" Category="Context" Type="System.String"%>
+<%@ Property Name="Licence" Type="System.String"%>
+
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description:  Helper para instanciar el kernel de Niject 
+//Fecha:<%= DateTime.Now%>
+//Licencia:<%=Licence%>
+
+namespace <%=NameSpaceUI%>.Helpers
+{
+    public class Bootstrapper
+    {
+        private Ninject.IKernel _kernel;
+        public void InitBootstrapper(params Ninject.Modules.INinjectModule[] modules)
+        {
+            _kernel = new Ninject.StandardKernel(modules);
+        }
+        public Ninject.IKernel Kernel()
+        {
+            return _kernel;
+        }
+    }
+}
+<script runat="template">
+</script>

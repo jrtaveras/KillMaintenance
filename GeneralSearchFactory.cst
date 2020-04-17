@@ -1,0 +1,27 @@
+﻿<%-- 
+Name: Factoria general para instanciar presenters que se inyectan a busquedas genericas
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage="c#" %>
+<%@ Property Name="NameSpaceBusinessObjects" Category="Context" Type="System.String"%>
+<%@ Property Name="Licence" Type="System.String"%>
+//Autor:Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Fecha:<%=DateTime.Now%>
+//Licencia:<%=Licence%>
+
+using <%=NameSpaceBusinessObjects%>.Interfaces;
+using <%=NameSpaceBusinessObjects%>.Models;
+using <%=NameSpaceBusinessObjects%>.Services;
+namespace <%=NameSpaceBusinessObjects%>.Factories
+{
+    public class GeneralSearchFactory
+    {
+
+        //Requerido por el generador de CodeSmith no modifique esto
+
+    }
+}
+<script runat="template">
+</script>

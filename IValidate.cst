@@ -1,0 +1,31 @@
+﻿<%-- 
+Name: Template de validaciones que debe implementar el user control para que el presenter le notifique los errores de validacion
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage="C#" %>
+<%@ Property Name="NameSpaceBusinessObjects" Category="Context" Type="System.String"%>
+<%@ Property Name="Licence" Type="System.String"%>
+
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description: Poco de entidad IPresenter
+//Fecha:<%= DateTime.Now%>
+//Licencia:<%=Licence%>
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace <%=NameSpaceBusinessObjects%>.Interfaces
+{
+    public interface IValidate
+    {
+        void ShowErrors();
+        void ClearErrorsValidations();
+    }
+}
+<script runat="template">
+</script>

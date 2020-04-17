@@ -1,0 +1,36 @@
+﻿<%-- 
+Name: Template de Presenter
+Author:Jose Roberto Taveras
+Description: Helper para validar la entidad
+--%>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Property Name="NameSpaceBusinessObjects" Category="Context" Type="System.String"%>
+<%@ Property Name="Licence" Type="System.String"%>
+
+//Autor:Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Fecha:<%=DateTime.Now%>
+//Licencia:<%=Licence%>
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace <%=NameSpaceBusinessObjects%>.Helpers
+{
+    public class HelperValidateEntity
+    {
+        public ICollection<ValidationResult> ValidationResult { get; set; }
+        public  bool ValidateService(object sender)
+        {
+            ValidationContext validationContext = new ValidationContext(sender);
+            ValidationResult = new List<ValidationResult>();
+            return Validator.TryValidateObject(sender, validationContext, ValidationResult, true);
+        }
+    }
+}
+
+<script runat="template">
+</script>

@@ -1,0 +1,99 @@
+﻿<%-- 
+Name: Template de Entity
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Assembly Name="System.Design" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="Context" Description="Table to get the data from." %>
+<%@ Map Name="SqlCSharp" Src="Sql-CSharp" Description="System to C# Type Map" %>
+<%@ Property Name="NameSpaceUI" Type="System.String"%>
+<%@ Property Name="Licence" Type="System.String"%>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="System.IO" %>
+<%@ Import NameSpace="System.Collections.Generic" %>
+
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description: control generico base 
+//Fecha:<%= DateTime.Now%>
+//Licencia:<%=Licence%>
+
+using System;
+using Wisej.Web;
+using BusinessObjects.Interfaces;
+
+namespace <%=NameSpaceUI%>.Controls {
+ public partial class UserControlBase : Wisej.Web.UserControl
+    {
+		public string Title { get; set; }
+
+		public string MenuItem { get; set; }
+
+		protected IContext _context;
+		CultureInfo _cultureInfo;
+
+		public UserControlBase()
+		{
+			InitializeComponent();
+		}
+		public UserControlBase(IContext context)
+		{
+			_context = context;
+			_cultureInfo = Application.CurrentCulture;
+			if (string.IsNullOrEmpty(_context.LocalizationName))
+				throw new ArgumentException("Debe proporcionar el localizacionName ejemplo es-DO!!");
+
+			if (_context.ResourceManager == null)
+				throw new ArgumentException("Debe proporcionar un resource manager!!");
+
+		}
+
+		public virtual string GetCreated()
+		{
+			return _context.ResourceManager.GetString(nameof(CommonConstants.CreatedBy), _cultureInfo) ?? CommonConstants.CreatedBy;
+		}
+
+		public virtual string GetModified()
+		{
+			return _context.ResourceManager.GetString(nameof(CommonConstants.ModifiedBy), _cultureInfo) ?? CommonConstants.ModifiedBy;
+		}
+
+		public virtual string GetMessageSavedFields()
+		{
+			return _context.ResourceManager.GetString(nameof(CommonConstants.MessageSavedFields), _cultureInfo) ?? CommonConstants.MessageSavedFields;
+		}
+
+		public virtual string GetMessageNotice()
+		{
+			return _context.ResourceManager.GetString(nameof(CommonConstants.MessageNotice), _cultureInfo) ?? CommonConstants.MessageNotice;
+		}
+
+		public virtual string GetMessageException()
+		{
+			return _context.ResourceManager.GetString(nameof(CommonConstants.MessageExcepcion), _cultureInfo) ?? CommonConstants.MessageExcepcion;
+		}
+
+		public virtual string GetMessageDeletedFields()
+		{
+			return _context.ResourceManager.GetString(nameof(CommonConstants.MessageDeletedFields), _cultureInfo) ?? CommonConstants.MessageDeletedFields;
+		}
+
+		public virtual string GetMessageFinding()
+		{
+			return _context.ResourceManager.GetString(nameof(CommonConstants.MessageFinding), _cultureInfo) ?? CommonConstants.MessageFinding;
+		}
+
+		public virtual string GetTitle()
+		{
+			return _context.ResourceManager.GetString(Title) ?? Title;
+		}
+	}
+}
+ <script runat="template">
+ </Script>

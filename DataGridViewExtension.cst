@@ -1,0 +1,36 @@
+﻿<%-- 
+Name: Template de Presenter
+Author:Jose Roberto Taveras
+Description: Helper para traducir las columnas de un datagridview
+--%>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Property Name="NameSpaceUI" Category="Context" Type="System.String"%>
+<%@ Property Name="Licence" Type="System.String"%>
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description:  Helper para traducciones , recorre el las columnas del datagridview que se le pasa como parametro y lo traduce an idioma especificado 
+//Fecha:<%= DateTime.Now%>
+//Licencia:<%=Licence%>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Resources;
+using System.Web;
+using Wisej.Web;
+
+namespace <%=NameSpaceUI%>.Helpers
+{
+    public static class DataGridViewExtension
+    {
+        public static void Translate(this DataGridView sender, ResourceManager resMan)
+        {
+            foreach (DataGridViewColumn item in sender.Columns)
+            {
+                item.HeaderText = resMan.GetString(item.Name, Application.CurrentCulture) ?? item.HeaderText;
+            }
+        }
+    }
+}
+<script runat="template">
+</script>

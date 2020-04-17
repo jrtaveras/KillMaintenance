@@ -1,0 +1,53 @@
+﻿<%-- 
+Name: Template de Entity
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage=" C#" %>
+<%@ Property Name="NameSpaceBusinessObjects" Category="Context" Type="System.String"%>
+<%@ Property Name="Licence" Type="System.String"%>
+
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description: Interface que debe implementar la clase Presenter
+//Fecha:<%=DateTime.Now%>
+//Licencia:<%=Licence%>
+
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
+
+namespace <%=NameSpaceBusinessObjects%>.Interfaces
+{
+    public delegate void Validate();
+    public interface ISave
+    {
+        bool Save();
+    }
+
+    public interface IDelete
+    {
+        bool Delete();
+    }
+
+    public interface IAdd
+    {
+        void Add();
+    }
+    
+
+
+    public interface IPresenter: IAdd,ISave,IDelete
+    {
+        event Validate BeforeSave;
+        event Validate AfterSave;
+        ICollection<ValidationResult> ValidationResult { get; set; }
+        bool Find(long Id);
+        bool Find(params object[] sender);
+        void FillDataSource();
+        void Undo();
+        DataTable GetDataTable();
+    }
+}
+<script runat="template">
+</script>

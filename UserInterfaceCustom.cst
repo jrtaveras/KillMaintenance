@@ -1,0 +1,643 @@
+﻿<%-- 
+Name:
+Author: 
+Description: 
+--%>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Assembly Name="System.Data" %>
+
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import NameSpace="System.IO" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="Context" Description="Table to get the data from." %>
+<%--<%@ Map Name="SampleMap" Src="MapSample.csmap" Default="DefaultValue" Description="Sample map file." %>--%>
+<%@ Map Name="SqlCSharp" Src="Sql-CSharp" Description="System to C# Type Map" %>
+<%@ Property Name="NameSpaceBusinessObjects" Type="System.String"%>
+<%@ Property Name="NameSpaceCommonUI" Type="System.String"%>
+<%@ Property Name="NameSpaceUI" Type="System.String"%>
+<%@ Property Name="ClassName" Type="System.String"%>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Assembly Name="System.Design" %>
+<%@ Import NameSpace="System.IO" %>
+<%@ Import NameSpace="System.Collections.Generic" %>
+<%@ Property Name="Licence" Type="System.String"%>
+
+//Autor:Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Fecha:<%=DateTime.Now%>
+//Licencia:<%=Licence%>
+using System;
+using Wisej.Web;
+using <%=NameSpaceBusinessObjects%>.Interfaces;
+using <%=NameSpaceBusinessObjects%>.Services;
+using <%=NameSpaceBusinessObjects%>.Models;
+using <%=NameSpaceBusinessObjects%>.Factories;
+using <%=NameSpaceCommonUI%>.Forms;
+using <%=NameSpaceCommonUI%>;
+using <%=NameSpaceUI%>.Helpers;
+using <%=NameSpaceCommonUI%>.Controls;
+using SmartXLS;
+using <%=NameSpaceCommonUI%>.Helpers;
+using System.IO;
+
+<%=UsingSpatial()%>
+
+namespace <%=NameSpaceUI%>
+{
+    public partial class UserControl<%=ClassName%> : UserControlBase, I<%=ClassName%>, IValidate
+    {
+
+        private readonly IPresenter <%=ClassNameToCamelCase()%>Presenter;
+        private readonly HelperControlsToValidate helperControls;
+        private bool _canEdit;
+        <%=MakeDeclarationComboBox()%>
+      
+        private UserControl<%=ClassName%>(){
+             InitializeComponent();
+        }
+        
+        public UserControl<%=ClassName%>(IContext context):base(context)
+        {
+            Title = "<%=ClassName%>";
+            MenuItem = "<%=ClassName%>";
+            InitializeComponent();
+            setControls();
+            <%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(context, this);
+            helperControls = new HelperControlsToValidate(this);
+            this.toolBar1.ButtonClick += toolBar1_ButtonClick;
+            CanEdit  = true;
+
+            
+            try
+            {
+                fillComboBox();
+            }
+            catch(Exception ex )
+            {
+				MessageBox.Show(GetMessageException() + ex.Message, GetMessageNotice(), MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+        }
+        
+        private void fillComboBox()
+        {
+            <%=MakeInstanceComboBox()%>        
+        }
+        
+        private void setControls()
+        {
+            <%=BuildMandatoryFiedsForValidation()%>
+        }
+
+
+        public  bool CanEdit
+        {
+            get
+            {
+                return _canEdit;
+            }
+            set {
+            
+                _canEdit = value;
+                
+                enableDisableControls();
+            }
+        } 
+        
+        private void enableDisableControls() {
+        
+			toolBarButtonNuevo.Enabled = !CanEdit;
+			toolBarButtonSalvar.Enabled = CanEdit;
+			toolBarButtonEditar.Enabled = !CanEdit;
+			toolBarButtonCancelar.Enabled = CanEdit;
+			toolBarButtonEliminar.Enabled = !CanEdit;
+
+            <%=BuildEnableDisableControls()%>
+        
+		}
+        
+      
+        
+        private void panelPricipal_PanelCollapsed(object sender, EventArgs e)
+		{
+			if (this.panelPricipal.Collapsed)
+			{
+				this.panelPricipal.HeaderPosition = HeaderPosition.Top;
+			}
+		}
+
+		private void panelPricipal_PanelExpanded(object sender, EventArgs e)
+		{
+			if (!this.panelPricipal.Collapsed)
+			{
+				this.panelPricipal.HeaderPosition = HeaderPosition.Left;
+			}
+		}
+        
+        
+       #region Properties <%=ClassName%>
+       
+       <%=BuildProperties()%>
+       
+       #endregion
+
+        private void toolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            switch (e.Button.Name)
+            {
+                case "toolBarButtonNuevo":
+                    <%=ClassNameToCamelCase()%>Presenter.Add();
+                    CanEdit = true;
+                    break;
+
+                case "toolBarButtonSalvar":
+
+                    try
+                    {
+                        if (<%=ClassNameToCamelCase()%>Presenter.Save())
+                        {
+                            AlertBox.Show(GetMessageSavedFields());
+                            CanEdit = false;
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(GetMessageException() + ex.Message, GetMessageNotice(), MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    }
+
+                    break;
+
+                case "toolBarButtonEditar":
+                    CanEdit =  <%=SourceTable.Columns[0].Name%> > 0;;
+                    break;
+
+                case "toolBarButtonCancelar":
+                    ClearErrorsValidations();
+                    <%=ClassNameToCamelCase()%>Presenter.Undo();
+                    CanEdit = false;
+                    break;
+
+                case "toolBarButtonEliminar":
+                    try
+                    {
+                        if( <%=ClassNameToCamelCase()%>Presenter.Delete())
+                        {
+                            AlertBox.Show(GetMessageDeletedFields());
+                            CanEdit = true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                       MessageBox.Show(GetMessageException() + ex.Message, GetMessageNotice(), MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    }
+                    break;
+
+                case "toolBarButtonBuscar":
+                
+                    WindowSearch<<%=ClassName%>> search = new WindowSearch<<%=ClassName%>>(GeneralSearchFactory.Make<%=ClassName%>Search(_context), GetMessageFinding() + " " + GetTitle());
+                    search.FormClosed += (senderX, eX) => {
+
+                        if (search.Id > 0)
+                        {
+                            this.<%=ClassNameToCamelCase()%>Presenter.Find(search.Id);
+                            CanEdit = true;
+                            ClearErrorsValidations();
+                        }
+
+                    };
+                    search.StartPosition = FormStartPosition.CenterScreen;
+                    search.ShowDialog();
+                    
+                    break;
+             
+              	case "toolBarButtonExcel":
+                
+                    try
+                    {
+                        using (WorkBook wb = HelperDataTableToExcel.MakeDataTableToExcel(this.<%=ClassNameToCamelCase()%>Presenter.GetDataTable()))
+                        {
+                        	using (Stream stream = new MemoryStream())
+                        	{
+
+                        	    wb.writeXLSX(stream);
+                        		stream.Seek(0, SeekOrigin.Begin);
+                        	    Application.Download(stream, GetTitle() + ".xlsx");
+
+                        	}
+                        }                    
+                    }
+                    catch (Exception ex)
+                    {
+                       MessageBox.Show(GetMessageException() + ex.Message, GetMessageNotice(), MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    }
+
+					break;      
+            }
+            
+            this.toolBarButtonInfo.ToolTipText =   $"{GetCreated()} : {Creado} {FechaCreado}  {GetModified()}: {Modificado} {FechaModificado}";
+        }
+
+      
+
+        public void ShowErrors()
+        {
+            helperControls.ValidateMembers(<%=ClassNameToCamelCase()%>Presenter.ValidationResult);
+
+        }
+
+        public void ClearErrorsValidations()
+        {
+            helperControls.ClearErrors(<%=ClassNameToCamelCase()%>Presenter.ValidationResult);
+        }
+
+       
+    }
+}
+
+<script runat="template">
+    public string UsingSpatial(){
+        List<string> lista = new List<string>();
+        lista.Add("geography");
+        lista.Add("geometry");
+        bool result = false;
+        for(int i = 0; i < SourceTable.Columns.Count; i++)
+        {
+            result = lista.Contains(SourceTable.Columns[i].NativeType);
+            if(result)
+                break;
+        
+        }
+        return result ? "using System.Data.Entity.Spatial;":"";
+    }
+
+public string MakeDeclarationComboBox()
+{ 
+
+    string result ="";
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+        
+    {
+        
+        if(SourceTable.Columns[i].IsForeignKeyMember)
+        {
+  
+              var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();
+              if(foreign != null){
+                 result = string.Concat(result,"private ISearchPresenter<",StringUtil.ToPascalCase(foreign.PrimaryKeyTable.Name),">"," _searchPresenter", StringUtil.ToPascalCase(foreign.PrimaryKeyTable.Name),";\n\t\t\t");
+                  
+              }
+
+        }
+     
+    }
+    return result;
+}
+public string MakeInstanceComboBox()
+{ 
+
+    string result ="";
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+        
+    {
+        
+        if(SourceTable.Columns[i].IsForeignKeyMember)
+        {
+  
+              var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();
+              if(foreign != null){
+                var columnDisplay = foreign.PrimaryKeyTable.Columns[1].Name;
+                var columnValue = foreign.PrimaryKeyTable.Columns[0].Name;
+                var field = SourceTable.Columns[i].Name;
+                var entity  = StringUtil.ToPascalCase(foreign.PrimaryKeyTable.Name);
+                result = string.Concat(result,"_searchPresenter", entity," = GeneralSearchFactory.Make",entity,"Search(_context);\n\t\t\t");
+                result = string.Concat(result,"comboBox", field,".DisplayMember = nameof(",entity + "." + columnDisplay,");\n\t\t\t");
+                result = string.Concat(result,"comboBox", field,".ValueMember = nameof(",entity + "." + columnValue,");\n\t\t\t");
+                result = string.Concat(result,"comboBox", field,".DataSource = ","_searchPresenter",entity,".GetAll();\n\t\t\t");
+
+              }
+
+        }
+     
+    }
+    return result;
+}
+
+public string GetDataType(ColumnSchema clm)
+{
+     var dataType = "";
+    switch(clm.NativeType)
+    {
+        case "geography":
+            dataType  = "DbGeography";
+            break;
+        case "geometry":
+            dataType  = "DbGeometry";
+            break;
+        default:
+            dataType = SqlCSharp[clm.NativeType];
+            break;
+        
+    }
+    return dataType;
+}
+
+public string BuildProperties()
+{
+    
+    string result ="";
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+        ColumnSchema clm = SourceTable.Columns[i];
+        
+        bool isNull = clm.AllowDBNull;
+        bool isString =  GetDataType(clm) == "string";
+        bool isKey = clm.IsPrimaryKeyMember;
+        int size = clm.Size;
+        var fieldName = clm.Name;
+        bool isForeignKeyMember = clm.IsForeignKeyMember;
+        result = string.Concat(result,getProperty(fieldName,GetDataType(clm), isKey,"Name",isForeignKeyMember,isNull),"\t\t");
+       
+    }
+    return result;
+}
+
+public string BuildMandatoryFiedsForValidation()
+{
+    
+    string result ="";
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+        ColumnSchema clm = SourceTable.Columns[i];
+        bool isNull = clm.AllowDBNull;
+        var fieldName = clm.Name;
+        bool isKey = clm.IsPrimaryKeyMember;
+        bool isForeignKeyMember = clm.IsForeignKeyMember;
+        if(!isKey && fieldName.ToUpper() != "TENANTID"){
+            result = string.Concat(result,getControlType(GetDataType(clm),isForeignKeyMember),fieldName,".Tag = nameof(",ClassName,".",fieldName,");\n\t\t\t");
+        }
+       
+    }
+    return result;
+}
+
+public string BuildEnableDisableControls()
+{
+    
+    string result ="";
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+        ColumnSchema clm = SourceTable.Columns[i];
+        bool isNull = clm.AllowDBNull;
+        var fieldName = clm.Name;
+        bool isKey = clm.IsPrimaryKeyMember;
+        bool isForeignKeyMember = clm.IsForeignKeyMember;
+        if(!isKey)
+        {
+            if(fieldName.ToLower() == "creado" || fieldName.ToLower() == "fechacreado"  || fieldName.ToLower() == "modificado" || fieldName.ToLower() == "fechamodificado")
+            {
+                  result = string.Concat(result,getControlType(GetDataType(clm),isForeignKeyMember),fieldName,".Enabled = false;\n\t\t\t");
+            }
+            else if(fieldName.ToUpper() != "TENANTID")
+            {
+                switch(GetDataType(clm))
+                {
+                    case "DbGeography":
+                        result = string.Concat(result,getControlType(GetDataType(clm),isForeignKeyMember),fieldName,".Enabled = CanEdit;\n\t\t\t");
+                        break;
+                    case "DateTime":
+                         result = string.Concat(result,getControlType(GetDataType(clm),isForeignKeyMember),fieldName,".Enabled = CanEdit;\n\t\t\t");
+                        break;
+                    default:
+                        result = string.Concat(result,getControlType(GetDataType(clm),isForeignKeyMember),fieldName,".ReadOnly = !CanEdit;\n\t\t\t");    
+                        break;
+                }
+            }
+           
+        }
+        else
+        {
+            result = string.Concat(result,"textBox",fieldName,".ReadOnly = true;\n\t\t\t");
+        }
+       
+    }
+    return result;
+}
+
+
+private string ClassNameToCamelCase(){
+   return StringUtil.ToCamelCase(ClassName);
+      
+ }
+ 
+ private string getControlType(string sender,bool isForeignKeyMember){
+     
+     var  result = string.Empty;
+     if(isForeignKeyMember){
+         
+         result = "comboBox";
+         return result;
+     }
+     
+     switch(sender){
+        case "int":
+             result = "numericUpDown";
+             break;
+        case "short":
+             result = "numericUpDown";
+             break;
+        case "long":
+            result = "numericUpDown";
+             break;
+        case "double":
+            result = "numericUpDown";
+             break;
+        case "decimal":
+            result = "numericUpDown";
+             break;
+        case "DateTime":
+            result = "dateTimePicker";
+             break;
+        case "bool":
+             result = "checkBox";
+             break;
+        case "DbGeography":
+             result = "userControlGeography";
+             break;
+        default:
+             result = "textBox";
+             break;
+     }
+     return result;
+         
+ }
+
+ private string getValue(string sender){
+     var  result = string.Empty;
+     switch(sender){
+        case "int":
+             result = "Value";
+             break;
+        case "short":
+             result = "Value";
+             break;
+        case "long":
+            result = "Value";
+             break;
+        case "double":
+            result = "Value";
+             break;
+        case "decimal":
+            result = "Value";
+             break;
+        case "DateTime":
+            result = "Value";
+             break;
+        case "bool":
+             result = "Checked";
+             break;
+        case "DbGeography":
+             result = "Value";
+             break;
+        default:
+             result = "Text";
+             break;
+     }
+     return result;
+         
+ }
+ 
+ private string setValue(string sender,bool isNull){
+     var  result = string.Empty;
+     switch(sender){
+        case "int":
+             result = "Value " + (isNull ? " = value ?? 0" : " = value");
+             break;
+        case "short":
+             result = "Value " + (isNull ? " = value ?? 0" : " = value");
+             break;
+        case "long":
+             result = "Value " + (isNull ? " = value ?? 0" : " = value");
+             break;
+        case "double":
+              result = "Value " + (isNull ? " = value ?? 0" : " = value");
+             break;
+        case "decimal":
+             result = "Value " + (isNull ? " = value ?? 0" : " = value");
+             break;
+        case "DateTime":
+             result = "Value "  + (isNull ? " = value ?? (new DateTime(1900,01,01))" : " = value");
+             break;
+        case "bool":
+            result = "Checked "  + (isNull ? " = value ?? false" : " = value");
+             break;
+        case "DbGeography":
+             result = "Value = value";
+             break;
+        default:
+             result = "Text = value";
+             break;
+     }
+     return result;
+         
+ }
+ private string getProperty(string fieldName,string dataType, bool isPrimaryKey,string foreignKey,bool isForeignKeyMember,bool isNull){
+        var result = string.Empty;
+        List<string> nonNull = new List<string>();
+        nonNull.Add("string");
+        nonNull.Add("DbGeography");
+        nonNull.Add("DbGeometry");
+       
+        var dataTypePrefix  = string.Empty;
+        if(!nonNull.Contains(dataType) && isNull)
+           dataTypePrefix = "?";
+     
+        if(dataType == "DbGeography"){
+            result = string.Concat(result,"private ",dataType," _", fieldName,";\n\t\t");
+            result = string.Concat(result,"public  ",dataType," ",fieldName,"\n\t\t");
+            result = string.Concat(result,"{\n\t\t\t");
+            result = string.Concat(result,"get\n\t\t\t");
+            result = string.Concat(result,"{\n\t\t\t\t");
+            result = string.Concat(result,"if(userControlGeography",fieldName,".Value != null)\n\t\t\t\t\t");
+            result = string.Concat(result,"_",fieldName," = ","userControlGeography",fieldName,".Value;\n\t\t\t");
+            result = string.Concat(result,"\treturn _",fieldName,";\n\t\t\t");
+            result = string.Concat(result,"}\n\t\t\t");
+            result = string.Concat(result,"set","\n\t\t\t");
+            result = string.Concat(result,"{","\n\t\t\t\t");
+            result = string.Concat(result,"userControlGeography",fieldName,".Value = value;\n\t\t\t");
+            result = string.Concat(result,"}\n\t\t");
+            result = string.Concat(result,"}\n\t\t\n");
+            return result;
+        }
+        
+        if(fieldName.ToUpper() == "TENANTID"){
+            result = string.Concat(result,"public  ",dataType," ",fieldName,"\n\t\t");
+            result = string.Concat(result,"{\n\t\t\t");
+            result = string.Concat(result,"get; set;\n\t\t");
+            result = string.Concat(result,"}\n\t\t\n");
+            return result;
+        }
+        
+        if(isForeignKeyMember){
+            result = string.Concat(result,"private ",dataType+dataTypePrefix," _", fieldName,";\n\t\t");
+            result = string.Concat(result,"public  ",dataType+dataTypePrefix," ",fieldName,"\n\t\t");
+            result = string.Concat(result,"{\n\t\t\t");
+            result = string.Concat(result,"get\n\t\t\t");
+            result = string.Concat(result,"{\n\t\t\t\t");
+            result = string.Concat(result,"if(comboBox",fieldName,".SelectedValue != null)\n\t\t\t\t\t");
+            result = string.Concat(result,dataType+dataTypePrefix,".TryParse(comboBox",fieldName,".SelectedValue.ToString(), out _",fieldName,");\n\t\t\t");
+            result = string.Concat(result,"\treturn _",fieldName,";\n\t\t\t");
+            result = string.Concat(result,"}\n\t\t\t");
+            result = string.Concat(result,"set","\n\t\t\t");
+            result = string.Concat(result,"{","\n\t\t\t\t");
+            result = string.Concat(result,"comboBox",fieldName,".SelectedValue = value;\n\t\t\t");
+            result = string.Concat(result,"}\n\t\t");
+            result = string.Concat(result,"}\n\t\t\n");
+            return result;
+        }
+        
+        if(isPrimaryKey){
+            result = string.Concat(result,"private ",dataType," _", fieldName,";\n\t\t");
+            result = string.Concat(result,"public  ",dataType," ",fieldName,"\n\t\t");
+            result = string.Concat(result,"{\n\t\t\t");
+            result = string.Concat(result,"get\n\t\t\t");
+            result = string.Concat(result,"{\n\t\t\t\t");
+            result = string.Concat(result,"bool result = ",dataType,".TryParse(textBox",fieldName,".Text, out _",fieldName,");\n\t\t\t");
+            result = string.Concat(result,"    if (!result)\n\t\t\t");
+            result = string.Concat(result,"         textBox",fieldName,".Text = \"0\";\n\t\t\t\t");
+            result = string.Concat(result,"return _",fieldName,";\n\t\t\t");
+            result = string.Concat(result,"}\n\t\t\t");
+            result = string.Concat(result,"set","\n\t\t\t");
+            result = string.Concat(result,"{","\n\t\t\t\t");
+            result = string.Concat(result,"textBox",fieldName,".Text = value.ToString();\n\t\t\t\t");
+            result = string.Concat(result,"this.toolBarButtonInfo.ToolTipText =   ","$\"{GetCreated()} : {Creado} {FechaCreado}  {GetModified()}: {Modificado} {FechaModificado}\";\n\t\t\t\t");
+            result = string.Concat(result,"this.panelPricipal.Text = GetTitle() +", " \" (\""," + value.ToString() + ","\")\";\n\t\t\t") ;
+            result = string.Concat(result,"}\n\t\t");
+            result = string.Concat(result,"}\n\t\t\n");
+        }
+        else
+        {
+            
+            result = string.Concat(result,"public ",dataType+dataTypePrefix," ",fieldName,"\n\t\t");
+            result = string.Concat(result,"{\n\t\t\t");
+            result = string.Concat(result,"get\n\t\t\t");
+            result = string.Concat(result,"{\n");
+            if((dataType != "string" && dataType !="DateTime") &&  dataType!="bool"){
+                result = string.Concat(result,"\t\t\t\t return (",(dataType+dataTypePrefix) ,") ",getControlType(dataType,isForeignKeyMember),fieldName,".",getValue(dataType),";\n\t\t\t");
+            }
+            else
+            {
+                  result = string.Concat(result,"\t\t\t\t return ", getControlType(dataType,isForeignKeyMember),fieldName,".",getValue(dataType),";\n\t\t\t");
+            }
+            result = string.Concat(result,"}\n\t\t\t");
+            result = string.Concat(result,"set","\n\t\t\t");
+            result = string.Concat(result,"{","\n\t\t\t\t");
+            result = string.Concat(result,getControlType(dataType,isForeignKeyMember),fieldName,".",setValue(dataType,isNull),";\n\t\t\t");
+            result = string.Concat(result,"}\n\t\t");
+            result = string.Concat(result,"}\n\t\t\n"); 
+        }
+        
+   return result;
+ }
+</script>

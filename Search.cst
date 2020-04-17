@@ -1,0 +1,180 @@
+﻿<%-- 
+Name: Template de Entity
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%--<%@ Assembly Name="CodeSmith.Core" %>--%>
+<%@ Assembly Name="CodeSmith.CustomProperties" %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Assembly Name="System.Design" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="Context" Description="Table to get the data from." %>
+<%@ Map Name="SqlCSharp" Src="Sql-CSharp" Description="System to C# Type Map" %>
+<%@ Property Name="NameSpaceBusinessObjects" Type="System.String"%>
+<%@ Property Name="ClassName" Type="System.String"%>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="System.IO" %>
+<%@ Property Name="QueryTableColumns" Type="SchemaExplorer.ColumnSchemaCollection" Category="Context" Description="Columns to show in the dataGridView" %>
+<%@ Import NameSpace="System.Collections.Generic" %>
+<%@ Import NameSpace="System.Linq" %>
+<%@ Property Name="Licence" Type="System.String"%>
+
+
+
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description: Poco de entidad <%= ClassName%>
+//Fecha:<%= DateTime.Now%>
+//Licencia:<%=Licence%>
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using <%=NameSpaceBusinessObjects %>.Interfaces;
+using <%=NameSpaceBusinessObjects %>.Models;
+namespace <%= NameSpaceBusinessObjects %>.Services
+{
+    public class Search<%= ClassName %>Presenter : ISearchPresenter<%= "<"+ClassName+">" %>
+    {
+        private ISearch _sender;
+        int id = 0;
+		public IContext Context { get; private set; }
+        public Search<%= ClassName %>Presenter(IContext context)
+        {
+            Context = context;
+         
+        }
+
+        public void Search() {
+            _sender.Id = 0;
+            id = 0;
+            int.TryParse(_sender.ValueToSearch, out id);
+            if(id == 0)
+            {
+                _sender.DataGridSource = <%= getQuery()%>;
+            }
+            else{
+                _sender.DataGridSource = <%= getQueryById()%>;
+            }
+        }
+        
+        public <%= ClassName %> FindById(int id) {
+            return Context.<%=ClassName%>.Find(id);
+        }
+        
+        public List<%= "<"+ClassName+">" %> GetAll()
+        {
+            return Context.<%= ClassName %>.ToList();
+        }
+        
+        public void DataBind(ISearch sender)
+        {
+            _sender = sender;
+            Search();
+        }
+    }
+}
+ <script runat="template">
+
+public bool HasTenantId() {
+    return  SourceTable.Columns.Where( a => a.Name  == "TenantId").ToList().Count > 0;
+    
+}
+
+public string getSelectedFields(){
+        string columnlist = string.Empty;
+    foreach (SchemaExplorer.ColumnSchema columna in QueryTableColumns)
+    {
+        var field = columna.ToString();
+        int inicio = field.LastIndexOf(".",field.Length-1)+1;
+        field = field.Substring(inicio,field.Length-inicio);
+        columnlist = string.Concat(columnlist, "a.",field,",");
+    }
+    columnlist = columnlist.Substring(0,columnlist.Length-1);
+
+   return columnlist;
+}
+
+public string getQueryById(){
+    string result = string.Concat("Context.",ClassName,".Where(a => ");
+    var tenant = HasTenantId() ? " a.TenantId == Context.TenantId && " : "";
+    result= string.Concat( result,tenant,"a.",SourceTable.PrimaryKey.MemberColumns[0].Name," == id)",".Take(1).Select(a => new {"+ getSelectedFields()+"}).ToList()"); 
+    return result;
+}
+
+public string getQuery(){
+    
+    string result = string.Concat("Context.",ClassName,".Where(a => ");
+    
+    var filter = string.Empty;
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+        var clm = SourceTable.Columns[i];
+       if(GetDataType(clm)  == "string")
+         filter= string.Concat( filter,"a.",clm.Name,".Contains(_sender.ValueToSearch) || ");
+       
+     
+    
+    }
+    
+    
+   
+    
+    filter = string.Concat(filter.Substring(0,filter.Length-3));
+    
+    if(filter.Length > 3)
+    {
+        if(HasTenantId())
+        {
+            
+            result = string.Concat(result,"a.TenantId == Context.TenantId"," && (",filter,"))");
+        }
+        else
+        {
+             result = string.Concat(result,filter,")");
+        }
+    }
+    else
+    {
+       if(HasTenantId())
+        {
+            
+            result = string.Concat(result,"a.TenantId == Context.TenantId",")");
+        }
+        else
+        {
+             result = string.Concat(result,")");
+        }
+    }
+
+        
+    result = string.Concat(result,".Take(100).Select(a => new {"+ getSelectedFields()+"}).ToList()");
+       
+ 
+    return result;
+}
+
+public string GetDataType(ColumnSchema clm)
+{
+     var dataType = "";
+    switch(clm.NativeType)
+    {
+        case "geography":
+            dataType  = "DbGeography";
+            break;
+        case "geometry":
+            dataType  = "DbGeometry";
+            break;
+        default:
+            dataType = SqlCSharp[clm.NativeType];
+            break;
+        
+    }
+    return dataType;
+}
+ </Script>

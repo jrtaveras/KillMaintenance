@@ -1,0 +1,84 @@
+﻿<%-- 
+Name: Template de Presenter
+Author:Jose Roberto Taveras
+Description: Helper Para validar la interfaz de usuario
+--%>
+<%@ Template Language="C#" TargetLanguage="C#" %>
+<%@ Property Name="NameSpaceUI" Category="Context" Type="System.String"%>
+<%@ Property Name="Licence" Type="System.String"%>
+//Autor:Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Fecha:<%=DateTime.Now%>
+//Licencia:<%=Licence%>
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+using Wisej.Web;
+
+
+namespace <%=NameSpaceUI%>.Helpers
+{
+    public class HelperControlsToValidate
+    {
+        private ErrorProvider errorProvider1 = new ErrorProvider();
+        public Dictionary<string,Control> dic = new Dictionary<string,Control>();
+
+        public  HelperControlsToValidate(Control sender)
+        {
+            addControlsToDictionary(sender);
+        }
+
+        protected void addControlsToDictionary(Control sender)
+        {
+            foreach (Control item in sender.Controls)
+            {
+                if(item.Tag != null)
+                    addItemToDictionary(item);
+
+                if (item.Controls.Count > 0)
+                    addControlsToDictionary(item);
+            }
+        }
+
+        private void addItemToDictionary(Control sender)
+        {
+            if (sender.Tag != null)
+            {
+
+                if (!dic.ContainsKey(sender.Tag.ToString()))
+                {
+                    dic.Add(sender.Tag.ToString(), sender);
+                }
+            }
+        }
+
+        public void ValidateMembers(ICollection<ValidationResult> sender) {
+
+
+            foreach (var item in sender)
+            {
+                foreach (var memberName in item.MemberNames)
+                {
+                    var found = dic.Where(a => a.Key == memberName).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(found.Key))
+                        errorProvider1.SetError(found.Value, item.ErrorMessage);
+
+                }
+
+            }
+        }
+
+        public void ClearErrors(ICollection<ValidationResult> sender)
+        {
+            foreach (var item in dic)
+            {
+                 errorProvider1.SetError(item.Value, null);
+
+            }
+        }
+    }
+}
+<script runat="template">
+</script>

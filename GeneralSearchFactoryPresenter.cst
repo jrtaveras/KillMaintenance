@@ -1,0 +1,18 @@
+﻿<%-- 
+Name: Factoria general para instanciar presenters que se inyectan a busquedas genericas
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage="Text" %>
+<%@ Property Name="ClassName" Category="Context" Type="System.String"%>
+
+public static ISearchPresenter<<%=ClassName%>> Make<%=ClassName%>Search(IContext context)
+{
+    ISearchPresenter<<%=ClassName%>> instance = new Search<%=ClassName%>Presenter(context);
+    return instance;
+}
+
+//Requerido por el generador de CodeSmith no modifique esto
+       
+<script runat="template">
+</script>

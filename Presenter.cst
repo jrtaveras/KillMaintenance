@@ -1,0 +1,267 @@
+﻿<%-- 
+Name: Template de Presenter
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Assembly Name="CodeSmith.Engine" %>
+<%@ Import Namespace="CodeSmith.Engine" %>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Property Name="NameSpaceBusinessObjects" Type="System.String"%>
+<%@ Property Name="ClassName" Type="System.String"%>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Assembly Name="System.Design" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="Context" Description="Table to get the data from." %>
+<%@ Map Name="SqlCSharp" Src="Sql-CSharp" Description="System to C# Type Map" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="System.IO" %>
+<%@ Import NameSpace="System.Collections.Generic" %>
+<%@ Property Name="Licence" Type="System.String"%>
+
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description: Busines Object  Presenter <%= ClassName%>
+//Fecha:<%= DateTime.Now%>
+//Licencia:<%=Licence%>
+//No toques esto por que al regenerar se sobreescribe el codigo
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using <%=NameSpaceBusinessObjects%>.Helpers;
+using <%=NameSpaceBusinessObjects%>.Models;
+using <%=NameSpaceBusinessObjects%>.Interfaces;
+using <%=NameSpaceBusinessObjects%>.Repository;
+<%=UsingSpatial()%>
+
+
+namespace  <%=NameSpaceBusinessObjects%>.Services
+{
+    public partial class <%=ClassName%>Presenter 
+    {
+        private readonly IContext _context;
+        public ICollection<ValidationResult> ValidationResult { get; set; }
+        private readonly HelperValidateEntity helperValidateEntity = new HelperValidateEntity();
+        private <%=ClassName%> <%=ClassNameToLower()%> { get; set; }
+        private I<%=ClassName%> _<%=ClassNameToLower()%>;
+        public event Validate BeforeSave;
+        public event Validate AfterSave;
+        public object DataSource {get;set;}
+        private IDataSource _dataSource;
+        private IValueToSearch _valueToSearch;
+                        
+        private bool validateService()
+        {
+            return helperValidateEntity.ValidateService(<%=ClassNameToLower()%>);
+        }
+
+        private void gatherFields()
+        {
+            
+            <%= getProperties()%>
+        }
+        
+        private void scatterFields()
+        {
+            <%=setProperties()%>
+        }
+        
+        public void Add()
+        {
+            
+            <%=ClassNameToLower()%> = new <%=ClassName%>();
+            <%=SetUserAndDateCreate()%>
+            afterSetUserAndCreateDate();
+            scatterFields();
+            FillDataSource();
+
+        }
+        
+        public void Undo()
+        {
+   
+            afterSetUserAndCreateDate();
+            scatterFields();
+            FillDataSource();
+
+        }
+        
+        public bool Find(long Id)
+        {
+            
+            Add();
+
+            <%=ClassNameToLower()%> =  _context.<%=ClassName%>.Find(Id);
+            
+             if (<%=ClassNameToLower()%> == null) {
+                
+                Add();
+                
+                scatterFields();
+                
+                return false;
+            }
+
+            _context.Entry(<%=ClassNameToLower()%>).State = EntityState.Modified;
+            
+            afterSetUserAndCreateDate();
+
+            scatterFields();
+            
+            FillDataSource();
+            
+            return true;
+        }  
+
+    }
+}
+
+<script runat="template">
+    /*
+     public override String GetFileName(){
+        return OutPutDir+"\\"+ ClassName+"Presenter.cs";
+        
+    }*/
+
+    public string UsingSpatial(){
+        List<string> lista = new List<string>();
+        lista.Add("geography");
+        lista.Add("geometry");
+        bool result = false;
+        for(int i = 0; i < SourceTable.Columns.Count; i++)
+        {
+            result = lista.Contains(SourceTable.Columns[i].NativeType);
+            if(result)
+                break;
+        
+        }
+        return result ? "using System.Data.Entity.Spatial;":"";
+    }
+
+    public string GetDataType(ColumnSchema clm)
+    {
+         var dataType = "";
+        switch(clm.NativeType)
+        {
+            case "geography":
+                dataType  = "DbGeography";
+                break;
+            case "geometry":
+                dataType  = "DbGeometry";
+                break;
+            default:
+                dataType = SqlCSharp[clm.NativeType];
+                break;
+            
+        }
+        return dataType;
+    }
+    private string ClassNameToLower(){
+        return StringUtil.ToCamelCase(ClassName);
+      
+    }
+    
+    public string SetUserAndDateCreate(){
+        string result = string.Empty;
+        for(int i = 0; i < SourceTable.Columns.Count; i++)
+        {
+            var field = SourceTable.Columns[i].Name;
+            switch(field.ToLower())
+            {
+                case "creado":
+                       result =string.Concat(result,"if(string.IsNullOrEmpty(",ClassNameToLower()+"."+field,")){\n\t\t\t");
+                       result= string.Concat(result,"\t",ClassNameToLower() +"."+field," = _context.UserName;\n \t\t\t");
+                       result = string.Concat(result,"}\n\t\t\t");
+                    break;
+                case "modificado":
+                    result= string.Concat(result,ClassNameToLower()+"."+ field," = _context.UserName;\n \t\t\t");
+                break;
+                case "fechacreado":
+                       result =string.Concat(result,"if(",ClassNameToLower()+ "."+field ," == null || ",ClassNameToLower()+"."+ field,".Year <= 1900) {\n\t\t\t");
+                       result= string.Concat(result,"\t",ClassNameToLower()+"."+ field," = DateTime.Now;\n\t\t\t");
+                       result = string.Concat(result,"}\n\t\t\t");
+                    break;
+                case "fechamodificado":
+                        result= string.Concat(result,ClassNameToLower()+"."+ field," = DateTime.Now;\n\t\t\t");
+                    break;
+                case "tenantid":
+                        result= string.Concat(result,ClassNameToLower()+"."+ field," = _context.TenantId;\n\t\t\t");
+                    break;
+                    
+                default:
+                     ColumnSchema clm = SourceTable.Columns[i];
+                    
+                    if(GetDataType(clm) == "DateTime")
+                    {
+                        
+                        result= string.Concat(result,ClassNameToLower()+"."+ field," = new DateTime(1900,01,01);\n\t\t\t");
+                    }
+                    
+                    if(GetDataType(clm) == "DbGeography")
+                    {
+                        result= string.Concat(result,ClassNameToLower()+"."+ field," = DbGeography.PointFromText(\"POINT(0 0)\", 4326);\n\t\t\t");
+                    }
+        
+               
+                    break;
+       
+            }
+            
+        }
+        return result;
+           
+    }
+  
+  public string  getProperties(){
+      
+
+    string result= string.Empty;
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+        var field = SourceTable.Columns[i].Name;
+        switch(field.ToLower())
+        {
+            case "creado":
+                   result =string.Concat(result,"if(string.IsNullOrEmpty(",ClassNameToLower()+"."+ field,")){\n\t\t\t");
+                   result= string.Concat(result,"\t", ClassNameToLower()+"."+ field," = _context.UserName;\n \t\t\t");
+                   result = string.Concat(result,"}\n\t\t\t");
+                break;
+            case "modificado":
+                result= string.Concat(result,ClassNameToLower()+"."+ field," = _context.UserName;\n \t\t\t");
+            break;
+            case "fechacreado":
+                   result =string.Concat(result,"if(",ClassNameToLower()+"."+ field ," == null || ",ClassNameToLower()+"."+ field,".Year <= 1900) {\n\t\t\t");
+                   result= string.Concat(result,"\t", ClassNameToLower()+"."+ field," = DateTime.Now;\n\t\t\t");
+                   result = string.Concat(result,"}\n\t\t\t");
+                break;
+            case "fechamodificado":
+                    result= string.Concat(result,ClassNameToLower()+"."+ field," = DateTime.Now;\n\t\t\t");
+                break;
+            default:
+                  result= string.Concat( result,ClassNameToLower()+"."+ field +  " = _" + ClassNameToLower()+"."+ field +";\n\t\t\t");
+                break;
+        }
+       
+    }
+    return result;
+  }
+  
+  public string setProperties(){
+    string result= string.Empty;
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+        var field= SourceTable.Columns[i].Name;
+       
+        result= string.Concat(result,"_",ClassNameToLower()+"."+ field +  " = " + ClassNameToLower() + "."+ field +";\n \t\t\t");
+    }
+    return result;
+  }
+</script>

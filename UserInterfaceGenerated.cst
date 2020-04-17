@@ -1,0 +1,546 @@
+﻿<%-- 
+
+--%>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import NameSpace="System.IO" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="Context" Description="Table to get the data from." %>
+<%--<%@ Map Name="SampleMap" Src="MapSample.csmap" Default="DefaultValue" Description="Sample map file." %>--%>
+<%@ Map Name="SqlCSharp" Src="Sql-CSharp" Description="System to C# Type Map" %>
+<%@ Property Name="NameSpaceUI" Type="System.String"%>
+<%@ Property Name="NameSpaceCommonUI" Type="System.String"%>
+<%@ Property Name="ClassName" Type="System.String"%>
+<%@ Property Name="TabIndex" Type="System.Int32" Default="0"%>
+<%@ Property Name="ControlLocationX" Type="System.Int32" Default="6" Category="Layout" %>
+<%@ Property Name="ControlLocationY" Type="System.Int32" Default="6" Category="Layout" %>
+<%@ Property Name="UserControls" Type="System.String"  Default="placeHolder" Category="No Uso" %>
+<%@ Property Name="BuildControls" Type="System.String"  Default="placeHolder" Category="No Uso" %>
+<%@ Property Name="DeclarationControls" Type="System.String"  Default="placeHolder" Category="No Uso" %>
+<%@ Property Name="LineSpacing" Type="System.Int32" Default="42" Category="Layout" %>
+<%@ Property Name="Contador" Type="System.Int32" Default="0" Category="Layout" Optional="True" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Assembly Name="System.Design" %>
+<%@ Import NameSpace="System.IO" %>
+
+namespace <%=NameSpaceUI%>
+{
+
+    partial  class UserControl<%=ClassName%>
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Wisej Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.panelPricipal = new Wisej.Web.Panel();
+            this.panelContenido = new Wisej.Web.Panel();
+            this.panelLeft = new Wisej.Web.Panel();
+            this.panelRight = new Wisej.Web.Panel();
+            this.toolBar1 = new Wisej.Web.ToolBar();
+            this.toolBarButtonNuevo = new Wisej.Web.ToolBarButton();
+            this.toolBarButtonSalvar = new Wisej.Web.ToolBarButton();
+            this.toolBarButtonEditar = new Wisej.Web.ToolBarButton();
+            this.toolBarButtonCancelar = new Wisej.Web.ToolBarButton();
+            this.toolBarButtonEliminar = new Wisej.Web.ToolBarButton();
+            this.toolBarButtonBuscar = new Wisej.Web.ToolBarButton();
+            this.toolBarButtonImprimir = new Wisej.Web.ToolBarButton();
+            this.toolBarButtonInfo = new Wisej.Web.ToolBarButton();
+            this.toolBarButtonExcel = new Wisej.Web.ToolBarButton();
+            this.panelPricipal.SuspendLayout();
+            this.panelContenido.SuspendLayout();
+            this.panelRight.SuspendLayout();
+            this.panelLeft.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panelPricipal
+            // 
+            this.panelPricipal.CollapseSide = Wisej.Web.HeaderPosition.Left;
+            this.panelPricipal.Controls.Add(this.panelContenido);
+            this.panelPricipal.Controls.Add(this.toolBar1);
+            this.panelPricipal.Dock = Wisej.Web.DockStyle.Top;
+            this.panelPricipal.HeaderAlignment = Wisej.Web.HorizontalAlignment.Center;
+            this.panelPricipal.HeaderPosition = Wisej.Web.HeaderPosition.Left;
+            this.panelPricipal.Location = new System.Drawing.Point(0, 0);
+            this.panelPricipal.Name = "panelPricipal";
+            this.panelPricipal.ShowHeader = true;
+            this.panelPricipal.Size = new System.Drawing.Size(674, 573);
+            this.panelPricipal.TabIndex = 0;
+            this.panelPricipal.TabStop = true;
+            this.panelPricipal.Tag = "";
+            this.panelPricipal.Text = "<%=ClassName%>";
+            this.panelPricipal.PanelCollapsed += new System.EventHandler(this.panelPricipal_PanelCollapsed);
+            this.panelPricipal.PanelExpanded += new System.EventHandler(this.panelPricipal_PanelExpanded);
+            // 
+            // panelContenido
+            // 
+            this.panelContenido.Controls.Add(this.panelRight);
+            this.panelContenido.Controls.Add(this.panelLeft);
+            this.panelContenido.Dock = Wisej.Web.DockStyle.Fill;
+            this.panelContenido.HeaderAlignment = Wisej.Web.HorizontalAlignment.Center;
+            this.panelContenido.HeaderSize = 34;
+            this.panelContenido.Location = new System.Drawing.Point(0, 33);
+            this.panelContenido.Name = "panelContenido";
+            this.panelContenido.Size = new System.Drawing.Size(646, 540);
+            this.panelContenido.TabIndex = 1;
+            this.panelContenido.TabStop = true;
+            // 
+            // toolBar1
+            // 
+            this.toolBar1.BorderStyle = Wisej.Web.BorderStyle.Dotted;
+            this.toolBar1.Buttons.AddRange(new Wisej.Web.ToolBarButton[] {
+            this.toolBarButtonNuevo,
+            this.toolBarButtonSalvar,
+            this.toolBarButtonEditar,
+            this.toolBarButtonCancelar,
+            this.toolBarButtonEliminar,
+            this.toolBarButtonBuscar,
+            this.toolBarButtonImprimir,
+            this.toolBarButtonExcel,
+            this.toolBarButtonInfo});
+            this.toolBar1.Location = new System.Drawing.Point(0, 0);
+            this.toolBar1.Name = "toolBar1";
+            this.toolBar1.Size = new System.Drawing.Size(1223, 28);
+            this.toolBar1.TabIndex =  <%=TabIndex+=1%>;
+            this.toolBar1.TabStop = false;
+            // 
+            // toolBarButtonNuevo
+            // 
+            this.toolBarButtonNuevo.Name = "toolBarButtonNuevo";
+            this.toolBarButtonNuevo.ImageSource = "resource.wx/Wisej.Ext.MaterialDesign/add-button-inside-black-circle.svg?color=too" +
+    "lbarText";
+            this.toolBarButtonNuevo.ToolTipText = "Nuevo";
+            // 
+            // toolBarButtonSalvar
+            // 
+            this.toolBarButtonSalvar.ImageSource = "resource.wx/Wisej.Ext.MaterialDesign/tick-inside-circle.svg?color=toolbarText";
+            this.toolBarButtonSalvar.Name = "toolBarButtonSalvar";
+            this.toolBarButtonSalvar.ToolTipText = "Salvar";
+            // 
+            // toolBarButtonEditar
+            // 
+            this.toolBarButtonEditar.ImageSource = "resource.wx/Wisej.Ext.MaterialDesign/underline-button.svg?color=toolbarText";
+            this.toolBarButtonEditar.Name = "toolBarButtonEditar";
+            this.toolBarButtonEditar.ToolTipText = "Editar";
+            // 
+            // toolBarButtonCancelar
+            // 
+            this.toolBarButtonCancelar.ImageSource = "resource.wx/Wisej.Ext.MaterialDesign/do-not-disturb-rounded-sign.svg?color=toolba" +
+    "rText";
+            this.toolBarButtonCancelar.Name = "toolBarButtonCancelar";
+            this.toolBarButtonCancelar.ToolTipText = "Cancelar";
+            // 
+            // toolBarButtonEliminar
+            // 
+            this.toolBarButtonEliminar.ImageSource = "resource.wx/Wisej.Ext.MaterialDesign/rubbish-bin-delete-button.svg?color=toolbarT" +
+    "ext";
+            this.toolBarButtonEliminar.Name = "toolBarButtonEliminar";
+            this.toolBarButtonEliminar.ToolTipText = "Eliminar";
+            // 
+            // toolBarButtonBuscar
+            // 
+            this.toolBarButtonBuscar.ImageSource = "resource.wx/Wisej.Ext.MaterialDesign/searching-magnifying-glass.svg?color=toolbar" +
+    "Text";
+            this.toolBarButtonBuscar.Name = "toolBarButtonBuscar";
+            this.toolBarButtonBuscar.ToolTipText = "Buscar";
+            // 
+            // toolBarButtonImprimir
+            // 
+           this.toolBarButtonImprimir.ImageSource = "resource.wx/Wisej.Ext.MaterialDesign/printer-printing-document.svg?color=toolbarT" +
+    "ext";
+            this.toolBarButtonImprimir.Name = "toolBarButtonImprimir";
+            this.toolBarButtonImprimir.ToolTipText = "Imprimir";
+            // 
+            // toolBarButtonExcel
+            // 
+            this.toolBarButtonExcel.ImageSource = "resource.wx/Wisej.Ext.MaterialDesign/microsoft-excel-logo.svg?color=toolbarText";
+            this.toolBarButtonExcel.Name = "toolBarButtonExcel";
+            this.toolBarButtonExcel.ToolTipText = "Exportar a Excel";
+            // 
+            // toolBarButtonInfo
+            // 
+            this.toolBarButtonInfo.ImageSource = "resource.wx/Wisej.Ext.MaterialDesign/rounded-info-button.svg?color=toolbarText";
+            this.toolBarButtonInfo.Name = "toolBarButtonInfo";
+            this.toolBarButtonInfo.ToolTipText = "Creado";
+            // 
+            // UserControl<%=ClassName%>
+            // 
+            <%=InitializeControls()%>
+             // 
+            // panelLeft
+            // 
+            <%=BuildControls%>
+            this.panelLeft.Dock = Wisej.Web.DockStyle.Top;
+            this.panelLeft.HeaderAlignment = Wisej.Web.HorizontalAlignment.Center;
+            this.panelLeft.Dock = Wisej.Web.DockStyle.Left;
+            this.panelLeft.Location = new System.Drawing.Point(0, 0);
+            this.panelLeft.Name = "panelLeft";
+            this.panelLeft.Size = new System.Drawing.Size(306, 550);
+            this.panelLeft.TabIndex = <%=TabIndex+=1%>;
+            this.panelLeft.TabStop = true;
+            <%=UserControls%>
+            // 
+            // panelRight
+            // 
+            this.panelRight.Location = new System.Drawing.Point(306, 0);
+            this.panelRight.Dock = Wisej.Web.DockStyle.Left;
+            this.panelRight.Name = "panelRight";
+            this.panelRight.Size = new System.Drawing.Size(306, 540);
+            this.panelRight.TabIndex = 28;
+            this.panelRight.TabStop = true;
+            // 
+            // UserControl<%=ClassName%>
+            //
+            this.AutoScroll = true;
+            this.AutoSizeMode = Wisej.Web.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add(this.panelPricipal);
+            this.Name =  <%= "\""+ClassName+"\""%>;
+            this.Size = new System.Drawing.Size(650, 1000);
+            this.panelPricipal.ResumeLayout(false);
+            this.panelPricipal.PerformLayout();
+            this.panelContenido.ResumeLayout(false);
+            this.panelRight.ResumeLayout(false);
+            this.panelRight.PerformLayout();
+            this.panelLeft.ResumeLayout(false);
+            this.panelLeft.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private Wisej.Web.ToolBar toolBar1;
+        private Wisej.Web.Panel panelPricipal;
+        private Wisej.Web.Panel panelContenido;
+        private Wisej.Web.Panel panelLeft;
+        private Wisej.Web.Panel panelRight;
+        private Wisej.Web.ToolBarButton toolBarButtonNuevo;
+        private Wisej.Web.ToolBarButton toolBarButtonSalvar;
+        private Wisej.Web.ToolBarButton toolBarButtonEditar;
+        private Wisej.Web.ToolBarButton toolBarButtonCancelar;
+        private Wisej.Web.ToolBarButton toolBarButtonEliminar;
+        private Wisej.Web.ToolBarButton toolBarButtonBuscar;
+        private Wisej.Web.ToolBarButton toolBarButtonImprimir;
+        private Wisej.Web.ToolBarButton toolBarButtonInfo;
+        private Wisej.Web.ToolBarButton toolBarButtonExcel;
+        <%=DeclarationControls%>
+       
+    }
+
+}
+<%=inicializar()%>
+<script runat="template">
+public string GetDataType(ColumnSchema clm)
+{
+     var dataType = "";
+    switch(clm.NativeType)
+    {
+        case "geography":
+            dataType  = "DbGeography";
+            break;
+        case "geometry":
+            dataType  = "DbGeometry";
+            break;
+        default:
+            dataType = SqlCSharp[clm.NativeType];
+            break;
+        
+    }
+    return dataType;
+}
+
+public int GetPanelHeight(){
+    
+    return (Contador + 1) * (LineSpacing + 22);
+    
+}
+public string test (){
+     var dataType = string.Empty;
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+             
+             var value =  SqlCSharp[SourceTable.Columns[i].NativeType];
+            dataType +=value+"\n";
+    }
+    return dataType;
+}
+public string inicializar(){
+ 
+    
+    ControlLocationX=6;
+    ControlLocationY=38;
+    LineSpacing = 42;
+    TabIndex=0;
+    UserControls = "placeHolder";
+    BuildControls = "placeHolder";
+    DeclarationControls = "placeHolder";
+    Contador = 0;
+   return String.Empty;
+}
+
+
+public string BuildTextBox(string name)
+{   TabIndex++;
+    int x = ControlLocationX;
+    int y = ControlLocationY;
+    var result = "//\n\t\t\t";
+    result = string.Concat(result,"// textBox"+name)+"\n\t\t\t";
+    result = string.Concat(result,"//","\n\t\t\t"); 
+    result = string.Concat(result,"this.textBox"+name+".Label.Position = Wisej.Web.LabelPosition.Inside;\n\t\t\t");
+    result = string.Concat(result,"this.textBox"+name+".Label.Text = \""+name+"\";\n\t\t\t");
+    result = string.Concat(result,"this.textBox"+name+".Location = new System.Drawing.Point("+x.ToString()+","+y.ToString()+ ");\n\t\t\t");
+    result = string.Concat(result,"this.textBox"+name+".Name = \"textBox"+name+"\";\n\t\t\t");
+    if(name.ToLower() == "id"){
+        result = string.Concat(result,"this.textBox"+name+".Size = new System.Drawing.Size(150, 22);\n\t\t\t");    
+    }
+    else{
+        result = string.Concat(result,"this.textBox"+name+".Size = new System.Drawing.Size(265, 22);\n\t\t\t");
+    }
+    
+    result = string.Concat(result,"this.textBox"+name+".TabIndex = "+TabIndex.ToString()+";\n\t\t\t");  
+    //result = string.Concat(result,"this.textBox"+name+".Watermark = \""+name+"\";\n\t\t\t");
+    ControlLocationY+= LineSpacing;
+   return result;
+}
+
+public string BuildCheckBox(string name)
+{
+    TabIndex++;
+    int x = ControlLocationX;
+    int y = ControlLocationY;
+    var result = "//\n\t\t\t";
+    result = string.Concat(result,"// checkBox"+name)+"\n\t\t\t";
+    result = string.Concat(result,"//","\n\t\t\t"); 
+    result = string.Concat(result,"this.checkBox"+name+".Appearance = Wisej.Web.Appearance.Switch;\n\t\t\t");
+    result = string.Concat(result,"this.checkBox"+name+".Location = new System.Drawing.Point("+x.ToString()+","+y.ToString()+ ");\n\t\t\t");
+    result = string.Concat(result,"this.checkBox"+name+".Name = \""+name+"\";\n\t\t\t");
+    result = string.Concat(result,"this.checkBox"+name+".Size = new System.Drawing.Size(42, 24);\n\t\t\t");
+    result = string.Concat(result,"this.checkBox"+name+".TabIndex = "+TabIndex.ToString()+";\n\t\t\t");
+    result = string.Concat(result,"this.checkBox"+name+".Text = \""+name+"\";\n\t\t\t");
+    ControlLocationY+= LineSpacing ;
+    return result;
+}
+
+public  string BuidDateTimePicker(string name){
+    TabIndex++;
+    int x = ControlLocationX;
+    int y = ControlLocationY;
+    var result = "//\n\t\t\t";
+    var date = DateTime.Now;
+    result = string.Concat(result,"// dateTimePicker"+name)+"\n\t\t\t";
+    result = string.Concat(result,"//","\n\t\t\t"); 
+    result = string.Concat(result,"this.dateTimePicker"+name+".Checked = false;\n\t\t\t");
+    result = string.Concat(result,"this.dateTimePicker"+name+".Format = Wisej.Web.DateTimePickerFormat.DateTime;\n\t\t\t");
+    result = string.Concat(result,"this.dateTimePicker"+name+".Label.Position = Wisej.Web.LabelPosition.Inside;\n\t\t\t");
+    result = string.Concat(result,"this.dateTimePicker"+name+".Label.Text = \""+name+"\";\n\t\t\t");
+    result = string.Concat(result,"this.dateTimePicker"+name+".Location = new System.Drawing.Point("+x.ToString()+","+y.ToString()+ ");\n\t\t\t");
+    result = string.Concat(result,"this.dateTimePicker"+name+".Name = \"dateTimePicker"+name+"\";\n\t\t\t");
+    result = string.Concat(result,"this.dateTimePicker"+name+".Size = new System.Drawing.Size(181, 22);\n\t\t\t");
+    result = string.Concat(result,"this.dateTimePicker"+name+".TabIndex = "+TabIndex.ToString()+";\n\t\t\t");
+    result = string.Concat(result,"this.dateTimePicker"+name+".Value = new System.DateTime("+date.Year.ToString()+", "+date.Month+","+date.Day+", "+date.Hour+", "+date.Minute+", "+date.Second+", "+date.Millisecond+");\n\t\t\t");   
+    ControlLocationY+= LineSpacing;
+    return result;
+}
+
+public string BuildNumericUpDown(string name,int decimalPlaces){
+    if(name.ToUpper() == "TENANTID")
+        return string.Empty;
+    
+    TabIndex++;
+    int x = ControlLocationX;
+    int y = ControlLocationY;
+    var result = "//\n\t\t\t";
+    var date = DateTime.Now;
+    result = string.Concat(result,"// numericUpDown"+name+"\n\t\t\t");
+    result = string.Concat(result,"//","\n\t\t\t"); 
+    if(decimalPlaces > 0)
+        result = string.Concat(result,"this.numericUpDown"+name+".DecimalPlaces = "+decimalPlaces.ToString()+";\n\t\t\t");
+    result = string.Concat(result,"this.numericUpDown"+name+".Label.Position = Wisej.Web.LabelPosition.Inside;\n\t\t\t");
+    result = string.Concat(result,"this.numericUpDown"+name+".Label.Text = \""+name+"\";\n\t\t\t");
+    result = string.Concat(result,"this.numericUpDown"+name+".Location = new System.Drawing.Point("+x.ToString()+","+y.ToString()+ ");\n\t\t\t");
+    result = string.Concat(result,"this.numericUpDown"+name+".Maximum = new decimal(new int[] {\n\t\t\t");
+    result = string.Concat(result,"276447231,\n\t\t\t");
+    result = string.Concat(result,"23283,\n\t\t\t");
+    result = string.Concat(result,"0,\n\t\t\t");
+    result = string.Concat(result,"0});\n\t\t\t");
+    result = string.Concat(result,"this.numericUpDown"+name+".Name = \"numericUpDown"+name+"\";\n\t\t\t");
+    result = string.Concat(result,"this.numericUpDown"+name+".Size = new System.Drawing.Size(175, 22);\n\t\t\t");
+    result = string.Concat(result,"this.numericUpDown"+name+".TabIndex = "+TabIndex.ToString()+";\n\t\t\t");
+    result = string.Concat(result,"this.numericUpDown"+name+".ThousandsSeparator = true;\n\t\t\t");
+    ControlLocationY+= LineSpacing;
+    return result;
+}
+
+public string BuildComboBox(string name){
+    TabIndex++;
+    int x = ControlLocationX;
+    int y = ControlLocationY;
+    var result = "//\n\t\t\t";
+    var date = DateTime.Now;
+    result = string.Concat(result,"// comboBox"+name+"\n\t\t\t");
+    result = string.Concat(result,"//","\n\t\t\t");
+	result = string.Concat(result,"this.comboBox"+name+".DropDownStyle = Wisej.Web.ComboBoxStyle.DropDownList;\n\t\t\t");
+    result = string.Concat(result,"this.comboBox"+name+".Label.Position = Wisej.Web.LabelPosition.Inside;\n\t\t\t");
+    result = string.Concat(result,"this.comboBox"+name+".Label.Text = \""+name+"\";\n\t\t\t");
+    result = string.Concat(result,"this.comboBox"+name+".Location = new System.Drawing.Point("+x.ToString()+","+y.ToString()+ ");\n\t\t\t");
+    result = string.Concat(result,"this.comboBox"+name+".Name = \"comboBox"+name+"\";\n\t\t\t");
+    result = string.Concat(result,"this.comboBox"+name+".ShowToolTips = true;\n\t\t\t");
+    result = string.Concat(result,"this.comboBox"+name+".Size = new System.Drawing.Size(265, 22);\n\t\t\t");
+    result = string.Concat(result,"this.comboBox"+name+".TabIndex = "+TabIndex.ToString()+";\n\t\t\t");
+    ControlLocationY+= LineSpacing;
+    return result;
+}
+
+public string BuildControlGeography(string name){
+    TabIndex++;
+    int x = ControlLocationX;
+    int y = ControlLocationY;
+    var result = "//\n\t\t\t";
+    var date = DateTime.Now;
+    result = string.Concat(result,"// userControlGeography"+name+"\n\t\t\t");
+    result = string.Concat(result,"//","\n\t\t\t");
+    result = string.Concat(result,"this.userControlGeography"+name+".Location = new System.Drawing.Point("+x.ToString()+","+y.ToString()+ ");\n\t\t\t");
+    result = string.Concat(result,"this.userControlGeography"+name+".Name = \"userControlGeography"+name+"\";\n\t\t\t");
+    result = string.Concat(result,"this.userControlGeography"+name+".TabIndex = "+TabIndex.ToString()+";\n\t\t\t");
+    ControlLocationY+= LineSpacing+12;
+    return result;
+}
+
+
+public string InitializeControls(){
+
+     UserControls = string.Empty;
+     BuildControls = string.Empty;
+     DeclarationControls = string.Empty;
+     var fieldName = string.Empty;
+     var result = string.Empty;
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+         fieldName = SourceTable.Columns[i].Name;
+         bool isKey = SourceTable.Columns[i].IsPrimaryKeyMember;
+         var dataType =  GetDataType(SourceTable.Columns[i]);
+         bool isForeignKeyMember =  SourceTable.Columns[i].IsForeignKeyMember;
+
+         
+         if(isForeignKeyMember && !isKey){
+                result =  string.Concat(result,"this.comboBox",fieldName," = new  Wisej.Web.ComboBox();\n\t\t\t");
+                UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.comboBox",fieldName,");\n\t\t\t");
+                BuildControls = string.Concat(BuildControls,BuildComboBox(fieldName));
+                DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.ComboBox comboBox",fieldName+";\n\t\t");
+            
+          }else {
+        
+         if (isKey){
+                result =  string.Concat(result,"this.textBox",fieldName," = new  Wisej.Web.TextBox();\n\t\t\t");
+                UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.textBox",fieldName,");\n\t\t\t");
+                BuildControls = string.Concat(BuildControls,BuildTextBox(fieldName));
+                DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.TextBox textBox",fieldName+";\n\t\t");
+              
+         } 
+         else if(fieldName.ToUpper() != "TENANTID")
+         {
+            switch(dataType)
+            {
+             
+                case "short":
+                     result =  string.Concat(result,"this.numericUpDown",fieldName," = new  Wisej.Web.NumericUpDown();\n\t\t\t");
+                      UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.numericUpDown",fieldName,");\n\t\t\t");
+                     BuildControls = string.Concat(BuildControls,BuildNumericUpDown(fieldName,0));
+                     DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.NumericUpDown numericUpDown",fieldName+";\n\t\t");
+                     break;
+                 
+                 case "int":
+                     result =  string.Concat(result,"this.numericUpDown",fieldName," = new  Wisej.Web.NumericUpDown();\n\t\t\t");
+                      UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.numericUpDown",fieldName,");\n\t\t\t");
+                     BuildControls = string.Concat(BuildControls,BuildNumericUpDown(fieldName,0));
+                     DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.NumericUpDown numericUpDown",fieldName+";\n\t\t");
+                     break;
+                     
+                 case "long":
+                        result =  string.Concat(result,"this.numericUpDown",fieldName," = new   Wisej.Web.NumericUpDown();\n\t\t\t");
+                        UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.numericUpDown",fieldName,");\n\t\t\t");
+                      BuildControls = string.Concat(BuildControls,BuildNumericUpDown(fieldName,0));
+                    DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.NumericUpDown numericUpDown",fieldName+";\n\t\t");
+                     break;
+                     
+                 case "decimal":
+                        result =  string.Concat(result,"this.numericUpDown",fieldName," = new  Wisej.Web.NumericUpDown();\n\t\t\t");
+                     UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.numericUpDown",fieldName,");\n\t\t\t");
+                      BuildControls = string.Concat(BuildControls,BuildNumericUpDown(fieldName,2));
+                    DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.NumericUpDown numericUpDown",fieldName+";\n\t\t");
+                     break;
+                     
+                case "double":
+                        result =  string.Concat(result,"this.numericUpDown",fieldName," = new  Wisej.Web.NumericUpDown();\n\t\t\t");
+                     UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.numericUpDown",fieldName,");\n\t\t\t");
+                      BuildControls = string.Concat(BuildControls,BuildNumericUpDown(fieldName,2));
+                     DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.NumericUpDown numericUpDown",fieldName+";\n\t\t");
+                     break;
+                     
+                 case "float":
+                        result =  string.Concat(result,"this.numericUpDown",fieldName," = new  Wisej.Web.NumericUpDown();\n\t\t\t");
+                     UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.numericUpDown",fieldName,");\n\t\t\t");
+                      BuildControls = string.Concat(BuildControls,BuildNumericUpDown(fieldName,2));
+                     DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.NumericUpDown numericpDown",fieldName+";\n\t\t\t");
+                     break;
+                     
+                 case "DateTime":
+                        result =  string.Concat(result,"this.dateTimePicker",fieldName," = new  Wisej.Web.DateTimePicker();\n\t\t\t");
+                     UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.dateTimePicker",fieldName,");\n\t\t\t");
+                      BuildControls = string.Concat(BuildControls,BuidDateTimePicker(fieldName));
+                     DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.DateTimePicker dateTimePicker",fieldName+";\n\t\t");
+                    
+                     break;
+                     
+                 case "bool":
+                     result =  string.Concat(result,"this.checkBox",fieldName," = new  Wisej.Web.CheckBox();\n\t\t\t");
+                     UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.checkBox",fieldName,");\n\t\t\t");
+                      BuildControls = string.Concat(BuildControls,BuildCheckBox(fieldName));
+                     DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.CheckBox checkBox",fieldName+";\n\t\t");
+                     break;
+                case "DbGeography":
+                     result =  string.Concat(result,"this.userControlGeography",fieldName," = new  ",NameSpaceCommonUI,".Controls.UserControlGeography();\n\t\t\t");
+                     UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.userControlGeography",fieldName,");\n\t\t\t");
+                      BuildControls = string.Concat(BuildControls,BuildControlGeography(fieldName));
+                     DeclarationControls = string.Concat(DeclarationControls,"private ",NameSpaceCommonUI,".Controls.UserControlGeography userControlGeography",fieldName+";\n\t\t");
+                     break;
+                     
+                 default:
+                       result =  string.Concat(result,"this.textBox",fieldName," = new  Wisej.Web.TextBox();\n\t\t\t");
+                     UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.textBox",fieldName,");\n\t\t\t");
+                      BuildControls = string.Concat(BuildControls,BuildTextBox(fieldName));
+                    DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.TextBox textBox",fieldName+";\n\t\t");
+                     break;
+            }
+        } 
+    }
+ }
+   return result;
+}
+
+ </Script>

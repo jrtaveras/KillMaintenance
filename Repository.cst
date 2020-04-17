@@ -1,0 +1,52 @@
+﻿<%-- 
+Name: Context para Dal
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage="c#" %>
+<%@ Property Name="NameSpaceBusinessObjects" Category="Context" Type="System.String"%>
+<%@ Property Name="Licence" Type="System.String"%>
+
+//Autor:Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Fecha:<%=DateTime.Now%>
+//Licencia:<%=Licence%>
+
+using <%=NameSpaceBusinessObjects%>.Interfaces;
+using <%=NameSpaceBusinessObjects%>.Models;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web;
+using System.Resources;
+
+namespace <%=NameSpaceBusinessObjects%>.Repository
+{
+    public class MyContext : DbContext, IContext
+    {
+		public ResourceManager ResourceManager { get; set; }
+		
+		public string LocalizationName { get; set; }
+		
+        public MyContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+			this.Database.CommandTimeout = 360;
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //modelBuider no remueva esto usado por CodeSmith
+            base.OnModelCreating(modelBuilder);
+            
+        }
+        
+        
+        public string UserName { get; set; }
+		
+        public long TenantId { get; set; }
+        //property no remueva esto usado por CodeSmith
+    }
+}
+<script runat="template">
+</script>

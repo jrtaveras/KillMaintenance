@@ -1,0 +1,128 @@
+﻿<%-- 
+Name: Formulario generico de busquedas
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage="C#" %>
+<%@ Property Name="NameSpaceBusinessObjects" Type="System.String"%>
+<%@ Property Name="NameSpaceUI" Type="System.String"%>
+<%@ Property Name="Licence" Type="System.String"%>
+using System;
+using Wisej.Web;
+using <%=NameSpaceBusinessObjects%>.Interfaces;
+using <%=NameSpaceBusinessObjects%>.Services;
+
+
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description: Formulario generico de busquedas WindowSearch
+//Fecha:<%= DateTime.Now%>
+//Licence:<%=Licence%>
+
+namespace <%=NameSpaceUI%>.Forms
+{
+    public partial class WindowSearch<T> : Form, ISearch
+    {
+
+        public long Id { get; set; }
+        private readonly ISearchPresenter<T> _search;
+        IContext _context;
+        RegionalizationHelper _regionalizationHelper;
+        CultureInfo _cultureInfo;
+        public WindowSearch(ISearchPresenter<T> search, string title)
+        {
+            InitializeComponent();
+            _context = search.Context;
+            _cultureInfo = Application.CurrentCulture;
+            _search = search;
+            this.Text = title;
+            dataBind();
+            this.CenterToParent();
+            _regionalizationHelper = new RegionalizationHelper(this, _context.ResourceManager);
+            if (Application.Browser.Device != "Desktop") 
+            {
+                this.Width = 650;
+            }
+
+        }
+
+        public void dataBind()
+        {
+            _search.DataBind(this);
+        }
+        public object DataGridSource
+        {
+            get
+            {
+                return dataGridViewData.DataSource;
+            }
+            set
+            {
+                dataGridViewData.DataSource = value;
+                translate();
+            }
+        }
+
+        private void translate()
+        {
+            foreach (DataGridViewColumn item in dataGridViewData.Columns)
+            {
+                item.HeaderText = _context.ResourceManager.GetString(item.Name, _cultureInfo) ??  item.HeaderText;
+            }
+        }
+
+        public string ValueToSearch { get { return textBoxSearch.Text; } set { textBoxSearch.Text = value; } }
+
+       
+
+
+        private void buttonOk_Click(object sender, EventArgs e)
+        {
+            if (this.dataGridViewData.SelectedRows.Count > 0)
+                Id = Convert.ToInt64(this.dataGridViewData.SelectedRows[0][0].Value);
+
+            this.Close();
+
+        }
+
+        private void dataGridViewData_DoubleClick(object sender, EventArgs e)
+        {
+            buttonOk_Click(sender, e);
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _search.Search();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(getMessageException() + ex.Message, getMessageNotice(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+           
+        }
+
+        private void WindowSearch_Load(object sender, EventArgs e)
+        {
+            this.KeyPreview = true;
+            this.textBoxSearch.KeyUp += (senderx, eX) =>
+            {
+                _search.Search();
+            };
+        }
+
+        private string getMessageNotice()
+        {
+            return _context.ResourceManager.GetString(nameof(CommonConstants.MessageNotice), _cultureInfo) ?? CommonConstants.MessageNotice;
+        }
+        private string getMessageException()
+        {
+            return _context.ResourceManager.GetString(nameof(CommonConstants.MessageExcepcion), _cultureInfo) ?? CommonConstants.MessageExcepcion;
+        }
+    }
+}
+
+<script runat="template">
+</script>

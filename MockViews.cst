@@ -1,0 +1,115 @@
+﻿<%-- 
+Name: Template de Presenter
+Author:Jose Roberto Taveras
+Description: Helper para validar Validar el contexto
+--%>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Assembly Name="System.Design" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="Context" Description="Table to get the data from." %>
+<%@ Map Name="SqlCSharp" Src="Sql-CSharp" Description="System to C# Type Map" %>
+<%@ Property Name="NameSpaceBusinessObjects" Type="System.String"%>
+<%@ Property Name="ClassName" Type="System.String"%>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="System.IO" %>
+<%@ Import NameSpace="System.Collections.Generic" %>
+<%@ Property Name="Licence" Type="System.String"%>
+
+//Autor:Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Fecha:<%=DateTime.Now%>
+//Licencia:<%=Licence%>
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using BusinessObjects.Interfaces;
+<%=UsingSpatial()%>
+namespace <%=NameSpaceBusinessObjects%>.Mocks
+{
+    public class Mock<%=ClassName%> : I<%=ClassName%> , IValidate  {
+    
+        <%=BuildProperties()%>     
+        public void ClearErrorsValidations()
+        {
+           
+        }
+
+        public void ShowErrors()
+        {
+           
+        }
+
+    } 
+}
+<script runat="template">
+public string UsingSpatial(){
+    List<string> lista = new List<string>();
+    lista.Add("geography");
+    lista.Add("geometry");
+    bool result = false;
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+        result = lista.Contains(SourceTable.Columns[i].NativeType);
+        if(result)
+            break;
+    
+    }
+    return result ? "using System.Data.Entity.Spatial;":"";
+}
+
+public string BuildProperties()
+{
+    
+    string result ="";
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+       result= string.Concat( result,DeclarationFromColumn(SourceTable.Columns[i]),"\t\t");
+      
+       
+    }
+    return result;
+}
+
+public string DeclarationFromColumn(ColumnSchema clm ) {
+
+        bool isNull = clm.AllowDBNull;
+        var dataType ="";
+        switch(clm.NativeType)
+        {
+            case "geography":
+                dataType  = "DbGeography";
+                break;
+            case "geometry":
+                dataType  = "DbGeometry";
+                break;
+            default:
+                dataType = SqlCSharp[clm.NativeType];
+                break;
+            
+        }
+            List<string> nonNull = new List<string>();
+            nonNull.Add("string");
+            nonNull.Add("DbGeography");
+           nonNull.Add("DbGeometry");
+        
+        bool isString =  dataType == "string";
+        bool isKey = clm.IsPrimaryKeyMember;
+        int size = clm.Size;
+         
+        var fieldName = clm.Name;
+    
+        if(!isString && isNull && !nonNull.Contains(dataType)){
+            return  "public " + dataType +"? " + fieldName + " {get; set;}\n";
+        }else {
+          var  result="";
+            result = string.Concat(result,"public " + dataType +" " + fieldName + " {get; set;}\n");
+            return result;
+        }
+}
+</script>

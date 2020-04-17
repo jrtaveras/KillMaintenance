@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<codeSmith xmlns="http://www.codesmithtools.com/schema/csp.xsd">
+  <variables>
+    <add key="ConnectionString1" value="Data Source=.;Initial Catalog=TestBlazor;Integrated Security=True" />
+  </variables>
+  <propertySets>
+    <propertySet name="Main.cs" output="Main.cs" template="Main.cst">
+      <property name="GenerateBusinessObjects">False</property>
+      <property name="GenerateUserControl">False</property>
+      <property name="GenerateWindowsSearch">False</property>
+      <property name="SourceTable">
+        <connectionString>$(ConnectionString1)</connectionString>
+        <providerType>SchemaExplorer.SqlSchemaProvider,SchemaExplorer.SqlSchemaProvider</providerType>
+        <table>
+          <owner>dbo</owner>
+          <name>authors</name>
+        </table>
+      </property>
+      <property name="QueryTableColumns">
+        <connectionString>$(ConnectionString1)</connectionString>
+        <providerType>SchemaExplorer.SqlSchemaProvider,SchemaExplorer.SqlSchemaProvider</providerType>
+        <tableColumnList>
+          <tableColumn>
+            <tableOwner>dbo</tableOwner>
+            <tableName>authors</tableName>
+            <name>au_id</name>
+          </tableColumn>
+          <tableColumn>
+            <tableOwner>dbo</tableOwner>
+            <tableName>authors</tableName>
+            <name>au_lname</name>
+          </tableColumn>
+          <tableColumn>
+            <tableOwner>dbo</tableOwner>
+            <tableName>authors</tableName>
+            <name>au_fname</name>
+          </tableColumn>
+          <tableColumn>
+            <tableOwner>dbo</tableOwner>
+            <tableName>authors</tableName>
+            <name>phone</name>
+          </tableColumn>
+          <tableColumn>
+            <tableOwner>dbo</tableOwner>
+            <tableName>authors</tableName>
+            <name>address</name>
+          </tableColumn>
+          <tableColumn>
+            <tableOwner>dbo</tableOwner>
+            <tableName>authors</tableName>
+            <name>city</name>
+          </tableColumn>
+          <tableColumn>
+            <tableOwner>dbo</tableOwner>
+            <tableName>authors</tableName>
+            <name>state</name>
+          </tableColumn>
+          <tableColumn>
+            <tableOwner>dbo</tableOwner>
+            <tableName>authors</tableName>
+            <name>zip</name>
+          </tableColumn>
+          <tableColumn>
+            <tableOwner>dbo</tableOwner>
+            <tableName>authors</tableName>
+            <name>contract</name>
+          </tableColumn>
+        </tableColumnList>
+      </property>
+      <property name="NameSpace">WisejWebApplication3</property>
+      <property name="ClassName">Autor</property>
+      <property name="OutPutDirBusinessObjects">C:\test\WisejWebApplication3\WisejWebApplication3</property>
+      <property name="OutPutDirUserControls">C:\test\WisejWebApplication3\WisejWebApplication3</property>
+    </propertySet>
+  </propertySets>
+</codeSmith>

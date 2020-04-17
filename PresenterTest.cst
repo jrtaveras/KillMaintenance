@@ -1,0 +1,103 @@
+﻿<%-- 
+Name: Template de Entity
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Assembly Name="System.Design" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Map Name="SqlCSharp" Src="Sql-CSharp" Description="System to C# Type Map" %>
+<%@ Property Name="NameSpaceBusinessObjects" Type="System.String"%>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="System.IO" %>
+<%@ Import NameSpace="System.Collections.Generic" %>
+<%@ Property Name="ClassName" Type="System.String"%>
+<%@ Property Name="Licence" Type="System.String"%>
+
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description: Unit test del presenter <%=ClassName%>Presenter
+//Fecha:<%= DateTime.Now%>
+//Licencia:<%=Licence%>
+
+using <%=NameSpaceBusinessObjects%>;
+using <%=NameSpaceBusinessObjects%>.Interfaces;
+using <%=NameSpaceBusinessObjects%>.Mocks;
+using <%=NameSpaceBusinessObjects%>.Repository;
+using <%=NameSpaceBusinessObjects%>.Services;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace UnitTestProjectBusinessObjects
+{
+    [TestClass]
+    public class <%=ClassName%>PresenserTest
+    {
+
+        IContext _context;
+        public <%=ClassName%>PresenserTest()
+        {
+            _context = new MyContext(ContextName.Name);
+            _context.UserName = "admin";
+            _context.LocalizationName = "es-DO";
+            _context.ResourceManager = Resource.ResourceManager;
+        }
+
+        [TestMethod]
+        public void TestAddAndSave()
+        {
+
+            I<%=ClassName%> _<%=ClassNameToCamelCase()%> = new Mock<%=ClassName%>();
+            IPresenter _<%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(_context, _<%=ClassNameToCamelCase()%>);
+            _<%=ClassNameToCamelCase()%>Presenter.Add();
+
+            //configura las propiedades aqui
+
+            Assert.IsTrue( _<%=ClassNameToCamelCase()%>Presenter.Save());
+
+        }
+
+        [TestMethod]
+        public void TestAddSaveAndDelete()
+        {
+
+            I<%=ClassName%> _<%=ClassNameToCamelCase()%> = new Mock<%=ClassName%>();
+            IPresenter _<%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(_context, _<%=ClassNameToCamelCase()%>);
+            _<%=ClassNameToCamelCase()%>Presenter.Add();
+            
+            //configura las propiedades aqui
+
+            Assert.IsTrue( _<%=ClassNameToCamelCase()%>Presenter.Save());
+            Assert.IsTrue( _<%=ClassNameToCamelCase()%>Presenter.Delete());
+        }
+
+        [TestMethod]
+        public void TestAddSaveFindAndDelete()
+        {
+
+            I<%=ClassName%> _<%=ClassNameToCamelCase()%> = new Mock<%=ClassName%>();
+            IPresenter _<%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(_context, _<%=ClassNameToCamelCase()%>);
+            _<%=ClassNameToCamelCase()%>Presenter.Add();
+
+            //configura las propiedades aqui
+
+            Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Save());
+            Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Find(_<%=ClassNameToCamelCase()%>.Id));
+            Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Delete());
+
+
+        }
+    }
+}
+
+ <script runat="template">
+
+private string ClassNameToCamelCase(){
+   return StringUtil.ToCamelCase(ClassName);
+      
+ }
+ 
+ </Script>
