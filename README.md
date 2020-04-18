@@ -10,7 +10,7 @@ Multitenance,MultiLenguaje,Validaciones Automaticas obtenidas de la definicion d
 esquema para pruebas (Unit Test del presenter)
 
 ## Restrictions
-Multitenance, MultiLanguage, Automatic Validations obtained from the definition of data in the database, CRUD and Automatic Search, scheme for tests (Unit Test of presenter)
+All must have a primary key Called Id that can be Int or Long, all the tables must have the following fields: Created (Varchar), CreatedDate (DateTime), Modified (Varchar) and ModifiedDate (DateTime)
 
 ![Screen of CodeSmith running KillMaintenance](/assets/CodeSmith.PNG)
 ![Screen en Visual Studio showing an example of  Maintenance generated](/assets/Pantallagenerada.PNG)
