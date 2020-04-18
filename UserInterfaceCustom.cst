@@ -542,6 +542,29 @@ private string ClassNameToCamelCase(){
      return result;
          
  }
+ 
+ private string getConvert(string dataType)
+ {
+     
+      
+     var result = "Convert.Undefine(template)";
+     switch(dataType)
+     {
+        case "short":
+        result = "Convert.ToInt16(template)";
+        break;
+             
+        case "int":
+        result = "Convert.ToInt32(template)";
+        break;
+             
+        case "long":
+        result = "Convert.ToInt64(template)";
+        break;
+     }
+     return result;
+ }
+ 
  private string getProperty(string fieldName,string dataType, bool isPrimaryKey,string foreignKey,bool isForeignKeyMember,bool isNull){
         var result = string.Empty;
         List<string> nonNull = new List<string>();
@@ -572,7 +595,7 @@ private string ClassNameToCamelCase(){
         }
         
         if(fieldName.ToUpper() == "TENANTID"){
-            result = string.Concat(result,"public  ",dataType," ",fieldName,"\n\t\t");
+            result = string.Concat(result,"public  ",dataType+dataTypePrefix," ",fieldName,"\n\t\t");
             result = string.Concat(result,"{\n\t\t\t");
             result = string.Concat(result,"get; set;\n\t\t");
             result = string.Concat(result,"}\n\t\t\n");
@@ -586,11 +609,12 @@ private string ClassNameToCamelCase(){
             result = string.Concat(result,"get\n\t\t\t");
             result = string.Concat(result,"{\n\t\t\t\t");
             result = string.Concat(result,"if(comboBox",fieldName,".SelectedValue != null)\n\t\t\t\t\t");
-            result = string.Concat(result,dataType+dataTypePrefix,".TryParse(comboBox",fieldName,".SelectedValue.ToString(), out _",fieldName,");\n\t\t\t");
+            result = string.Concat(result,"_", fieldName," = ",getConvert(dataType).Replace("template","comboBox"+fieldName+".SelectedValue"),";\n\n\t\t\t");
             result = string.Concat(result,"\treturn _",fieldName,";\n\t\t\t");
             result = string.Concat(result,"}\n\t\t\t");
             result = string.Concat(result,"set","\n\t\t\t");
             result = string.Concat(result,"{","\n\t\t\t\t");
+            result = string.Concat(result,"_",fieldName," = value;\n\t\t\t\t");
             result = string.Concat(result,"comboBox",fieldName,".SelectedValue = value;\n\t\t\t");
             result = string.Concat(result,"}\n\t\t");
             result = string.Concat(result,"}\n\t\t\n");
