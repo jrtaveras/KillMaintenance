@@ -12,13 +12,10 @@ Multitenance, MultiLanguage, Automatic Validations obtained from the definition 
 All must have a primary key Called Id that can be Int or Long, all the tables must have the following fields: Creado (Varchar), FechaCreado (DateTime), Modificado (Varchar) and FechaModificado (DateTime)
 
 ## Screen of CodeSmith running KillMaintenance
-![Screen of CodeSmith running KillMaintenance](/assets/CodeSmith.PNG)
+![Screen of CodeSmith running KillMaintenance](/assets/CodeSmith.PNG) (https://www.youtube.com/watch?v=Y8rvl_QEhXk)
 
 ## Screen en Visual Studio showing an example of  Maintenance generated
 ![Screen en Visual Studio showing an example of  Maintenance generated](/assets/Pantallagenerada.PNG)
-
-##
-![Video tutorial on the generation of a User control of a table](https://www.youtube.com/watch?v=Y8rvl_QEhXk)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
