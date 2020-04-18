@@ -18,7 +18,7 @@ All must have a primary key Called Id that can be Int or Long, all the tables mu
 ![Screen en Visual Studio showing an example of  Maintenance generated](/assets/Pantallagenerada.PNG)
 
 ##
-![Video tutorial on the generation of a User control of a table](https://www.youtube.com/watch?v=Y8rvl_QEhXk
+![Video tutorial on the generation of a User control of a table](https://www.youtube.com/watch?v=Y8rvl_QEhXk)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
