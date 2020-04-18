@@ -2,7 +2,7 @@
 KillMaintenance are a set of CodeSmith templates for rapid development, 
 generating the user interface from the table structures in the database.
 
-## Some of the dependencies it has::
+## Some of the dependencies it has:
 They are Wisej https://wisej.com/ (which is a Framework for the development of business Web Applications), SmartXLS http://www.smartxls.com/ (Library to export data to excel), Entityframework 6.4 (ORM), NInject (Dependency Manager) http://www.ninject.org/ and SqlServer. The MVP design pattern is implemented (https://es.wikipedia.org/wiki/Modelo%E2%80%93vista%E2%80%93presentador) and Dependency Injection.
 
 ## Features
