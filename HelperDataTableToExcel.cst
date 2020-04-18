@@ -25,10 +25,17 @@ namespace <%=NameSpaceUI%>.Helpers
         public static WorkBook MakeDataTableToExcel(DataTable senderDataTable) 
         {
             WorkBook wb = new WorkBook();
-            wb.ImportDataTable(senderDataTable, true, 0, 0, senderDataTable.Rows.Count, senderDataTable.Columns.Count);
-            colorFormat(wb);
-            formatingBorder(wb);
-            return wb;
+            if (senderDataTable.Columns.Count > 0 )
+             {
+                
+                wb.ImportDataTable(senderDataTable, true, 0, 0, senderDataTable.Rows.Count, senderDataTable.Columns.Count);
+                if (senderDataTable.Rows.Count > 0)
+                {
+                    colorFormat(wb);
+                    formatingBorder(wb);
+                }
+             }
+           return wb;      
         }
         private static void colorFormat(WorkBook workBook)
         {
@@ -74,6 +81,5 @@ namespace <%=NameSpaceUI%>.Helpers
         }
     }
 }
-
 <script runat="template">
 </script>
