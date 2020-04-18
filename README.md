@@ -17,7 +17,7 @@ todas las tablas deben tener los siguientes campos:
 Creado(Varchar),FechaCreado(DateTime),Modificado(Varchar) y FechaModificado(DateTime)
 
 ![Pantalla de CodeSmith corriendo KillMaintenance](/assets/CodeSmith.PNG)
-![Pantalla en Visual Studio Mostrando un ejemplo de un Mantenimiento generado](/assets/CodeSmith.PNG)
+![Pantalla en Visual Studio Mostrando un ejemplo de un Mantenimiento generado](/assets/Pantallagenerada.PNG)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
