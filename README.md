@@ -15,6 +15,9 @@ esquema para pruebas (Unit Test del presenter)
 Todas deben tener un primary key Llamado Id que puede ser Int o Long,
 todas las tablas deben tener los siguientes campos:
 Creado(Varchar),FechaCreado(DateTime),Modificado(Varchar) y FechaModificado(DateTime)
+
+https://github.com/jrtaveras/KillMaintenance/blob/master/assets/CodeSmith.PNG
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
