@@ -285,7 +285,7 @@ public string MakeDeclarationComboBox()
   
               var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();
               if(foreign != null){
-                 result = string.Concat(result,"private ISearchPresenter<",StringUtil.ToPascalCase(foreign.PrimaryKeyTable.Name),">"," _searchPresenter", StringUtil.ToPascalCase(foreign.PrimaryKeyTable.Name),";\n\t\t\t");
+                 result = string.Concat(result,"private ISearchPresenter<",StringUtil.ToPascalCase(foreign.PrimaryKeyTable.Name),">"," _searchPresenter", StringUtil.ToPascalCase(foreign.PrimaryKeyTable.Name),";\n\t\t");
                   
               }
 
