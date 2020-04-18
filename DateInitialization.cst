@@ -1,0 +1,30 @@
+﻿<%-- 
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage="Text" %>
+<%@ Property Name="NameSpaceBusinessObjects" Type="System.String"%>
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace <%=NameSpaceBusinessObjects%>
+{
+    public class DateInitialization : ValidationAttribute
+    {
+      
+        public override bool IsValid(object obj)
+        {
+            var date = new DateTime(1900, 01, 01);
+            
+            return Convert.ToDateTime(obj) >= date;
+        }
+    }
+}
+
+<script runat="template">
+</script>

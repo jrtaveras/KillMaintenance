@@ -59,6 +59,9 @@ Description: Para usar integrado con wisej
 <%@ Register Name="BootstrapperTemplate" Template="Bootstrapper.cst" %>
 <%@ Register Name="RegionalizationHelperTemplate" Template="RegionalizationHelper.cst" %>
 <%@ Register Name="DataGridViewExtensionTemplate" Template="DataGridViewExtension.cst" %>
+<%@ Register Name="ResourceTemplate" Template="Resource.resx.cst" %>
+<%@ Register Name="ResourceENTemplate" Template="Resource.en-US.resx.cst" %>
+<%@ Register Name="DateInitializationTemplate" Template="DateInitialization.cst" %>
 <%@ Property Name="GenerateBusinessObjects" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del BO"%>
 <%@ Property Name="GeneratePresenters" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del Presenters"%>
 <%@ Property Name="GenerateInterfaces" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del Interfaces"%>
@@ -87,6 +90,28 @@ public void RenderChildChild(){
         helperValidationEntity.Licence = Licence;
         helperValidationEntity.RenderToFile(this.OutPutDirBusinessObjects+"\\Helpers\\HelperValidateEntity.cs",true);
        
+    }
+    
+    found = File.Exists(this.OutPutDirBusinessObjects+"\\Attributes\\DateInitialization.cs");
+    if(!found)
+    {
+        DateInitializationTemplate dateInitializationTemplate = this.Create<DateInitializationTemplate>();
+        dateInitializationTemplate.NameSpaceBusinessObjects =  NameSpaceBusinessObjects;
+        dateInitializationTemplate.RenderToFile(this.OutPutDirBusinessObjects+"\\Helpers\\DateInitialization.cs",true);
+    }
+    
+    found = File.Exists(this.OutPutDirBusinessObjects+"\\Resource.resx");
+    if(!found)
+    {
+        ResourceTemplate resourceTemplate = this.Create<ResourceTemplate>();
+        resourceTemplate.RenderToFile(this.OutPutDirBusinessObjects+"\\Resource.resx",true);
+    }
+    
+    found = File.Exists(this.OutPutDirBusinessObjects+"\\Resource.en-US.resx");
+    if(!found)
+    {
+        ResourceENTemplate resourceENTemplate = this.Create<ResourceENTemplate>();
+        resourceENTemplate.RenderToFile(this.OutPutDirBusinessObjects+"\\Resource.en-US.resx",true);
     }
     
     found = File.Exists(this.OutPutDirBusinessObjects+"\\Helpers\\HelperDataTable.cs");

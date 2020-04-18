@@ -117,8 +117,6 @@ public string getQuery(){
         var clm = SourceTable.Columns[i];
        if(GetDataType(clm)  == "string")
          filter= string.Concat( filter,"a.",clm.Name,".Contains(_sender.ValueToSearch) || ");
-       
-     
     
     }
     
