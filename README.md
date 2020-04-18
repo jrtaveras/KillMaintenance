@@ -1,5 +1,5 @@
 # KillMaintenance
-KillMaintenance are a set of CodeSmith (https://www.codesmithtools.com/) templates for rapid development, 
+KillMaintenance are a set of CodeSmith (https://www.codesmithtools.com/) templates for fast development, 
 generating the user interface from the table structures in the database.
 
 ## Some of the dependencies it has:
