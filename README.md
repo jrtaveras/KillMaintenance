@@ -9,7 +9,7 @@ They are Wisej https://wisej.com/ (which is a Framework for the development of b
 Multitenance, MultiLanguage, Automatic Validations obtained from the definition of table structure in the database, CRUD and Automatic Search, scheme for tests (Unit Test of presenter)
 
 ## Restrictions
-All tables must have a primary key Called Id that can be Int or BigInt, all the tables must have the following fields: Creado (Varchar), FechaCreado (DateTime), Modificado (Varchar) and FechaModificado (DateTime)
+All tables must have a primary key Called Id(Identity) that can be Int or BigInt, all the tables must have the following fields: Creado (Varchar), FechaCreado (DateTime), Modificado (Varchar) and FechaModificado (DateTime)
 
 ## Screen of CodeSmith running KillMaintenance
 ![Screen of CodeSmith running KillMaintenance](/assets/CodeSmith.PNG) (https://www.youtube.com/watch?v=Y8rvl_QEhXk)
