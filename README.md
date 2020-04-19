@@ -16,6 +16,7 @@ All must have a primary key Called Id that can be Int or Long, all the tables mu
 
 ## Screen en Visual Studio showing an example of  Maintenance generated
 ![Screen en Visual Studio showing an example of  Maintenance generated](/assets/Pantallagenerada.PNG)
+![Customer](/assets/Customer.PNG)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
