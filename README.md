@@ -16,7 +16,7 @@ All tables must have a primary key Called Id(Identity) that can be Int or BigInt
 
 ## Screen in Visual Studio showing an example of  Maintenance generated
 ![Screen en Visual Studio showing an example of  Maintenance generated](/assets/Pantallagenerada.PNG)
-![Customer](/assets/Customer.PNG)
+![Customer](/assets/Customer.png)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
