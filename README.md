@@ -20,7 +20,7 @@ All tables must have a primary key Called Id(Identity) that can be Int or BigInt
 ## Screen in Visual Studio showing an example of  Maintenance generated
 ![Screen en Visual Studio showing an example of  Maintenance generated](/assets/Pantallagenerada.PNG)
 ![Customer](/assets/Customer.png)
-## Main page code
+## You must put a code similar to the following on the main page
 ```
 
 using BusinessObjects;
