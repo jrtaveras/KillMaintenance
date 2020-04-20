@@ -67,9 +67,6 @@ namespace YourApp
             _context.ResourceManager = resource;
             _regionalizationHelper = new RegionalizationHelper(this, _context.ResourceManager,culture);
             _factory = new FactoryUserControlsImps(_context);
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
-
 
         }
         private void navigationBarMainMenu_ItemClick(object sender, NavigationBarItemClickEventArgs e)
