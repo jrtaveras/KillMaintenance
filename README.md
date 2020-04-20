@@ -1,5 +1,5 @@
-# KillMaintenance
-KillMaintenance are a set of CodeSmith templates (https://www.codesmithtools.com/)  for fast development, 
+# CRUDCrusher
+CRUDCrusher are a set of CodeSmith templates (https://www.codesmithtools.com/)  for fast development, 
 generating Model,Interface,Presenter and the user interface of the user control from the table structures in the database.
 
 ## Some of the dependencies it has:
@@ -14,8 +14,8 @@ Multitenance, MultiLanguage, Automatic Validations obtained from the definition 
 ## Restrictions
 All tables must have a primary key Called Id(Identity) that can be Int or BigInt, all the tables must have the following fields: Creado (Varchar), FechaCreado (DateTime), Modificado (Varchar) and FechaModificado (DateTime)
 
-## Screen of CodeSmith running KillMaintenance
-![Screen of CodeSmith running KillMaintenance](/assets/CodeSmith.PNG) (https://www.youtube.com/watch?v=Y8rvl_QEhXk)
+## Screen of CodeSmith running CRUDCrusher
+![Screen of CodeSmith running CRUDCrusher](/assets/CodeSmith.PNG) (https://www.youtube.com/watch?v=Y8rvl_QEhXk)
 
 ## Screen in Visual Studio showing an example of  Maintenance generated
 ![Screen en Visual Studio showing an example of  Maintenance generated](/assets/Pantallagenerada.PNG)
