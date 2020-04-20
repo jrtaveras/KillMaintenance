@@ -21,7 +21,7 @@ All tables must have a primary key Called Id(Identity) that can be Int or BigInt
 ![Screen en Visual Studio showing an example of  Maintenance generated](/assets/Pantallagenerada.PNG)
 ![Customer](/assets/Customer.png)
 ## You must put a code similar to the following on the main page
-```
+```csharp
 
 using BusinessObjects;
 using BusinessObjects.Interfaces;
