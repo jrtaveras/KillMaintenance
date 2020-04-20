@@ -1,5 +1,5 @@
 # CRUD Crusher
-CRUDCrusher are a set of CodeSmith templates (https://www.codesmithtools.com/)  for fast development, 
+CRUD Crusher are a set of CodeSmith templates (https://www.codesmithtools.com/)  for fast development, 
 generating Model,Interface,Presenter and the user interface of the user control from the table structures in the database.
 
 ## Some of the dependencies it has:
