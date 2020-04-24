@@ -424,12 +424,14 @@ public string BuildControlGeography(string name){
     var date = DateTime.Now;
     result = string.Concat(result,"// userControlGeography"+name+"\n\t\t\t");
     result = string.Concat(result,"//","\n\t\t\t");
+    result = string.Concat(result,"this.userControlGeography"+name+".BorderStyle = Wisej.Web.BorderStyle.Solid;","\n\t\t\t");
     result = string.Concat(result,"this.userControlGeography"+name+".Location = new System.Drawing.Point("+x.ToString()+","+y.ToString()+ ");\n\t\t\t");
     result = string.Concat(result,"this.userControlGeography"+name+".Name = \"userControlGeography"+name+"\";\n\t\t\t");
     result = string.Concat(result,"this.userControlGeography"+name+".TabIndex = "+TabIndex.ToString()+";\n\t\t\t");
     ControlLocationY+= LineSpacing+12;
     return result;
 }
+
 
 
 public string InitializeControls(){

@@ -61,7 +61,6 @@ namespace <%=NameSpaceUI%>
         public UserControl<%=ClassName%>(IContext context):base(context)
         {
             Title = "<%=ClassName%>";
-            MenuItem = "<%=ClassName%>";
             InitializeComponent();
             setControls();
             <%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(context, this);
