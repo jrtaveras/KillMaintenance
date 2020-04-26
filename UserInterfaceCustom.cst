@@ -305,7 +305,7 @@ public string MakeInstanceComboBox()
         {
   
               var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();
-              if(foreign != null){
+              if(foreign != null && !SourceTable.Columns[i].IsPrimaryKeyMember){
                 var columnDisplay = foreign.PrimaryKeyTable.Columns[1].Name;
                 var columnValue = foreign.PrimaryKeyTable.Columns[0].Name;
                 var field = SourceTable.Columns[i].Name;
@@ -601,7 +601,7 @@ private string ClassNameToCamelCase(){
             return result;
         }
         
-        if(isForeignKeyMember){
+        if(isForeignKeyMember  && !isPrimaryKey){
             result = string.Concat(result,"private ",dataType+dataTypePrefix," _", fieldName,";\n\t\t");
             result = string.Concat(result,"public  ",dataType+dataTypePrefix," ",fieldName,"\n\t\t");
             result = string.Concat(result,"{\n\t\t\t");
