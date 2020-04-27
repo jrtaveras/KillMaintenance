@@ -448,7 +448,7 @@ public string InitializeControls(){
          var dataType =  GetDataType(SourceTable.Columns[i]);
          bool isForeignKeyMember =  SourceTable.Columns[i].IsForeignKeyMember;
          //var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == fieldName ).Count() > 0 ).FirstOrDefault();
-         isForeignKeyMember = foreign != null;
+
         
          if(isForeignKeyMember && !isKey){
                 result =  string.Concat(result,"this.comboBox",fieldName," = new  Wisej.Web.ComboBox();\n\t\t\t");
