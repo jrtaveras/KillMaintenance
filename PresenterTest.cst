@@ -38,6 +38,7 @@ namespace UnitTestProjectBusinessObjects
     {
 
         IContext _context;
+        IPresenter _<%=ClassNameToCamelCase()%>Presenter = null;
         public <%=ClassName%>PresenterTest()
         {
             _context = new MyContext(ContextName.Name);
@@ -45,18 +46,24 @@ namespace UnitTestProjectBusinessObjects
             _context.LocalizationName = "es-DO";
             _context.ResourceManager = Resource.ResourceManager;
         }
+        
+        private void tearDown()
+        {
+            _<%=ClassNameToCamelCase()%>Presenter.Delete();
+        }
 
         [TestMethod]
         public void TestAddAndSave()
         {
 
             I<%=ClassName%> _<%=ClassNameToCamelCase()%> = new Mock<%=ClassName%>();
-            IPresenter _<%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(_context, _<%=ClassNameToCamelCase()%>);
+            _<%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(_context, _<%=ClassNameToCamelCase()%>);
             _<%=ClassNameToCamelCase()%>Presenter.Add();
 
             //configura las propiedades aqui
 
             Assert.IsTrue( _<%=ClassNameToCamelCase()%>Presenter.Save());
+            tearDown();
 
         }
 
@@ -65,13 +72,14 @@ namespace UnitTestProjectBusinessObjects
         {
 
             I<%=ClassName%> _<%=ClassNameToCamelCase()%> = new Mock<%=ClassName%>();
-            IPresenter _<%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(_context, _<%=ClassNameToCamelCase()%>);
+            _<%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(_context, _<%=ClassNameToCamelCase()%>);
             _<%=ClassNameToCamelCase()%>Presenter.Add();
             
             //configura las propiedades aqui
 
             Assert.IsTrue( _<%=ClassNameToCamelCase()%>Presenter.Save());
             Assert.IsTrue( _<%=ClassNameToCamelCase()%>Presenter.Delete());
+            tearDown();
         }
 
         [TestMethod]
@@ -79,7 +87,7 @@ namespace UnitTestProjectBusinessObjects
         {
 
             I<%=ClassName%> _<%=ClassNameToCamelCase()%> = new Mock<%=ClassName%>();
-            IPresenter _<%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(_context, _<%=ClassNameToCamelCase()%>);
+            _<%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(_context, _<%=ClassNameToCamelCase()%>);
             _<%=ClassNameToCamelCase()%>Presenter.Add();
 
             //configura las propiedades aqui
@@ -87,6 +95,7 @@ namespace UnitTestProjectBusinessObjects
             Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Save());
             Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Find(_<%=ClassNameToCamelCase()%>.Id));
             Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Delete());
+            tearDown();
 
 
         }
