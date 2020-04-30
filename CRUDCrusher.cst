@@ -104,14 +104,14 @@ public void RenderChildChild(){
     if(!found)
     {
         ResourceTemplate resourceTemplate = this.Create<ResourceTemplate>();
-        resourceTemplate.RenderToFile(this.OutPutDirBusinessObjects+"\\Resource.resx",true);
+        resourceTemplate.RenderToFile(this.OutPutDirBusinessObjects+"\\Resource.resx",false);
     }
     
     found = File.Exists(this.OutPutDirBusinessObjects+"\\Resource.en-US.resx");
     if(!found)
     {
         ResourceENTemplate resourceENTemplate = this.Create<ResourceENTemplate>();
-        resourceENTemplate.RenderToFile(this.OutPutDirBusinessObjects+"\\Resource.en-US.resx",true);
+        resourceENTemplate.RenderToFile(this.OutPutDirBusinessObjects+"\\Resource.en-US.resx",false);
     }
     
     found = File.Exists(this.OutPutDirBusinessObjects+"\\Helpers\\HelperDataTable.cs");
