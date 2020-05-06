@@ -12,7 +12,7 @@ generating Model,Interface,Presenter and the user interface of the user control 
 Multitenance, MultiLanguage, Automatic Validations obtained from the definition of table structure in the database, CRUD and Automatic Search, scheme for tests (Unit Test of presenter)
 
 ## Restrictions
-All tables must have a primary key Called Id(Identity) that can be Int or BigInt, all the tables must have the following fields: Creado (Varchar), FechaCreado (DateTime), Modificado (Varchar) and FechaModificado (DateTime)
+All tables must have a primary key Called Id(Identity) that can be Int or BigInt or Guid, all the tables must have the following fields: Creado (Varchar), FechaCreado (DateTime), Modificado (Varchar) and FechaModificado (DateTime)
 
 ## Screen of CodeSmith running CRUD Crusher
 ![Screen of CodeSmith running CRUDCrusher](/assets/CodeSmith.PNG) (https://www.youtube.com/watch?v=Y8rvl_QEhXk)
