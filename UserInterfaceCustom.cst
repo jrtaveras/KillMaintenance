@@ -199,13 +199,12 @@ namespace <%=NameSpaceUI%>
                     WindowSearch<<%=ClassName%>> search = new WindowSearch<<%=ClassName%>>(GeneralSearchFactory.Make<%=ClassName%>Search(_context), GetMessageFinding() + " " + GetTitle());
                     search.FormClosed += (senderX, eX) => {
 
-                        if (search.Id != null)
+                        if (search.Id != null && this.<%=ClassNameToCamelCase()%>Presenter.Find(search.Id))
                         {
-                            if(this.<%=ClassNameToCamelCase()%>Presenter.Find(search.Id))
-                            {
-                                CanEdit = true;
-                                ClearErrorsValidations();
-                            }
+                            
+							CanEdit = true;
+							ClearErrorsValidations();
+
                         }
 
                     };
