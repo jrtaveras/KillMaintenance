@@ -42,7 +42,7 @@ namespace <%=NameSpaceBusinessObjects%>.Interfaces
         event Validate BeforeSave;
         event Validate AfterSave;
         ICollection<ValidationResult> ValidationResult { get; set; }
-        bool Find(long Id);
+        bool Find(object Id);
         bool Find(params object[] sender);
         void FillDataSource();
         void Undo();

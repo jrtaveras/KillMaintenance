@@ -52,6 +52,11 @@ namespace UnitTestProjectBusinessObjects
             _<%=ClassNameToCamelCase()%>Presenter.Delete();
         }
 
+        private void setter(I<%=ClassName%> sender) 
+        {
+        
+        }
+        
         [TestMethod]
         public void TestAddAndSave()
         {
@@ -61,6 +66,7 @@ namespace UnitTestProjectBusinessObjects
             _<%=ClassNameToCamelCase()%>Presenter.Add();
 
             //configura las propiedades aqui
+            setter(_<%=ClassNameToCamelCase()%>);
 
             Assert.IsTrue( _<%=ClassNameToCamelCase()%>Presenter.Save());
             tearDown();
@@ -76,6 +82,7 @@ namespace UnitTestProjectBusinessObjects
             _<%=ClassNameToCamelCase()%>Presenter.Add();
             
             //configura las propiedades aqui
+            setter(_<%=ClassNameToCamelCase()%>);
 
             Assert.IsTrue( _<%=ClassNameToCamelCase()%>Presenter.Save());
             Assert.IsTrue( _<%=ClassNameToCamelCase()%>Presenter.Delete());
@@ -91,6 +98,7 @@ namespace UnitTestProjectBusinessObjects
             _<%=ClassNameToCamelCase()%>Presenter.Add();
 
             //configura las propiedades aqui
+            setter(_<%=ClassNameToCamelCase()%>);
 
             Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Save());
             Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Find(_<%=ClassNameToCamelCase()%>.Id));

@@ -23,7 +23,7 @@ Description: Para usar integrado con wisej
 
 //Author: Jose Roberto Taveras
 //Email:roberto.taveras@hotmail.com
-//Description: Busines Object  Presenter <%= ClassName%>
+//Description: Busines Object  Presenter <%=ClassName%>
 //Fecha:<%= DateTime.Now%>
 //<%=Licence%>
 
@@ -86,7 +86,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
         
         public bool Save()
         {
-          
+             
             gatherFields();
 
             var validate = _<%=ClassNameToLower()%> as IValidate;
@@ -112,12 +112,15 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
                 return false;
             }
             
-            if (<%=ClassNameToLower()%>.<%= SourceTable.PrimaryKey.MemberColumns[0].Name %> == 0)
+            var state = _context.Entry(<%=ClassNameToLower()%>).State;
+             
+            if (state == EntityState.Detached)
             {
+                <%=InizialiteId()%>
                 _context.<%=ClassName%>.Add(<%=ClassNameToLower()%>);
             }
             
-            var state = _context.Entry(<%=ClassNameToLower()%>).State;
+            state = _context.Entry(<%=ClassNameToLower()%>).State;
             
             BeforeSave?.Invoke();
 
@@ -177,8 +180,34 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
 }
 
 <script runat="template">
-   private string ClassNameToLower(){
+    private string ClassNameToLower(){
         return StringUtil.ToCamelCase(ClassName);
       
+    }
+    
+    public string InizialiteId(){
+        
+        var clm = GetDataType(SourceTable.Columns[0]);
+        return ((clm == "Guid") ? ClassNameToLower()+".Id = Guid.NewGuid();":string.Empty);
+        
+    }
+   
+    public string GetDataType(ColumnSchema clm)
+    {
+         var dataType = "";
+        switch(clm.NativeType)
+        {
+            case "geography":
+                dataType  = "DbGeography";
+                break;
+            case "geometry":
+                dataType  = "DbGeometry";
+                break;
+            default:
+                dataType = SqlCSharp[clm.NativeType];
+                break;
+            
+        }
+        return dataType;
     }
 </script>

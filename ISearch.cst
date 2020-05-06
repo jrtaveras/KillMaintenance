@@ -27,7 +27,7 @@ namespace <%=NameSpaceBusinessObjects%>.Interfaces
 
     public interface ISearch : IDataSource, IValueToSearch
     {
-        long Id { get; set; }
+        object Id { get; set; }
 
     }
 }

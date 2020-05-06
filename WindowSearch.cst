@@ -24,7 +24,7 @@ namespace <%=NameSpaceUI%>.Forms
     public partial class WindowSearch<T> : Form, ISearch
     {
 
-        public long Id { get; set; }
+        public object Id { get; set; }
         private readonly ISearchPresenter<T> _search;
         IContext _context;
         RegionalizationHelper _regionalizationHelper;
@@ -79,7 +79,7 @@ namespace <%=NameSpaceUI%>.Forms
         private void buttonOk_Click(object sender, EventArgs e)
         {
             if (this.dataGridViewData.SelectedRows.Count > 0)
-                Id = Convert.ToInt64(this.dataGridViewData.SelectedRows[0][0].Value);
+                Id = this.dataGridViewData.SelectedRows[0][0].Value;
 
             this.Close();
 

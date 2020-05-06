@@ -35,6 +35,8 @@ Description: Para usar integrado con wisej
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using <%=NameSpaceBusinessObjects %>.Helpers;
 using <%=NameSpaceBusinessObjects %>.Interfaces;
 using <%=NameSpaceBusinessObjects %>.Models;
 namespace <%= NameSpaceBusinessObjects %>.Services
@@ -51,10 +53,12 @@ namespace <%= NameSpaceBusinessObjects %>.Services
         }
 
         public void Search() {
-            _sender.Id = 0;
-            id = 0;
-            int.TryParse(_sender.ValueToSearch, out id);
-            if(id == 0)
+        
+            Type typeEntity = typeof(<%=ClassName%>);
+            PropertyInfo propertyInfo = typeEntity.GetProperty("<%=SourceTable.Columns[0].Name%>");
+            var type = propertyInfo.GetType().Name;
+
+            if (!HelperParser.TryParse(type, _sender.ValueToSearch, id))
             {
                 _sender.DataGridSource = <%= getQuery()%>;
             }
@@ -63,7 +67,7 @@ namespace <%= NameSpaceBusinessObjects %>.Services
             }
         }
         
-        public <%= ClassName %> FindById(int id) {
+        public <%= ClassName %> FindById(object id) {
             return Context.<%=ClassName%>.Find(id);
         }
         
@@ -101,9 +105,10 @@ public string getSelectedFields(){
 }
 
 public string getQueryById(){
+    var clm = GetDataType(SourceTable.Columns[0]);
     string result = string.Concat("Context.",ClassName,".Where(a => ");
     var tenant = HasTenantId() ? " a.TenantId == Context.TenantId && " : "";
-    result= string.Concat( result,tenant,"a.",SourceTable.PrimaryKey.MemberColumns[0].Name," == id)",".Take(1).Select(a => new {"+ getSelectedFields()+"}).ToList()"); 
+    result= string.Concat( result,tenant,"a.",SourceTable.PrimaryKey.MemberColumns[0].Name," == ("+clm+") id)",".Take(1).Select(a => new {"+ getSelectedFields()+"}).ToList()"); 
     return result;
 }
 

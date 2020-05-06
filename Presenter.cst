@@ -94,7 +94,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
 
         }
         
-        public bool Find(long Id)
+        public bool Find(object Id)
         {
             
             Add();

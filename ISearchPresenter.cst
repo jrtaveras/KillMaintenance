@@ -18,7 +18,7 @@ namespace <%=NameSpaceBusinessObjects%>.Interfaces
 {
     public interface ISearchPresenter<T>
     {
-        T FindById(int id);
+        T FindById(object id);
         void Search();
         void DataBind(ISearch senderBusqueda);
         List<T> GetAll();

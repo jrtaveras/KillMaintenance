@@ -189,7 +189,8 @@ namespace <%=NameSpaceUI%>
                     }
                     catch (Exception ex)
                     {
-                       MessageBox.Show(GetMessageException() + ex.Message, GetMessageNotice(), MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        <%=ClassNameToCamelCase()%>Presenter.Add();
+                        MessageBox.Show(GetMessageException() + ex.Message, GetMessageNotice(), MessageBoxButtons.OK,MessageBoxIcon.Error);
                     }
                     break;
 
@@ -198,11 +199,13 @@ namespace <%=NameSpaceUI%>
                     WindowSearch<<%=ClassName%>> search = new WindowSearch<<%=ClassName%>>(GeneralSearchFactory.Make<%=ClassName%>Search(_context), GetMessageFinding() + " " + GetTitle());
                     search.FormClosed += (senderX, eX) => {
 
-                        if (search.Id > 0)
+                        if (search.Id != null)
                         {
-                            this.<%=ClassNameToCamelCase()%>Presenter.Find(search.Id);
-                            CanEdit = true;
-                            ClearErrorsValidations();
+                            if(this.<%=ClassNameToCamelCase()%>Presenter.Find(search.Id))
+                            {
+                                CanEdit = true;
+                                ClearErrorsValidations();
+                            }
                         }
 
                     };
