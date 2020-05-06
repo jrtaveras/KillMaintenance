@@ -62,6 +62,7 @@ Description: Para usar integrado con wisej
 <%@ Register Name="ResourceTemplate" Template="Resource.resx.cst" %>
 <%@ Register Name="ResourceENTemplate" Template="Resource.en-US.resx.cst" %>
 <%@ Register Name="DateInitializationTemplate" Template="DateInitialization.cst" %>
+<%@ Register Name="HelperParserTemplate" Template="HelperParser.cst" %>
 <%@ Property Name="GenerateBusinessObjects" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del BO"%>
 <%@ Property Name="GeneratePresenters" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del Presenters"%>
 <%@ Property Name="GenerateInterfaces" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del Interfaces"%>
@@ -125,6 +126,19 @@ public void RenderChildChild(){
       
 
     }
+    
+    found = File.Exists(this.OutPutDirBusinessObjects+"\\Helpers\\HelperParser.cs");
+    if(!found)
+    {
+        
+        HelperParserTemplate helperParser = this.Create<HelperParserTemplate>();
+        helperParser.NameSpaceBusinessObjects =  NameSpaceBusinessObjects;
+        helperParser.Licence = Licence;
+        helperParser.RenderToFile(this.OutPutDirBusinessObjects+"\\Helpers\\HelperParser.cs",true);
+      
+
+    }
+    
     
     found = File.Exists(this.OutPutDirBusinessObjects+"\\Mocks\\Mock"+SourceTable.Name+".cs");
     if(!found || GenerateBusinessObjects)

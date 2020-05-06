@@ -1,0 +1,92 @@
+﻿<%-- 
+Name: Template de Entity
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%--<%@ Assembly Name="CodeSmith.Core" %>--%>
+<%@ Assembly Name="CodeSmith.CustomProperties" %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Assembly Name="System.Design" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Map Name="SqlCSharp" Src="Sql-CSharp" Description="System to C# Type Map" %>
+<%@ Property Name="NameSpaceBusinessObjects" Type="System.String"%>
+<%@ Import NameSpace="System.IO" %>
+<%@ Import NameSpace="System.Collections.Generic" %>
+<%@ Import NameSpace="System.Linq" %>
+<%@ Property Name="Licence" Type="System.String"%>
+
+
+
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description: Helper para parsear HelperParser
+//Fecha:<%= DateTime.Now%>
+//Licencia:<%=Licence%>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace <%=NameSpaceBusinessObjects%>.Helpers
+{
+    public class HelperParser
+    {
+        public static bool TryParse(string type,String senderValue,object id)
+        {
+            if (type == "int")
+            {
+                int idValue = 0;
+                int.TryParse(senderValue, out idValue);
+                if (idValue > 0)
+                {
+                    id = idValue;
+                }
+                    
+                return (idValue > 0);
+            }
+            else if (type == "long")
+            {
+                long idValue = 0;
+                long.TryParse(senderValue, out idValue);
+                if (idValue > 0)
+                {
+                    id = idValue;
+                }
+                return (idValue > 0);
+            }
+            else if (type == "Guid")
+            {
+                Guid idValue = Guid.Empty;
+                Guid.TryParse(senderValue, out idValue);
+                if (idValue != Guid.Empty)
+                {
+                    id = idValue;
+                }
+
+                return (idValue != Guid.Empty);
+
+            }
+            else if (type == "string")
+            {
+                var idValue = string.Empty;
+                
+                if (!string.IsNullOrEmpty(senderValue.ToString()))
+                {
+                    id = senderValue.ToString();
+                }
+
+                return (id != null);
+
+            }
+
+            return false;
+        }
+    }
+}
+<script runat="template">
+</script>
