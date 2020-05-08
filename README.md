@@ -9,7 +9,11 @@ generating Model,Interface,Presenter and the user interface of the user control 
 4. The MVP design pattern is implemented (https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) and Dependency Injection.
 
 ## Features
-Multitenance, MultiLanguage, Automatic Validations obtained from the definition of table structure in the database, CRUD and Automatic Search, scheme for tests (Unit Test of presenter)
+- Multitenance
+- MultiLanguage
+- Automatic Validations obtained from the definition of table structure in the database
+- CRUD and Automatic Search
+- Scheme for tests (Unit Test of presenter)
 
 ## Restrictions
 All tables must have a primary key Called Id(Identity) that can be Int or BigInt or Guid, all the tables must have the following fields: Creado (Varchar), FechaCreado (DateTime), Modificado (Varchar) and FechaModificado (DateTime)
