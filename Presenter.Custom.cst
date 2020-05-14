@@ -165,7 +165,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
         
         public DataTable GetDataTable()
         {
-            return _context.<%=ClassName%>.ToList().ToDataTable("<%=ClassName%>").TranslateDataTable(_context.ResourceManager);
+            return _context.<%=ClassName%>.<%=GetFilter()%>.ToDataTable("<%=ClassName%>").TranslateDataTable(_context.ResourceManager);
         }
         
         private void translate(DataTable sender)
@@ -180,6 +180,20 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
 }
 
 <script runat="template">
+
+public string GetFilter(){
+    return HasTenantId() ? ("Where(a => a.TenantId == _context.TenantId"+(HasActivo() ? " && a.Activo ":"")+").ToList()"): (HasActivo() ? "where( a => a.Activo).ToList()":"ToList()");
+}
+
+public bool HasActivo() {
+    return  SourceTable.Columns.Where( a => a.Name  == "IsActivo").ToList().Count > 0;
+    
+}
+
+public bool HasTenantId() {
+    return  SourceTable.Columns.Where( a => a.Name  == "TenantId").ToList().Count > 0;
+    
+}
     private string ClassNameToLower(){
         return StringUtil.ToCamelCase(ClassName);
       

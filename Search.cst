@@ -73,7 +73,7 @@ namespace <%= NameSpaceBusinessObjects %>.Services
         
         public List<%= "<"+ClassName+">" %> GetAll()
         {
-            return Context.<%= ClassName %>.ToList();
+            return Context.<%= ClassName %>.<%= GetFilterIsActivo() %>ToList();
         }
         
         public void DataBind(ISearch sender)
@@ -84,6 +84,14 @@ namespace <%= NameSpaceBusinessObjects %>.Services
     }
 }
  <script runat="template">
+
+private string GetFilterIsActivo(){
+    return HasActivo() ? "Where( a => a.IsActivo ).":"";
+}
+public bool HasActivo() {
+    return  SourceTable.Columns.Where( a => a.Name  == "IsActivo").ToList().Count > 0;
+    
+}
 
 public bool HasTenantId() {
     return  SourceTable.Columns.Where( a => a.Name  == "TenantId").ToList().Count > 0;
@@ -107,7 +115,7 @@ public string getSelectedFields(){
 public string getQueryById(){
     var clm = GetDataType(SourceTable.Columns[0]);
     string result = string.Concat("Context.",ClassName,".Where(a => ");
-    var tenant = HasTenantId() ? " a.TenantId == Context.TenantId && " : "";
+    var tenant = HasTenantId() ? " a.TenantId == Context.TenantId && " + (HasActivo() ? "  a.IsActivo && ":""): "";
     result= string.Concat( result,tenant,"a.",SourceTable.PrimaryKey.MemberColumns[0].Name," == ("+clm+") id)",".Take(1).Select(a => new {"+ getSelectedFields()+"}).ToList()"); 
     return result;
 }
@@ -135,11 +143,11 @@ public string getQuery(){
         if(HasTenantId())
         {
             
-            result = string.Concat(result,"a.TenantId == Context.TenantId"," && (",filter,"))");
+            result = string.Concat(result,"a.TenantId == Context.TenantId" , (HasActivo() ? " && a.IsActivo":"")," && (",filter,"))");
         }
         else
         {
-             result = string.Concat(result,filter,")");
+             result = string.Concat(result,filter +  (HasActivo() ? "  a.IsActivo":""),")");
         }
     }
     else
@@ -147,11 +155,11 @@ public string getQuery(){
        if(HasTenantId())
         {
             
-            result = string.Concat(result,"a.TenantId == Context.TenantId",")");
+            result = string.Concat(result,"a.TenantId == Context.TenantId", (HasActivo() ? " && a.IsActivo":""),")");
         }
         else
         {
-             result = string.Concat(result,")");
+             result = string.Concat(result,( HasActivo() ? "  a.IsActivo":""),")");
         }
     }
 

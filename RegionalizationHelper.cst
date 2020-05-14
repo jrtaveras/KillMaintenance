@@ -43,6 +43,7 @@ namespace <%=NameSpaceUI%>.Helpers
                 ToolBar toolBar = item as ToolBar;
                 Button button = item as Button;
                 ComboBox comboBox = item as ComboBox;
+                TabPage tabPage = item as TabPage;
                 Wisej.Web.Ext.NavigationBar.NavigationBarItem barItem = item as Wisej.Web.Ext.NavigationBar.NavigationBarItem;
                 Wisej.Web.Ext.NavigationBar.NavigationBar navigationBar = item as Wisej.Web.Ext.NavigationBar.NavigationBar;
                 if (numericUpDown != null && numericUpDown.Tag != null)
@@ -91,6 +92,10 @@ namespace <%=NameSpaceUI%>.Helpers
                 else if (comboBox != null && comboBox.Tag !=null)
                 {
                     comboBox.Label.Text = _resMan.GetString(comboBox.Tag.ToString(),_cultureInfo) ?? comboBox.Label.Text;
+                }
+                else if (tabPage != null && tabPage.Tag != null)
+                {
+                    tabPage.Text = _resMan.GetString(tabPage.Tag.ToString(), _cultureInfo) ?? tabPage.Text;
                 }
                 else if (toolBar != null)
                 {
