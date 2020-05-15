@@ -61,7 +61,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
         
         private void afterSetUserAndCreateDate()
         {
-        
+            <%=setIsActivo()%>
         }
         
         private void  extendedValidations()
@@ -180,6 +180,9 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
 }
 
 <script runat="template">
+private string setIsActivo(){
+  return  ( HasActivo() ? ClassNameToLower()+ ".IsActivo = true;" :"");
+}
 
 public string GetFilter(){
     return HasTenantId() ? ("Where(a => a.TenantId == _context.TenantId"+(HasActivo() ? " && a.Activo ":"")+").ToList()"): (HasActivo() ? "where( a => a.Activo).ToList()":"ToList()");
