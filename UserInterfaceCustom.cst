@@ -64,7 +64,7 @@ namespace <%=NameSpaceUI%>
             InitializeComponent();
             setControls();
             <%=ClassNameToCamelCase()%>Presenter = new <%=ClassName%>Presenter(context, this);
-            helperControls = new HelperControlsToValidate(this);
+            helperControls = new HelperControlsToValidate(this.panelPricipal);
             this.toolBar1.ButtonClick += toolBar1_ButtonClick;
             CanEdit  = true;
 

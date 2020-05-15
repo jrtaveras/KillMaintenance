@@ -86,7 +86,7 @@ namespace <%= NameSpaceBusinessObjects %>.Services
  <script runat="template">
 
 private string GetFilterIsActivo(){
-    return HasActivo() ? "Where( a => a.IsActivo ).":"";
+    return HasActivo() | HasTenantId() ? "Where( a => " +(HasActivo() ? "a.IsActivo ":"") + (HasTenantId() && HasActivo() ? " && ":"") +(HasTenantId() ? "a.TenantId == Context.TenantId ":"") +").":"";
 }
 public bool HasActivo() {
     return  SourceTable.Columns.Where( a => a.Name  == "IsActivo").ToList().Count > 0;
