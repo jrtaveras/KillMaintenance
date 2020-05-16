@@ -71,6 +71,7 @@ namespace <%=NameSpaceUI%>
             
             try
             {
+               
                 fillComboBox();
             }
             catch(Exception ex )
@@ -83,6 +84,22 @@ namespace <%=NameSpaceUI%>
         {
             <%=MakeInstanceComboBox()%>        
         }
+        
+        private void toolBarButtonRecargaCombo_Click(object sender, EventArgs e)
+		{
+			try
+			{
+                <%=getCache()%>
+				fillComboBox();
+                
+                <%=setCache()%>
+				
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(GetMessageException() + ex.Message, GetMessageNotice(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
         
         private void setControls()
         {
@@ -272,7 +289,50 @@ namespace <%=NameSpaceUI%>
         
         }
         return result ? "using System.Data.Entity.Spatial;":"";
+}
+    
+public string getCache()
+{
+    var result = string.Empty; 
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+        
+        if(SourceTable.Columns[i].IsForeignKeyMember && SourceTable.Columns[i].Name.ToUpper() != "TENANTID")
+        {
+  
+              var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();
+              if(foreign != null){
+                 result = string.Concat(result,"var obj",StringUtil.ToPascalCase(SourceTable.Columns[i].Name)," = ","comboBox",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),".SelectedValue;\n\t\t\t\t");
+                  
+              }
+
+        }
+     
     }
+    return result;
+}
+
+public string setCache()
+{
+    var result = string.Empty; 
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+        
+        if(SourceTable.Columns[i].IsForeignKeyMember && SourceTable.Columns[i].Name.ToUpper() != "TENANTID")
+        {
+  
+              var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();
+              if(foreign != null){
+                 result = string.Concat(result,"comboBox",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),".SelectedValue"," = ","obj",StringUtil.ToPascalCase(SourceTable.Columns[i].Name)," != null ? ","obj",StringUtil.ToPascalCase(SourceTable.Columns[i].Name)," : ","comboBox",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),".SelectedValue;\n\t\t\t\t");
+                  
+              }
+
+        }
+     
+    }
+    return result;
+}
+
 
 public string MakeDeclarationComboBox()
 { 
@@ -282,7 +342,7 @@ public string MakeDeclarationComboBox()
         
     {
         
-        if(SourceTable.Columns[i].IsForeignKeyMember)
+        if(SourceTable.Columns[i].IsForeignKeyMember &&  SourceTable.Columns[i].Name.ToUpper() != "TENANTID")
         {
   
               var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();
@@ -304,7 +364,7 @@ public string MakeInstanceComboBox()
         
     {
         
-        if(SourceTable.Columns[i].IsForeignKeyMember)
+        if(SourceTable.Columns[i].IsForeignKeyMember && SourceTable.Columns[i].Name.ToUpper() != "TENANTID")
         {
   
               var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();

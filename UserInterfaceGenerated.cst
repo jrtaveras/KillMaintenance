@@ -71,6 +71,7 @@ namespace <%=NameSpaceUI%>
             this.toolBarButtonImprimir = new Wisej.Web.ToolBarButton();
             this.toolBarButtonInfo = new Wisej.Web.ToolBarButton();
             this.toolBarButtonExcel = new Wisej.Web.ToolBarButton();
+            this.toolBarButtonRecargaCombo = new Wisej.Web.ToolBarButton();
             this.panelPricipal.SuspendLayout();
             this.panelContenido.SuspendLayout();
             this.panelRight.SuspendLayout();
@@ -121,7 +122,8 @@ namespace <%=NameSpaceUI%>
             this.toolBarButtonBuscar,
             this.toolBarButtonImprimir,
             this.toolBarButtonExcel,
-            this.toolBarButtonInfo});
+            this.toolBarButtonInfo,
+            this.toolBarButtonRecargaCombo});
             this.toolBar1.Location = new System.Drawing.Point(0, 0);
             this.toolBar1.Name = "toolBar1";
             this.toolBar1.Size = new System.Drawing.Size(1223, 28);
@@ -187,6 +189,12 @@ namespace <%=NameSpaceUI%>
             this.toolBarButtonInfo.Name = "toolBarButtonInfo";
             this.toolBarButtonInfo.ToolTipText = "Creado";
             // 
+            // toolBarButtonRecargaCombo
+            // 
+            this.toolBarButtonRecargaCombo.ImageSource = "resource.wx/Wisej.Ext.MaterialDesign/synchronization-button-with-two-arrows.svg?color=toolbarText";
+            this.toolBarButtonRecargaCombo.Name = "toolBarButtonRecargaCombo";
+            this.toolBarButtonRecargaCombo.Click += new System.EventHandler(this.toolBarButtonRecargaCombo_Click);
+            // 
             // UserControl<%=ClassName%>
             // 
             <%=InitializeControls()%>
@@ -248,6 +256,7 @@ namespace <%=NameSpaceUI%>
         private Wisej.Web.ToolBarButton toolBarButtonImprimir;
         private Wisej.Web.ToolBarButton toolBarButtonInfo;
         private Wisej.Web.ToolBarButton toolBarButtonExcel;
+        private Wisej.Web.ToolBarButton toolBarButtonRecargaCombo;
         <%=DeclarationControls%>
        
     }
