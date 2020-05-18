@@ -105,6 +105,8 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
                 
                 Add();
                 
+                <%=ClassNameToLower()%>.Id = <%=getCompare()%>;
+                
                 scatterFields();
                 
                 return false;
@@ -130,6 +132,25 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
         return OutPutDir+"\\"+ ClassName+"Presenter.cs";
         
     }*/
+private string getCompare()
+{
+    var clm = GetDataType(SourceTable.Columns[0]);
+    var result = "0";
+    switch(clm)
+    {
+        case "Guid":
+            result = "Guid.Empty";
+            break;
+        case "string":
+            result = "string.Empty";
+            break;
+        default:
+            result = "0";
+            break;
+        
+    }
+    return result;
+}
 
     public string UsingSpatial(){
         List<string> lista = new List<string>();

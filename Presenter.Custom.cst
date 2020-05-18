@@ -143,7 +143,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
         public bool Delete()
         {
             
-            if (<%=ClassNameToLower()%>.<%= SourceTable.PrimaryKey.MemberColumns[0].Name %> == 0)
+            if (<%=ClassNameToLower()%>.<%= SourceTable.PrimaryKey.MemberColumns[0].Name %> == <%=getCompare()%>)
             {
                 Add();
                 
@@ -179,13 +179,34 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
     }
 }
 
+
 <script runat="template">
+
+private string getCompare()
+{
+    var clm = GetDataType(SourceTable.Columns[0]);
+    var result = "0";
+    switch(clm)
+    {
+        case "Guid":
+            result = "Guid.Empty";
+            break;
+        case "string":
+            result = "string.Empty";
+            break;
+        default:
+            result = "0";
+            break;
+        
+    }
+    return result;
+}
 private string setIsActivo(){
   return  ( HasActivo() ? ClassNameToLower()+ ".IsActivo = true;" :"");
 }
 
 public string GetFilter(){
-    return HasTenantId() ? ("Where(a => a.TenantId == _context.TenantId"+(HasActivo() ? " && a.Activo ":"")+").ToList()"): (HasActivo() ? "where( a => a.Activo).ToList()":"ToList()");
+    return HasTenantId() ? ("Where(a => a.TenantId == _context.TenantId"+(HasActivo() ? " && a.IsActivo ":"")+").ToList()"): (HasActivo() ? "Where( a => a.IsActivo).ToList()":"ToList()");
 }
 
 public bool HasActivo() {

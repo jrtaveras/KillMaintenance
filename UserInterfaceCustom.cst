@@ -186,7 +186,7 @@ namespace <%=NameSpaceUI%>
                     break;
 
                 case "toolBarButtonEditar":
-                    CanEdit =  <%=SourceTable.Columns[0].Name%> > 0;;
+                    CanEdit =  <%=SourceTable.Columns[0].Name%> != <%=getCompare()%>;
                     break;
 
                 case "toolBarButtonCancelar":
@@ -276,6 +276,26 @@ namespace <%=NameSpaceUI%>
 }
 
 <script runat="template">
+private string getCompare()
+{
+    var clm = GetDataType(SourceTable.Columns[0]);
+    var result = "0";
+    switch(clm)
+    {
+        case "Guid":
+            result = "Guid.Empty";
+            break;
+        case "string":
+            result = "string.Empty";
+            break;
+        default:
+            result = "0";
+            break;
+        
+    }
+    return result;
+}
+
     public string UsingSpatial(){
         List<string> lista = new List<string>();
         lista.Add("geography");
