@@ -116,15 +116,33 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
              
             if (state == EntityState.Detached)
             {
-                <%=InizialiteId()%>
-                _context.<%=ClassName%>.Add(<%=ClassNameToLower()%>);
+                if(<%=ClassNameToLower()%>.Id == <%=getCompare()%>)
+                {
+                    <%=InizialiteId()%>
+                    _context.<%=ClassName%>.Add(<%=ClassNameToLower()%>);
+                }
+                else
+                {
+                    _context.Entry(<%=ClassNameToLower()%>).State = EntityState.Modified;
+                }
             }
             
             state = _context.Entry(<%=ClassNameToLower()%>).State;
             
             BeforeSave?.Invoke();
 
-            bool result = _context.SaveChanges() > 0;
+            bool result = false;
+            
+            try
+            {
+                result = _context.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                _context.Entry(<%=ClassNameToLower()%>).State = EntityState.Detached;
+
+                throw ex;
+            }
            
             if (result && state == EntityState.Deleted)
                 Add();
