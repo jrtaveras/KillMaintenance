@@ -367,7 +367,7 @@ public string MakeDeclarationComboBox()
   
               var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();
               if(foreign != null){
-                 result = string.Concat(result,"private ISearchPresenter<",StringUtil.ToPascalCase(foreign.PrimaryKeyTable.Name),">"," _searchPresenter", StringUtil.ToPascalCase(foreign.PrimaryKeyTable.Name),";\n\t\t");
+                 result = string.Concat(result,"private ISearchPresenter<",StringUtil.ToPascalCase(foreign.PrimaryKeyTable.Name),">"," _searchPresenter", StringUtil.ToPascalCase(SourceTable.Columns[i].Name),";\n\t\t");
                   
               }
 
@@ -393,10 +393,10 @@ public string MakeInstanceComboBox()
                 var columnValue = foreign.PrimaryKeyTable.Columns[0].Name;
                 var field = SourceTable.Columns[i].Name;
                 var entity  = StringUtil.ToPascalCase(foreign.PrimaryKeyTable.Name);
-                result = string.Concat(result,"_searchPresenter", entity," = GeneralSearchFactory.Make",entity,"Search(_context);\n\t\t\t");
+                result = string.Concat(result,"_searchPresenter", field," = GeneralSearchFactory.Make",entity,"Search(_context);\n\t\t\t");
                 result = string.Concat(result,"comboBox", field,".DisplayMember = nameof(",entity + "." + columnDisplay,");\n\t\t\t");
                 result = string.Concat(result,"comboBox", field,".ValueMember = nameof(",entity + "." + columnValue,");\n\t\t\t");
-                result = string.Concat(result,"comboBox", field,".DataSource = ","_searchPresenter",entity,".GetAll();\n\t\t\t");
+                result = string.Concat(result,"comboBox", field,".DataSource = ","_searchPresenter",field,".GetAll();\n\t\t\t");
 
               }
 

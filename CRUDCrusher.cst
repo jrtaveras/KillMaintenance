@@ -63,6 +63,7 @@ Description: Para usar integrado con wisej
 <%@ Register Name="ResourceENTemplate" Template="Resource.en-US.resx.cst" %>
 <%@ Register Name="DateInitializationTemplate" Template="DateInitialization.cst" %>
 <%@ Register Name="HelperParserTemplate" Template="HelperParser.cst" %>
+<%@ Register Name="CommonConstantsTemplate" Template="CommonConstants.cst" %>
 <%@ Property Name="GenerateBusinessObjects" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del BO"%>
 <%@ Property Name="GeneratePresenters" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del Presenters"%>
 <%@ Property Name="GenerateInterfaces" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del Interfaces"%>
@@ -407,8 +408,10 @@ public void RenderChildChild(){
     userControlBase.SourceTable = SourceTable;
     userControlBase.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlBase.cs",true);
     
+   
     UserControlBaseDesignerTemplate userControlBaseDesigner = this.Create<UserControlBaseDesignerTemplate>();
     userControlBaseDesigner.NameSpaceUI = NameSpaceCommonUI;
+    userControlBaseDesigner.SourceTable = SourceTable;
     userControlBaseDesigner.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlBase.Designer.cs",true);
       
     UserControlBaseResFileTemplate userControlBaseResFile = this.Create<UserControlBaseResFileTemplate>();
@@ -433,6 +436,13 @@ public void RenderChildChild(){
     dataGridViewExtensionTemplate.NameSpaceUI = NameSpaceUI;
     dataGridViewExtensionTemplate.Licence = Licence;
     dataGridViewExtensionTemplate.RenderToFile(this.OutPutDirCommonUI+"\\Helpers\\DataGridViewExtension.cs",true);
+    
+    CommonConstantsTemplate commonConstantsTemplate = this.Create<CommonConstantsTemplate>();
+    commonConstantsTemplate.NameSpaceUI = NameSpaceUI;
+    commonConstantsTemplate.Licence = Licence;
+    commonConstantsTemplate.RenderToFile(this.OutPutDirCommonUI+"\\CommonConstants.cs",true);
+      
+    
       
   }
 
