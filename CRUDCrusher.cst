@@ -64,6 +64,7 @@ Description: Para usar integrado con wisej
 <%@ Register Name="DateInitializationTemplate" Template="DateInitialization.cst" %>
 <%@ Register Name="HelperParserTemplate" Template="HelperParser.cst" %>
 <%@ Register Name="CommonConstantsTemplate" Template="CommonConstants.cst" %>
+<%@ Register Name="ContextNameTemplate" Template="ContextName.cst" %>
 <%@ Property Name="GenerateBusinessObjects" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del BO"%>
 <%@ Property Name="GeneratePresenters" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del Presenters"%>
 <%@ Property Name="GenerateInterfaces" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe todas las clases del Interfaces"%>
@@ -333,6 +334,15 @@ public void RenderChildChild(){
           presenterTest.Licence = Licence;
           presenterTest.RenderToFile(this.OutPutDirUnitTestBusinessObjects+"\\"+SourceTable.Name+"PresenterTest.cs",GeneratePresenters);
       }
+      
+    found =  File.Exists(this.OutPutDirUnitTestBusinessObjects+"\\ContextName.cs");
+      if(!found){
+          ContextNameTemplate contextNameTemplate = this.Create<ContextNameTemplate>();
+          contextNameTemplate.NameSpaceBusinessObjects = NameSpaceBusinessObjects;
+          contextNameTemplate.Licence = Licence;
+          contextNameTemplate.RenderToFile(this.OutPutDirUnitTestBusinessObjects+"\\ContextName.cs",GeneratePresenters);
+      }
+      
       
 
       found =  File.Exists(this.OutPutDirBusinessObjects+"\\Services\\Search"+SourceTable.Name+"Presenter.cs");

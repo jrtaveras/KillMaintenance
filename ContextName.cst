@@ -1,0 +1,38 @@
+﻿<%-- 
+Name: Template de para constantes de los test
+Author:Jose Roberto Taveras
+Description: Para usar integrado con wisej
+--%>
+<%@ Template Language="C#" TargetLanguage="C#"   %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Assembly Name="CodeSmith.BaseTemplates" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Assembly Name="System.Design" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Map Name="SqlCSharp" Src="Sql-CSharp" Description="System to C# Type Map" %>
+<%@ Property Name="NameSpaceBusinessObjects" Type="System.String"%>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import NameSpace="System.IO" %>
+<%@ Import NameSpace="System.Collections.Generic" %>
+<%@ Property Name="Licence" Type="System.String"%>
+//Author: Jose Roberto Taveras
+//Email:roberto.taveras@hotmail.com
+//Description: ContextName
+//Fecha:<%= DateTime.Now%>
+//Licencia:<%=Licence%>
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace UnitTestProject<%=NameSpaceBusinessObjects%>
+{
+    public class ContextName
+    {
+        public const string Name = "ConnectionStringOrConnectionName";
+    }
+}
+
+<script runat="template">
+</script>

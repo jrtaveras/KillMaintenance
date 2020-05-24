@@ -31,7 +31,7 @@ using <%=NameSpaceBusinessObjects%>.Repository;
 using <%=NameSpaceBusinessObjects%>.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTestProjectBusinessObjects
+namespace  UnitTestProject<%=NameSpaceBusinessObjects%>
 {
     [TestClass]
     public class <%=ClassName%>PresenterTest
