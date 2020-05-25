@@ -697,6 +697,7 @@ private string ClassNameToCamelCase(){
             result = string.Concat(result,"set","\n\t\t\t");
             result = string.Concat(result,"{","\n\t\t\t\t");
             result = string.Concat(result,"_",fieldName," = value;\n\t\t\t\t");
+            result = string.Concat(result,"if( value != null);\n\t\t\t\t\t");
             result = string.Concat(result,"comboBox",fieldName,".SelectedValue = value;\n\t\t\t");
             result = string.Concat(result,"}\n\t\t");
             result = string.Concat(result,"}\n\t\t\n");
