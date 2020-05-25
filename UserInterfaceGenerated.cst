@@ -459,7 +459,7 @@ public string InitializeControls(){
          //var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == fieldName ).Count() > 0 ).FirstOrDefault();
 
         
-         if(isForeignKeyMember && !isKey){
+         if(isForeignKeyMember && !isKey && fieldName.ToUpper() != "TENANTID"){
                 result =  string.Concat(result,"this.comboBox",fieldName," = new  Wisej.Web.ComboBox();\n\t\t\t");
                 UserControls = string.Concat(UserControls,"this.panelLeft.Controls.Add(","this.comboBox",fieldName,");\n\t\t\t");
                 BuildControls = string.Concat(BuildControls,BuildComboBox(fieldName));
