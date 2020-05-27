@@ -22,6 +22,8 @@ namespace <%=NameSpaceBusinessObjects%>.Interfaces
     public interface IContext
     {
 		ResourceManager ResourceManager { get; set; }
+        
+        void DetachAllEntities();
 		
 		string LocalizationName { get; set; }
 		

@@ -123,6 +123,11 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
                 }
                 else
                 {
+                    var found = _context.<%=ClassName%>.Where(a => a.Id == <%=ClassNameToLower()%>.Id).FirstOrDefault();
+                    if(found != null && found.FechaModificado >  <%=ClassNameToLower()%>.FechaModificado)
+                    {
+                        throw new Exception("There is an updated conflict in the registry, its version is older than the one that contains the database!!");
+                    }
                     _context.Entry(<%=ClassNameToLower()%>).State = EntityState.Modified;
                 }
             }
@@ -139,7 +144,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
             }
             catch (Exception ex)
             {
-                _context.Entry(<%=ClassNameToLower()%>).State = EntityState.Detached;
+                 _context.DetachAllEntities();
 
                 throw ex;
             }
@@ -170,7 +175,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
                 return false;
             }
             
-            _context.Entry(<%=ClassNameToLower()%>).State = EntityState.Deleted;
+            <%=markForDeleted()%>
             
             bool result = Save();
             
@@ -221,6 +226,10 @@ private string getCompare()
 }
 private string setIsActivo(){
   return  ( HasActivo() ? ClassNameToLower()+ ".IsActivo = true;" :"");
+}
+
+private string markForDeleted(){
+    return HasActivo() ? ClassNameToLower()+".IsActivo = false;":"_context.Entry("+ClassNameToLower()+").State = EntityState.Deleted;";
 }
 
 public string GetFilter(){
