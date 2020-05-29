@@ -126,7 +126,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
                     var found = _context.<%=ClassName%>.Where(a => a.Id == <%=ClassNameToLower()%>.Id).FirstOrDefault();
                     if(found != null && found.FechaModificado >  <%=ClassNameToLower()%>.FechaModificado)
                     {
-                        throw new Exception("There is an updated conflict in the registry, its version is older than the one that contains the database!!");
+                        throw new Exception("There is and update conflict with this record. The version you modified is older than the current record in the database.!!");
                     }
                     _context.Entry(<%=ClassNameToLower()%>).State = EntityState.Modified;
                 }
