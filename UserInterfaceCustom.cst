@@ -215,14 +215,21 @@ namespace <%=NameSpaceUI%>
                 
                     WindowSearch<<%=ClassName%>> search = new WindowSearch<<%=ClassName%>>(GeneralSearchFactory.Make<%=ClassName%>Search(_context), GetMessageFinding() + " " + GetTitle());
                     search.FormClosed += (senderX, eX) => {
-
-                        if (search.Id != null)
+                        try
                         {
-                            if(this.<%=ClassNameToCamelCase()%>Presenter.Find(search.Id))
+                            if (search.Id != null)
                             {
-                                CanEdit = true;
-                                ClearErrorsValidations();
+                                if(this.<%=ClassNameToCamelCase()%>Presenter.Find(search.Id))
+                                {
+                                    CanEdit = true;
+                                    ClearErrorsValidations();
+                                    toolBar1_ButtonClick(null,null);
+                                }
                             }
+                        }
+                        catch (Exception ex)
+                        {
+                           MessageBox.Show(GetMessageException() + ex.Message, GetMessageNotice(), MessageBoxButtons.OK,MessageBoxIcon.Error);
                         }
 
                     };
@@ -343,7 +350,8 @@ public string setCache()
   
               var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();
               if(foreign != null){
-                 result = string.Concat(result,"comboBox",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),".SelectedValue"," = ","obj",StringUtil.ToPascalCase(SourceTable.Columns[i].Name)," != null ? ","obj",StringUtil.ToPascalCase(SourceTable.Columns[i].Name)," : ","comboBox",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),".SelectedValue;\n\t\t\t\t");
+                 result = string.Concat(result,"if(","obj",StringUtil.ToPascalCase(SourceTable.Columns[i].Name)," != null )\n\t\t\t\t\t");
+                 result = string.Concat(result,"comboBox",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),".SelectedValue"," = ","obj",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),";\n\t\t\t\t\n\t\t\t\t");
                   
               }
 
