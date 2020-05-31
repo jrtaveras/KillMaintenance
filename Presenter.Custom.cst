@@ -66,7 +66,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
         
         private void  extendedValidations()
         {
-            var fields = new List<string>();    
+             
             <%=GetComboBoxValidation()%>
         }
         
@@ -219,6 +219,7 @@ public string GetComboBoxValidation()
                 {
                     result = string.Concat(result,"if (",ClassNameToLower(),".",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),"  == ",getCompare(),")\n\t\t\t"); 
                     result = string.Concat(result,"{\n\t\t\t\t");
+                    result = string.Concat(result,"var fields = new List<string>();\n\t\t\t\t");
                     result = string.Concat(result,"fields.Add(nameof(",ClassName,".",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),"));\n\t\t\t\t");;
                     result = string.Concat(result,"ValidationResult error",StringUtil.ToPascalCase(SourceTable.Columns[i].Name)," = new ValidationResult(\"","Debe seleccionar la ",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),"!!\"",",fields);\n\t\t\t\t");
                     result = string.Concat(result,"ValidationResult.Add(error",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),");\n\t\t\t");
