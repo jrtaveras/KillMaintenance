@@ -66,7 +66,8 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
         
         private void  extendedValidations()
         {
-
+            var fields = new List<string>();    
+            <%=GetComboBoxValidation()%>
         }
         
         public bool Find(params object[] sender)
@@ -76,12 +77,12 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
         
         public void FillDataSource() 
         {
-            /*
+            
             if (_dataSource != null)
             {
-             _dataSource.DataGridSource = _context.<%=ClassName%>.ToList();
+                _dataSource.DataGridSource = _context.<%=ClassName%>.<%=GetFilter()%>;
             }
-            */
+            
         }
         
         public bool Save()
@@ -204,6 +205,31 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
 
 
 <script runat="template">
+public string GetComboBoxValidation()
+{
+    var result = string.Empty; 
+    for(int i = 0; i < SourceTable.Columns.Count; i++)
+    {
+        
+        if(SourceTable.Columns[i].IsForeignKeyMember && SourceTable.Columns[i].Name.ToUpper() != "TENANTID")
+        {
+             
+                var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();
+                if(foreign != null)
+                {
+                    result = string.Concat(result,"if (",ClassNameToLower(),".",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),"  == ",getCompare(),")\n\t\t\t"); 
+                    result = string.Concat(result,"{\n\t\t\t\t");
+                    result = string.Concat(result,"fields.Add(nameof(",ClassName,".",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),"));\n\t\t\t\t");;
+                    result = string.Concat(result,"ValidationResult error",StringUtil.ToPascalCase(SourceTable.Columns[i].Name)," = new ValidationResult(\"","Debe seleccionar la ",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),"!!\"",",fields);\n\t\t\t\t");
+                    result = string.Concat(result,"ValidationResult.Add(error",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),");\n\t\t\t");
+                    result = string.Concat(result,"}\n\t\t\t\n\t\t\t");
+                }
+
+        }
+     
+    }
+    return result;
+}
 
 private string getCompare()
 {
@@ -235,6 +261,7 @@ private string markForDeleted(){
 public string GetFilter(){
     return HasTenantId() ? ("Where(a => a.TenantId == _context.TenantId"+(HasActivo() ? " && a.IsActivo ":"")+").ToList()"): (HasActivo() ? "Where( a => a.IsActivo).ToList()":"ToList()");
 }
+
 
 public bool HasActivo() {
     return  SourceTable.Columns.Where( a => a.Name  == "IsActivo").ToList().Count > 0;
