@@ -472,7 +472,7 @@ public string InitializeControls(){
                 DeclarationControls = string.Concat(DeclarationControls,"private Wisej.Web.TextBox textBox",fieldName+";\n\t\t");
               
          } 
-         else if(fieldName.ToUpper() != "TENANTID")
+         else if(fieldName.ToUpper() != "TENANTID" && fieldName.ToUpper() != "CREADO" && fieldName.ToUpper() != "FECHACREADO" && fieldName.ToUpper() != "MODIFICADO" && fieldName.ToUpper() != "FECHAMODIFICADO")
          {
             switch(dataType)
             {

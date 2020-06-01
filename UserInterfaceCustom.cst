@@ -464,7 +464,7 @@ public string BuildMandatoryFiedsForValidation()
         var fieldName = clm.Name;
         bool isKey = clm.IsPrimaryKeyMember;
         bool isForeignKeyMember = clm.IsForeignKeyMember;
-        if(!isKey && fieldName.ToUpper() != "TENANTID"){
+        if(!isKey && fieldName.ToUpper() != "TENANTID" && fieldName.ToLower() != "creado" && fieldName.ToLower() != "fechacreado"  && fieldName.ToLower() != "modificado" && fieldName.ToLower() != "fechamodificado"){
             result = string.Concat(result,getControlType(GetDataType(clm),isForeignKeyMember),fieldName,".Tag = nameof(",ClassName,".",fieldName,");\n\t\t\t");
         }
        
@@ -485,11 +485,8 @@ public string BuildEnableDisableControls()
         bool isForeignKeyMember = clm.IsForeignKeyMember;
         if(!isKey)
         {
-            if(fieldName.ToLower() == "creado" || fieldName.ToLower() == "fechacreado"  || fieldName.ToLower() == "modificado" || fieldName.ToLower() == "fechamodificado")
-            {
-                  result = string.Concat(result,getControlType(GetDataType(clm),isForeignKeyMember),fieldName,".Enabled = false;\n\t\t\t");
-            }
-            else if(fieldName.ToUpper() != "TENANTID")
+            
+            if(fieldName.ToUpper() != "TENANTID" && fieldName.ToLower() != "creado" && fieldName.ToLower() != "fechacreado"  && fieldName.ToLower() != "modificado" && fieldName.ToLower() != "fechamodificado")
             {
                 switch(GetDataType(clm))
                 {
@@ -684,7 +681,7 @@ private string ClassNameToCamelCase(){
             return result;
         }
         
-        if(fieldName.ToUpper() == "TENANTID"){
+        if(fieldName.ToUpper() == "TENANTID" || fieldName.ToUpper() == "CREADO" || fieldName.ToUpper() == "FECHACREADO" || fieldName.ToUpper() == "MODIFICADO" || fieldName.ToUpper() == "FECHAMODIFICADO" ){
             result = string.Concat(result,"public  ",dataType+dataTypePrefix," ",fieldName,"\n\t\t");
             result = string.Concat(result,"{\n\t\t\t");
             result = string.Concat(result,"get; set;\n\t\t");
