@@ -79,6 +79,8 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
             
             <%=ClassNameToLower()%> = new <%=ClassName%>();
             <%=SetUserAndDateCreate()%>
+            //Inicializando el Id se necesita en los id de tipo Guid
+            <%=ClassNameToLower()%>.Id = <%=getCompare()%>;
             afterSetUserAndCreateDate();
             scatterFields();
             FillDataSource();
@@ -104,8 +106,6 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
              if (<%=ClassNameToLower()%> == null) {
                 
                 Add();
-                
-                <%=ClassNameToLower()%>.Id = <%=getCompare()%>;
                 
                 scatterFields();
                 
