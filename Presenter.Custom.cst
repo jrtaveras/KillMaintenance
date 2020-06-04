@@ -179,9 +179,12 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
             <%=markForDeleted()%>
             
             bool result = Save();
-            
+    
             if(result)
-                 FillDataSource();
+            {
+                Add();
+                FillDataSource();
+            }
 
             return result;
 
