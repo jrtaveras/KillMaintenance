@@ -223,7 +223,7 @@ namespace <%=NameSpaceUI%>
                                 {
                                     CanEdit = true;
                                     ClearErrorsValidations();
-                                    toolBar1_ButtonClick(null,null);
+                                    toolBarButtonRecargaCombo_Click(null,null);
                                 }
                             }
                         }
