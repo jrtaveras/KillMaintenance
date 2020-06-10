@@ -130,6 +130,7 @@ public string DeclarationFromColumn(ColumnSchema clm ) {
     bool isString =  dataType == "string";
     bool isKey = clm.IsPrimaryKeyMember;
     int size = clm.Size;
+    bool notMapped =((bool)clm.ExtendedProperties["CS_IsComputed"].Value) == true;
      
     var fieldName = clm.Name;
 
@@ -139,18 +140,25 @@ public string DeclarationFromColumn(ColumnSchema clm ) {
         string result = "";
         if(isKey)
             result = "[Key]\n\t\t";
+        
+        if(notMapped) {
+        
+           result = string.Concat(result,"[NotMapped]\n\t\t");
+        }
        
-        if(!isNull){
+      
+       
+        if(!isNull && !notMapped){
             result = string.Concat(result,"[Required(ErrorMessageResourceName = \"RequiredErrorMessage\",ErrorMessageResourceType = typeof(Resource))]\n\t\t");
 
         }
         
-        if(dataType == "DateTime")
+        if(dataType == "DateTime" && notMapped)
         {
             result = string.Concat("[DateInitialization(ErrorMessageResourceName = \"DateInitialization\",ErrorMessageResourceType = typeof(Resource))]\n\t\t",result);
         }
         
-        if(isString){
+        if(isString && !notMapped){
              
             result = string.Concat("[MaxLength("+size.ToString()+",ErrorMessageResourceName = \"MaxLengthErrorMessage\",ErrorMessageResourceType = typeof(Resource))]\n\t\t",result);
             var found = list.Where(a => fieldName.ToUpper().Contains( a )).Count() > 0;
