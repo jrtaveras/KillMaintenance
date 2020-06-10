@@ -153,7 +153,7 @@ public string DeclarationFromColumn(ColumnSchema clm ) {
 
         }
         
-        if(dataType == "DateTime" && notMapped)
+        if(dataType == "DateTime" && !notMapped)
         {
             result = string.Concat("[DateInitialization(ErrorMessageResourceName = \"DateInitialization\",ErrorMessageResourceType = typeof(Resource))]\n\t\t",result);
         }
