@@ -35,7 +35,6 @@ Description: Para usar integrado con wisej
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using <%=NameSpaceBusinessObjects %>.Helpers;
 using <%=NameSpaceBusinessObjects %>.Interfaces;
 using <%=NameSpaceBusinessObjects %>.Models;
@@ -44,7 +43,7 @@ namespace <%= NameSpaceBusinessObjects %>.Services
     public class Search<%= ClassName %>Presenter : ISearchPresenter<%= "<"+ClassName+">" %>
     {
         private ISearch _sender;
-        object id = <%=getCompare()%>;
+        object id = (<%=GetDataType(SourceTable.Columns[0])%>) <%=getCompare()%>;
 		public IContext Context { get; private set; }
         public Search<%= ClassName %>Presenter(IContext context)
         {
@@ -54,11 +53,9 @@ namespace <%= NameSpaceBusinessObjects %>.Services
 
         public void Search() {
         
-            Type typeEntity = typeof(<%=ClassName%>);
-            PropertyInfo propertyInfo = typeEntity.GetProperty("<%=SourceTable.Columns[0].Name%>");
-            var type = propertyInfo.GetType().Name;
+           
 
-            if (!HelperParser.TryParse(type, _sender.ValueToSearch, id))
+            if (!HelperParser.TryParse("<%=GetDataType(SourceTable.Columns[0])%>", _sender.ValueToSearch,ref id))
             {
                 _sender.DataGridSource = <%= getQuery()%>;
             }
