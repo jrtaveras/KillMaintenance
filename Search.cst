@@ -52,8 +52,6 @@ namespace <%= NameSpaceBusinessObjects %>.Services
         }
 
         public void Search() {
-        
-           
 
             if (!HelperParser.TryParse("<%=GetDataType(SourceTable.Columns[0])%>", _sender.ValueToSearch,ref id))
             {

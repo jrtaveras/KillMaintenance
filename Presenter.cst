@@ -98,7 +98,9 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
         
         public bool Find(object Id)
         {
-            
+           
+            _context.Entry(this.<%=ClassNameToLower()%>).State = EntityState.Detached;
+             
             Add();
 
             <%=ClassNameToLower()%> =  _context.<%=ClassName%>.Find(Id);

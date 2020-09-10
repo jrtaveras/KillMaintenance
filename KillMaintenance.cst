@@ -62,6 +62,9 @@ Description: Para usar integrado con wisej
 <%@ Register Name="ResourceTemplate" Template="Resource.resx.cst" %>
 <%@ Register Name="ResourceENTemplate" Template="Resource.en-US.resx.cst" %>
 <%@ Register Name="DateInitializationTemplate" Template="DateInitialization.cst" %>
+<%@ Register Name="WindowPdfViewerTemplate" Template="WindowPdfViewer.cst" %>
+<%@ Register Name="WindowPdfViewerDesignerTemplate" Template="WindowPdfViewer.Designer.cst" %>
+<%@ Register Name="WindowPdfViewerResxTemplate" Template="WindowPdfViewer.resx.cst" %>
 <%@ Register Name="HelperParserTemplate" Template="HelperParser.cst" %>
 <%@ Register Name="CommonConstantsTemplate" Template="CommonConstants.cst" %>
 <%@ Register Name="ContextNameTemplate" Template="ContextName.cst" %>
@@ -451,6 +454,17 @@ public void RenderChildChild(){
     commonConstantsTemplate.NameSpaceUI = NameSpaceUI;
     commonConstantsTemplate.Licence = Licence;
     commonConstantsTemplate.RenderToFile(this.OutPutDirCommonUI+"\\CommonConstants.cs",true);
+      
+    //PrintPreview
+      
+    WindowPdfViewerTemplate pdfViewer = this.Create<WindowPdfViewerTemplate>();
+    pdfViewer.RenderToFile(this.OutPutDirCommonUI+"\\Forms\\"+"WindowPdfViewer.cs",true);
+      
+    WindowPdfViewerDesignerTemplate pdfViewerDesigner = this.Create<WindowPdfViewerDesignerTemplate>();
+    pdfViewerDesigner.RenderToFile(this.OutPutDirCommonUI+"\\Forms\\WindowPdfViewer.Designer.cs",true);  
+      
+    WindowPdfViewerResxTemplate pdfViewerResx = this.Create<WindowPdfViewerResxTemplate>();
+    pdfViewerResx.RenderToFile(this.OutPutDirCommonUI+"\\Forms\\WindowPdfViewer.resx",true);
       
     
       
