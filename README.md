@@ -7,6 +7,7 @@ generating Model,Interface,Presenter and the user interface of the user control 
 2. SmartXLS http://www.smartxls.com/ (Library to export data to excel), Entityframework 6.4 (ORM). 
 3. NInject (Dependency Manager) http://www.ninject.org/ and SqlServer. 
 4. The MVP design pattern is implemented (https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter) and Dependency Injection.
+5. FastReport.Net https://www.fast-report.com/es/product/fast-report-net/
 
 ## Features
 - Multitenance
