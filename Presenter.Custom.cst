@@ -120,29 +120,12 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
                 throw new Exception("There is and update conflict with this record. The version you modified is older than the current record in the database.!!");
             }
             
-            if (found != null)
+            if (found == null)
             {
-                _context.Entry(test).State = EntityState.Modified;
-            }
-            else
-            {
-                 _context.<%=ClassName%>.Add(<%=ClassNameToLower()%>);
+                _context.<%=ClassName%>.Add(<%=ClassNameToLower()%>);
             }
      
-            /*if (state == EntityState.Detached)
-            {
-                if(<%=ClassNameToLower()%>.Id == <%=getCompare()%>)
-                {
-                    <%=InizialiteId()%>
-                    _context.<%=ClassName%>.Add(<%=ClassNameToLower()%>);
-                }
-                else
-                {
-                    
-                    _context.Entry(<%=ClassNameToLower()%>).State = EntityState.Modified;
-                }
-            }*/
-            
+                       
             state = _context.Entry(<%=ClassNameToLower()%>).State;
             
             BeforeSave?.Invoke();

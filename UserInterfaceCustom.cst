@@ -796,7 +796,7 @@ private string ClassNameToCamelCase(){
             
             result = string.Concat(result,"{ \n\t\t\t\t\t");
             result = string.Concat(result,"string _", found," = textBox",SourceTable.Columns[0].Name,".Text;\n\t\t\t\t\t");
-            result  = string.Concat(result,"if (!string.IsNullOrEmpty(_",found,") && !",SourceTable.Name,"Presenter.Find(_",found,")) \n\t\t\t\t\t");
+            result  = string.Concat(result,"if (!string.IsNullOrEmpty(_",found,") && !",ClassNameToCamelCase(),"Presenter.Find(_",found,")) \n\t\t\t\t\t");
             result = string.Concat(result,"{ \n\t\t\t\t\t\t");
             result = string.Concat(result,"textBox",SourceTable.Columns[0].Name,".Text = _",found,"; \n\t\t\t\t\t");
             result = string.Concat(result,"} \n\t\t\t\t");
