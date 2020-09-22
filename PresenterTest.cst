@@ -17,7 +17,7 @@ Description: Para usar integrado con wisej
 <%@ Import NameSpace="System.Collections.Generic" %>
 <%@ Property Name="ClassName" Type="System.String"%>
 <%@ Property Name="Licence" Type="System.String"%>
-
+<%@ Property Name="SourceTable" Type="SchemaExplorer.TableSchema" Category="Context" Description="Table to get the data from." %>
 //Author: Jose Roberto Taveras
 //Email:roberto.taveras@hotmail.com
 //Description: Unit test del presenter <%=ClassName%>Presenter
@@ -101,7 +101,7 @@ namespace  UnitTestProject<%=NameSpaceBusinessObjects%>
             setter(_<%=ClassNameToCamelCase()%>);
 
             Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Save());
-            Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Find(_<%=ClassNameToCamelCase()%>.Id));
+            Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Find(_<%=ClassNameToCamelCase()%>.<%=SourceTable.Columns[0].Name%>));
             Assert.IsTrue(_<%=ClassNameToCamelCase()%>Presenter.Delete());
             tearDown();
 

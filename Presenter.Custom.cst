@@ -114,8 +114,22 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
             }
             
             var state = _context.Entry(<%=ClassNameToLower()%>).State;
-             
-            if (state == EntityState.Detached)
+            var found = _context.<%=ClassName%>.Where(a => a.Id == <%=ClassNameToLower()%>.Id).FirstOrDefault();
+            if(found != null && found.FechaModificado >  <%=ClassNameToLower()%>.FechaModificado)
+            {
+                throw new Exception("There is and update conflict with this record. The version you modified is older than the current record in the database.!!");
+            }
+            
+            if (found != null)
+            {
+                _context.Entry(test).State = EntityState.Modified;
+            }
+            else
+            {
+                 _context.<%=ClassName%>.Add(<%=ClassNameToLower()%>);
+            }
+     
+            /*if (state == EntityState.Detached)
             {
                 if(<%=ClassNameToLower()%>.Id == <%=getCompare()%>)
                 {
@@ -124,14 +138,10 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
                 }
                 else
                 {
-                    var found = _context.<%=ClassName%>.Where(a => a.Id == <%=ClassNameToLower()%>.Id).FirstOrDefault();
-                    if(found != null && found.FechaModificado >  <%=ClassNameToLower()%>.FechaModificado)
-                    {
-                        throw new Exception("There is and update conflict with this record. The version you modified is older than the current record in the database.!!");
-                    }
+                    
                     _context.Entry(<%=ClassNameToLower()%>).State = EntityState.Modified;
                 }
-            }
+            }*/
             
             state = _context.Entry(<%=ClassNameToLower()%>).State;
             

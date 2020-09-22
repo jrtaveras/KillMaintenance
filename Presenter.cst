@@ -80,7 +80,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
             <%=ClassNameToLower()%> = new <%=ClassName%>();
             <%=SetUserAndDateCreate()%>
             //Inicializando el Id se necesita en los id de tipo Guid
-            <%=ClassNameToLower()%>.Id = <%=getCompare()%>;
+            <%=ClassNameToLower()%>.<%=SourceTable.Columns[0].Name%> = <%=getCompare()%>;
             afterSetUserAndCreateDate();
             scatterFields();
             FillDataSource();

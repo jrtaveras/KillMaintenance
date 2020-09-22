@@ -335,6 +335,7 @@ public void RenderChildChild(){
           presenterTest.ClassName = SourceTable.Name;
           presenterTest.NameSpaceBusinessObjects = NameSpaceBusinessObjects;
           presenterTest.Licence = Licence;
+          presenterTest.SourceTable = SourceTable;
           presenterTest.RenderToFile(this.OutPutDirUnitTestBusinessObjects+"\\"+SourceTable.Name+"PresenterTest.cs",GeneratePresenters);
       }
       
@@ -431,7 +432,7 @@ public void RenderChildChild(){
     userControlBaseResFile.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlBase.resx",true);
       
     HelperDataTableToExcelTemplate helperDataTableToExcelTemplate = this.Create<HelperDataTableToExcelTemplate>();
-    helperDataTableToExcelTemplate.NameSpaceUI = NameSpaceUI;
+    helperDataTableToExcelTemplate.NameSpaceUI = NameSpaceCommonUI;
     helperDataTableToExcelTemplate.Licence = Licence;
     helperDataTableToExcelTemplate.RenderToFile(this.OutPutDirCommonUI+"\\Helpers\\HelperDataTableToExcel.cs",true);
       

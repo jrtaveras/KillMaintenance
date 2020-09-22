@@ -52,8 +52,10 @@ namespace <%= NameSpaceBusinessObjects %>.Services
         }
 
         public void Search() {
+         
 
-            if (!HelperParser.TryParse("<%=GetDataType(SourceTable.Columns[0])%>", _sender.ValueToSearch,ref id))
+            
+            if (<%=GetDataType(SourceTable.Columns[0]) == "string" ? "":"!"%>HelperParser.TryParse("<%=GetDataType(SourceTable.Columns[0])%>", _sender.ValueToSearch,ref id))
             {
                 _sender.DataGridSource = <%= getQuery()%>;
             }

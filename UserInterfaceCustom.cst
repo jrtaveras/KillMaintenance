@@ -73,6 +73,7 @@ namespace <%=NameSpaceUI%>
             {
                
                 fillComboBox();
+                <%= GetDataType(SourceTable.Columns[0]) == "string"?createSearch():""%>
             }
             catch(Exception ex )
             {
@@ -85,6 +86,7 @@ namespace <%=NameSpaceUI%>
             <%=MakeInstanceComboBox()%>        
         }
         
+     
         private void toolBarButtonRecargaCombo_Click(object sender, EventArgs e)
 		{
 			try
@@ -505,7 +507,14 @@ public string BuildEnableDisableControls()
         }
         else
         {
-            result = string.Concat(result,"textBox",fieldName,".ReadOnly = true;\n\t\t\t");
+           
+            if(GetDataType(clm) != "string"){
+                result = string.Concat(result,"textBox",fieldName,".ReadOnly = true;\n\t\t\t");
+            }
+            else
+            {
+                 result = string.Concat(result,"textBox",fieldName,".ReadOnly = !CanEdit;\n\t\t\t");
+            }
         }
        
     }
@@ -714,10 +723,18 @@ private string ClassNameToCamelCase(){
             result = string.Concat(result,"{\n\t\t\t");
             result = string.Concat(result,"get\n\t\t\t");
             result = string.Concat(result,"{\n\t\t\t\t");
+            if(dataType.ToLower() == "string")
+            {
+                result = string.Concat(result,"_",fieldName," = ","textBox",fieldName,".Text;\n\t\t\t\t");
+                result = string.Concat(result,"return _",fieldName,";\n\t\t\t");
+            }
+            else
+            {
             result = string.Concat(result,"bool result = ",dataType,".TryParse(textBox",fieldName,".Text, out _",fieldName,");\n\t\t\t");
             result = string.Concat(result,"    if (!result)\n\t\t\t");
             result = string.Concat(result,"         textBox",fieldName,".Text = \"0\";\n\t\t\t\t");
             result = string.Concat(result,"return _",fieldName,";\n\t\t\t");
+            }
             result = string.Concat(result,"}\n\t\t\t");
             result = string.Concat(result,"set","\n\t\t\t");
             result = string.Concat(result,"{","\n\t\t\t\t");
@@ -751,6 +768,7 @@ private string ClassNameToCamelCase(){
         
    return result;
  }
+ 
  private string getComboBoxValue(string fieldName,bool isNull)
  {
      var result = string.Empty;
@@ -759,7 +777,7 @@ private string ClassNameToCamelCase(){
     {
         result = string.Concat(result,"if( value != null)\n\t\t\t\t\t");
         result = string.Concat(result,"comboBox",fieldName,".SelectedValue = value;\n\t\t\t");
-        result = string.Concat(result,"}\n\t\t");
+        //result = string.Concat(result,"}\n\t\t");
     }
     else
     {
@@ -768,4 +786,23 @@ private string ClassNameToCamelCase(){
  
     return result;
  }
+ 
+    private string createSearch()
+        {
+           var found =  SourceTable.Columns[0].Name.ToLower();
+
+            string result = string.Empty;
+            result = string.Concat(result,"textBox",SourceTable.Columns[0].Name,".Leave += (sender, e) => \n\t\t\t\t");
+            
+            result = string.Concat(result,"{ \n\t\t\t\t\t");
+            result = string.Concat(result,"string _", found," = textBox",SourceTable.Columns[0].Name,".Text;\n\t\t\t\t\t");
+            result  = string.Concat(result,"if (!string.IsNullOrEmpty(_",found,") && !",SourceTable.Name,"Presenter.Find(_",found,")) \n\t\t\t\t\t");
+            result = string.Concat(result,"{ \n\t\t\t\t\t\t");
+            result = string.Concat(result,"textBox",SourceTable.Columns[0].Name,".Text = _",found,"; \n\t\t\t\t\t");
+            result = string.Concat(result,"} \n\t\t\t\t");
+            result = string.Concat(result,"}; \n\t\t\t");
+        
+            return result;
+        }
+        
 </script>
