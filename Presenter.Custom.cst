@@ -160,7 +160,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
         public bool Delete()
         {
             
-            if (<%=ClassNameToLower()%>.<%= SourceTable.PrimaryKey.MemberColumns[0].Name %> == <%=getCompare()%>)
+            if (<%=ClassNameToLower()%>.<%= SourceTable.PrimaryKey.MemberColumns[0].Name %> == <%=getCompare(0)%>)
             {
                 Add();
                 
@@ -213,7 +213,7 @@ public string GetComboBoxValidation()
                 var foreign =  SourceTable.ForeignKeys.Where( a => a.ForeignKeyMemberColumns.Where( b => b.Name == SourceTable.Columns[i].Name).Count() > 0 ).FirstOrDefault();
                 if(foreign != null)
                 {
-                    result = string.Concat(result,"if (",ClassNameToLower(),".",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),"  == ",getCompare(),")\n\t\t\t"); 
+                    result = string.Concat(result,"if (",ClassNameToLower(),".",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),"  == ",getCompare(i),")\n\t\t\t"); 
                     result = string.Concat(result,"{\n\t\t\t\t");
                     result = string.Concat(result,"var fields = new List<string>();\n\t\t\t\t");
                     result = string.Concat(result,"fields.Add(nameof(",ClassName,".",StringUtil.ToPascalCase(SourceTable.Columns[i].Name),"));\n\t\t\t\t");;
@@ -228,9 +228,9 @@ public string GetComboBoxValidation()
     return result;
 }
 
-private string getCompare()
+private string getCompare(int position)
 {
-    var clm = GetDataType(SourceTable.Columns[0]);
+    var clm = GetDataType(SourceTable.Columns[position]);
     var result = "0";
     switch(clm)
     {
