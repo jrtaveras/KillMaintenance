@@ -251,7 +251,7 @@ private string setIsActivo(){
 }
 
 private string markForDeleted(){
-    return HasActivo() ? ClassNameToLower()+".IsActivo = false;":"_context.Entry("+ClassNameToLower()+").State = EntityState.Deleted;";
+    return HasActivo() ? "_"+ClassNameToLower()+".IsActivo = false;":"_context.Entry("+ClassNameToLower()+").State = EntityState.Deleted;";
 }
 
 public string GetFilter(){

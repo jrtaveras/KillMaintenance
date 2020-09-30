@@ -459,15 +459,19 @@ public string BuildMandatoryFiedsForValidation()
 {
     
     string result ="";
-    for(int i = 0; i < SourceTable.Columns.Count; i++)
+     ColumnSchema clm = SourceTable.Columns[0];
+     result = string.Concat("textBox", clm.Name,".Tag = nameof(",ClassName,".", clm.Name,");\n\t\t\t");
+    for(int i = 1; i < SourceTable.Columns.Count; i++)
     {
-        ColumnSchema clm = SourceTable.Columns[i];
+       
+        clm = SourceTable.Columns[i];
         bool isNull = clm.AllowDBNull;
         var fieldName = clm.Name;
         bool isKey = clm.IsPrimaryKeyMember;
         bool isForeignKeyMember = clm.IsForeignKeyMember;
-        if(!isKey && fieldName.ToUpper() != "TENANTID" && fieldName.ToLower() != "creado" && fieldName.ToLower() != "fechacreado"  && fieldName.ToLower() != "modificado" && fieldName.ToLower() != "fechamodificado"){
-            result = string.Concat(result,getControlType(GetDataType(clm),isForeignKeyMember),fieldName,".Tag = nameof(",ClassName,".",fieldName,");\n\t\t\t");
+       // if(!isKey && fieldName.ToUpper() != "TENANTID" && fieldName.ToLower() != "creado" && fieldName.ToLower() != "fechacreado"  && fieldName.ToLower() != "modificado" && fieldName.ToLower() != "fechamodificado"){
+          if(fieldName.ToUpper() != "TENANTID" && fieldName.ToLower() != "creado" && fieldName.ToLower() != "fechacreado"  && fieldName.ToLower() != "modificado" && fieldName.ToLower() != "fechamodificado"){
+        result = string.Concat(result,getControlType(GetDataType(clm),isForeignKeyMember),fieldName,".Tag = nameof(",ClassName,".",fieldName,");\n\t\t\t");
         }
        
     }
