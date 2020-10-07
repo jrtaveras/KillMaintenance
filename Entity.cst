@@ -138,8 +138,19 @@ public string DeclarationFromColumn(ColumnSchema clm ) {
         return "public " + dataType +"? " + fieldName + " {get; set;}\n";
     }else {
         string result = "";
+        bool identity = ((bool)clm.ExtendedProperties["CS_IsIdentity"].Value) ;
+        
         if(isKey)
-            result = "[Key]\n\t\t";
+        {
+            if( !identity && (dataType.Contains("int") || dataType.Contains("long") ))
+            {
+                result = string.Concat(result,"[DatabaseGenerated(DatabaseGeneratedOption.None)]\n\t\t");
+            }
+            //result = "[Key]\n\t\t";
+             result = string.Concat(result,"[Key]\n\t\t");
+            
+        }
+          
         
         if(notMapped) {
         
@@ -148,7 +159,7 @@ public string DeclarationFromColumn(ColumnSchema clm ) {
        
       
        
-        if(!isNull && !notMapped){
+        if(!isNull && !notMapped && !identity){
             result = string.Concat(result,"[Required(ErrorMessageResourceName = \"RequiredErrorMessage\",ErrorMessageResourceType = typeof(Resource))]\n\t\t");
 
         }
