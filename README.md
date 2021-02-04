@@ -2,6 +2,8 @@
 CRUD Crusher are a set of CodeSmith templates (https://www.codesmithtools.com/)  for fast development, 
 generating Model,Interface,Presenter and the user interface of the user control from the table structures in the database.
 
+To run the templates you must open  Killmaintenance.cst with code smith.
+
 ## Some of the dependencies it has:
 1. They are Wisej https://wisej.com/ (which is a Framework for the development of business Web Applications),Wisej.Ext.MaterialDesign. 
 2. SmartXLS http://www.smartxls.com/ (Library to export data to excel), Entityframework 6.4 (ORM). 
