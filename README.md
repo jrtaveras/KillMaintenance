@@ -21,10 +21,10 @@ To run the templates you must open  Killmaintenance.cst with code smith.
 ## Restrictions
 All tables must have a primary key Called Id(Identity) that can be Int or BigInt or Guid, all the tables must have the following fields: Creado (Varchar), FechaCreado (DateTime), Modificado (Varchar) and FechaModificado (DateTime)
 
-## Developed by Roberto Taveras and Ramon Peralta
+## Developed by Roberto Taveras
 
 
-## Screen of CodeSmith running CRUD Crusher
+## Screen of CodeSmith running CRUD Killer
 ![Screen of CodeSmith running CRUDCrusher](/assets/CodeSmith.PNG) (https://www.youtube.com/watch?v=Y8rvl_QEhXk)
 
 ## Screen in Visual Studio showing an example of  Maintenance generated
