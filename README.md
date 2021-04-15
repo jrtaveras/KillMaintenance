@@ -3,7 +3,7 @@ CRUD Killer are a set of CodeSmith templates (https://www.codesmithtools.com/)  
 generating Model,Interface,Presenter and the user interface of the user control from the table structures in the database.
 
 To run the templates you must open  Killmaintenance.cst with code smith.
-## (/assets/CodeSmith.PNG) (https://www.youtube.com/watch?v=Y8rvl_QEhXk)
+##  (https://www.youtube.com/watch?v=Y8rvl_QEhXk)
 
 ## Some of the dependencies it has:
 1. They are Wisej https://wisej.com/ (which is a Framework for the development of business Web Applications),Wisej.Ext.MaterialDesign. 
@@ -26,7 +26,7 @@ All tables must have a primary key Called Id(Identity) that can be Int or BigInt
 
 
 ## Screen of CodeSmith running CRUD Killer
-![Screen of CodeSmith running CRUDCrusher]
+![Screen of CodeSmith running CRUDCrusher](/assets/CodeSmith.PNG)
 
 ## Screen in Visual Studio showing an example of  Maintenance generated
 ![Screen en Visual Studio showing an example of  Maintenance generated](/assets/Pantallagenerada.PNG)
