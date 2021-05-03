@@ -3,6 +3,8 @@ CRUD Killer are a set of CodeSmith templates (https://www.codesmithtools.com/)  
 generating Model,Interface,Presenter and the user interface of the user control from the table structures in the database.
 
 To run the templates you must open  Killmaintenance.cst with code smith.
+
+`The following video show CRUD Killer in action`
 ##  (https://www.youtube.com/watch?v=Y8rvl_QEhXk)
 
 ## Some of the dependencies it has:
