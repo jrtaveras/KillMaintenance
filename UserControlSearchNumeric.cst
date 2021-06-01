@@ -146,8 +146,8 @@ namespace <%=NameSpaceUI%>.Controls.Controls
             MethodInfo method = objType.GetMethod("FindById");
             if (SearchNumericDataType == SearchNumericDataType.Long)
             {
-                int _value = 0;
-                int.TryParse(numericUpDownValue.Text, out _value);
+                long _value = 0;
+                long.TryParse(numericUpDownValue.Text, out _value);
                 found = method.Invoke(_search, new object[] { _value });
                 
                 if (OnValueChange != null)
@@ -155,8 +155,8 @@ namespace <%=NameSpaceUI%>.Controls.Controls
             }
             else
             {
-                long _value = 0;
-                long.TryParse(numericUpDownValue.Text, out _value);
+                int _value = 0;
+                int.TryParse(numericUpDownValue.Text, out _value);
                 found = method.Invoke(_search, new object[] { _value });
                 
                 if (OnValueChange != null)
