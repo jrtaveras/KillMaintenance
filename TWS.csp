@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<codeSmith xmlns="http://www.codesmithtools.com/schema/csp.xsd">
+  <variables>
+    <add key="ConnectionString1" value="Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=Kosmos;Data Source=LIBRA" />
+  </variables>
+  <propertySets>
+    <propertySet name="KillMaintenance.cs" output="KillMaintenance.cs" template="C:\sistemas_github\CodeSmithTemplates\KillMaintenance.cst">
+      <property name="GenerateBusinessObjects">False</property>
+      <property name="GeneratePresenters">False</property>
+      <property name="GenerateInterfaces">False</property>
+      <property name="GenerateUserControl">False</property>
+      <property name="GenerateWindowsSearch">False</property>
+      <property name="modelBuilder">//modelBuider no remueva esto usado por CodeSmith</property>
+      <property name="dbSetVirtual">//property no remueva esto usado por CodeSmith</property>
+      <property name="SourceTable">
+        <connectionString>$(ConnectionString1)</connectionString>
+        <providerType>SchemaExplorer.SqlSchemaProvider,SchemaExplorer.SqlSchemaProvider</providerType>
+        <table>
+      <owner>dbo</owner>
+      <name>TmsTarea</name>
+    </table>
+      </property>
+      <property name="QueryTableColumns">
+        <connectionString>$(ConnectionString1)</connectionString>
+        <providerType>SchemaExplorer.SqlSchemaProvider,SchemaExplorer.SqlSchemaProvider</providerType>
+        <tableColumnList>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>Id</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>ViajeId</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>DireccionId</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>NombreContacto</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>Telefono</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>Direccion1</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>Direccion2</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>CiudadId</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>ZonaId</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>PerfilFacturacionId</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>DireccionDescripcion</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>ClienteId</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>TareaTipoId</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>PaquetesEsperados</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>PaquetesRecibidos</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>PaquetesFaltantes</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>TareaEstatusId</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>Email</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>OrdenCompra</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>Factura</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>NumeroRastreo</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>Longitud</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>Latitud</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>CodigoBarra</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>IsActivo</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>TenantId</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>Creado</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>FechaCreado</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>Modificado</name>
+      </tableColumn>
+      <tableColumn>
+        <tableOwner>dbo</tableOwner>
+        <tableName>TmsTarea</tableName>
+        <name>FechaModificado</name>
+      </tableColumn>
+    </tableColumnList>
+      </property>
+      <property name="NameSpaceBusinessObjects">BusinessObjects</property>
+      <property name="Licence">Frederic Schad (Todos los derechos Reservados)</property>
+      <property name="NameSpaceUI">TWS.UserControls</property>
+      <property name="NameSpaceCommonUI">Common</property>
+      <property name="OutPutDirBusinessObjects">C:\sistemas_github\BusinessObjects\BusinessObjects</property>
+      <property name="OutPutDirUserControls">C:\sistemas_github\TWS</property>
+      <property name="OutPutDirCommonUI">C:\sistemas_github\common</property>
+      <property name="OutPutDirUnitTestBusinessObjects">C:\sistemas_github\BusinessObjects\UnitTestProjectBusinessObjects</property>
+    </propertySet>
+  </propertySets>
+</codeSmith>

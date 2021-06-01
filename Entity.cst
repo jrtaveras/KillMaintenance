@@ -155,8 +155,9 @@ public string DeclarationFromColumn(ColumnSchema clm ) {
     bool notMapped =((bool)clm.ExtendedProperties["CS_IsComputed"].Value) == true;
      
     var fieldName = clm.Name;
-
-    if(!isString && isNull  && !nonNull.Contains(dataType)){
+   
+   
+    if(  !isString && isNull  && !nonNull.Contains(dataType)  && !notMapped){
         return "public " + dataType +"? " + fieldName + " {get; set;}\n";
     }else {
         string result = "";
@@ -172,14 +173,12 @@ public string DeclarationFromColumn(ColumnSchema clm ) {
              result = string.Concat(result,"[Key]\n\t\t");
             
         }
-          
+     
         
         if(notMapped) {
         
-           result = string.Concat(result,"[NotMapped]\n\t\t");
-        }
-       
-      
+           result = string.Concat(result,"[DatabaseGenerated(DatabaseGeneratedOption.Computed)]\n\t\t");
+        } 
        
         if(!isNull && !notMapped && !identity){
             result = string.Concat(result,"[Required(ErrorMessageResourceName = \"RequiredErrorMessage\",ErrorMessageResourceType = typeof(Resource))]\n\t\t");

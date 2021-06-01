@@ -41,6 +41,8 @@ using System.Data;
 namespace <%=NameSpaceBusinessObjects%>.Interfaces
 {
     public delegate void Validate();
+    public delegate void RaiseRefresh();
+    
     public interface ISave
     {
         bool Save();

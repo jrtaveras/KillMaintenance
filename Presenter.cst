@@ -74,6 +74,8 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
         private I<%=ClassName%> _<%=ClassNameToLower()%>;
         public event Validate BeforeSave;
         public event Validate AfterSave;
+        public event RaiseRefresh OnRefresh;
+        
         public object DataSource {get;set;}
         private IDataSource _dataSource;
         private IValueToSearch _valueToSearch;
@@ -103,6 +105,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
             <%=ClassNameToLower()%>.<%=SourceTable.Columns[0].Name%> = <%=getCompare()%>;
             afterSetUserAndCreateDate();
             scatterFields();
+            OnRefresh?.Invoke();
             FillDataSource();
 
         }
@@ -112,6 +115,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
    
             afterSetUserAndCreateDate();
             scatterFields();
+            OnRefresh?.Invoke();
             FillDataSource();
 
         }
@@ -131,6 +135,9 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
                 
                 scatterFields();
                 
+                
+				OnRefresh?.Invoke();
+            
                 return false;
             }
 
@@ -139,6 +146,9 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
             afterSetUserAndCreateDate();
 
             scatterFields();
+            
+            
+			OnRefresh?.Invoke();
             
             FillDataSource();
             

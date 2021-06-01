@@ -250,6 +250,8 @@ namespace <%=NameSpaceUI%>
                                     toolBarButtonRecargaCombo_Click(null,null);
                                 }
                             }
+							
+							enableDisableControls();
                         }
                         catch (Exception ex)
                         {

@@ -172,7 +172,11 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
             FillDataSource();
 
             if(result)
+            {
                 AfterSave?.Invoke();
+                OnRefresh?.Invoke();
+                
+            }
                 
             return result;
 
@@ -186,7 +190,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
                 Add();
                 
                 scatterFields();
-                
+                OnRefresh?.Invoke();
                 return false;
             }
             
@@ -197,6 +201,7 @@ namespace  <%=NameSpaceBusinessObjects%>.Services
             if(result)
             {
                 Add();
+                OnRefresh?.Invoke();
                 FillDataSource();
             }
 

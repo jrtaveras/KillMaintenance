@@ -71,18 +71,22 @@ namespace <%=NameSpaceUI%>.Helpers
                 if (numericUpDown != null && numericUpDown.Tag != null)
                 {
                     numericUpDown.Label.Text = _resMan.GetString(numericUpDown.Tag.ToString(), _cultureInfo) ?? numericUpDown.Label.Text;
+                    continue;
                 }
                 else if (dateTimePicker != null && dateTimePicker.Tag !=null)
                 {
                     dateTimePicker.Label.Text = _resMan.GetString(dateTimePicker.Tag.ToString(), _cultureInfo) ?? dateTimePicker.Label.Text;
+                    continue;
                 }
                 else if (textBox != null && textBox.Tag != null)
                 {
                     textBox.Label.Text = _resMan.GetString(textBox.Tag.ToString(), _cultureInfo) ?? textBox.Label.Text;
+                    continue;
                 }
                 else if (checkBox != null && checkBox.Tag != null)
                 {
                     checkBox.Text = _resMan.GetString(checkBox.Tag.ToString(), _cultureInfo) ?? checkBox.Text;
+                    continue;
                 }
                 else if (navigationBar != null)
                 {
@@ -110,14 +114,17 @@ namespace <%=NameSpaceUI%>.Helpers
                 else if (button != null)
                 {
                     button.Text = _resMan.GetString(button.Name, _cultureInfo) ?? button.Text;
+                    continue;
                 }
                 else if (comboBox != null && comboBox.Tag !=null)
                 {
                     comboBox.Label.Text = _resMan.GetString(comboBox.Tag.ToString(),_cultureInfo) ?? comboBox.Label.Text;
+                    continue;
                 }
                 else if (tabPage != null && tabPage.Tag != null)
                 {
                     tabPage.Text = _resMan.GetString(tabPage.Tag.ToString(), _cultureInfo) ?? tabPage.Text;
+                    continue;
                 }
                 else if (toolBar != null)
                 {

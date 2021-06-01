@@ -97,7 +97,26 @@ Description: Para usar integrado con wisej
 <%@ Property Name="GenerateWindowsSearch" Category="Regenerar" Type="System.Boolean" Default="False" Optional="True" Description="Si lo pones en True sobreescribe el Form de busqueda"%>
 <%@ Property Name="modelBuilder" Category="PlaceHolder" Type="System.String" Default="//modelBuider no remueva esto usado por CodeSmith" Optional="True"%>
 <%@ Property Name="dbSetVirtual" Category="PlaceHolder"  Type="System.String" Default="//property no remueva esto usado por CodeSmith" Optional="True"%>
+<%-- Modificacion 2021-04-20--%>
+<%@ Register Name="UserControlSearchNumeric" Template="UserControlSearchNumeric.cst" %>
+<%@ Register Name="UserControlSearchNumeric_Designer" Template="UserControlSearchNumeric.Designer.cst" %>
+<%@ Register Name="UserControlSearchNumeric_resx" Template="UserControlSearchNumeric.resx.cst" %>
+<%@ Register Name="UserControlSearchNumericMobile" Template="UserControlSearchNumericMobile.cst" %>
+<%@ Register Name="UserControlSearchNumericMobile_Designer" Template="UserControlSearchNumericMobile.Designer.cst" %>
+<%@ Register Name="UserControlSearchNumericMobile_resx" Template="UserControlSearchNumericMobile.resx.cst" %>
+<%@ Register Name="UserControlSearchText" Template="UserControlSearchText.cst" %>
+<%@ Register Name="UserControlSearchText_Designer" Template="UserControlSearchText.Designer.cst" %>
+<%@ Register Name="UserControlSearchText_resx" Template="UserControlSearchText.resx.cst" %>
+<%@ Register Name="UserPopupSearch" Template="UserPopupSearch.cst" %>
+<%@ Register Name="UserPopupSearch_Designer" Template="UserPopupSearch.Designer.cst" %>
+<%@ Register Name="UserPopupSearch_resx" Template="UserPopupSearch.resx.cst" %>
+<%@ Register Name="UserPopupSearchMobile" Template="UserPopupSearchMobile.cst" %>
+<%@ Register Name="UserPopupSearchMobile_Designer" Template="UserPopupSearchMobile.Designer.cst" %>
+<%@ Register Name="UserPopupSearchMobile_resx" Template="UserPopupSearchMobile.resx.cst" %>
+<%-- Modificacion 2021-04-20--%>
+
 <script runat="template">
+
 public override void Render(TextWriter writer)
 {
     RenderChildChild();
@@ -443,6 +462,7 @@ public void RenderChildChild(){
     userControlBase.Licence = Licence;
     userControlBase.SourceTable = SourceTable;
     userControlBase.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlBase.cs",true);
+      
     
    
     UserControlBaseDesignerTemplate userControlBaseDesigner = this.Create<UserControlBaseDesignerTemplate>();
@@ -452,6 +472,77 @@ public void RenderChildChild(){
       
     UserControlBaseResFileTemplate userControlBaseResFile = this.Create<UserControlBaseResFileTemplate>();
     userControlBaseResFile.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlBase.resx",true);
+    
+    //2021-04-20//
+      
+    UserControlSearchNumeric userControlSearchNumeric = this.Create<UserControlSearchNumeric>();
+    userControlSearchNumeric.Licence = Licence;
+    userControlSearchNumeric.NameSpaceUI = NameSpaceCommonUI;
+    userControlSearchNumeric.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlSearchNumeric.cs",true);
+    
+    UserControlSearchNumeric_Designer userControlSearchNumeric_Designer = this.Create<UserControlSearchNumeric_Designer>();
+    userControlSearchNumeric_Designer.Licence = Licence;
+    userControlSearchNumeric_Designer.NameSpaceUI = NameSpaceCommonUI;
+    userControlSearchNumeric_Designer.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlSearchNumeric.Designer.cs",true);
+    
+    UserControlSearchNumeric_resx userControlSearchNumeric_resx = this.Create<UserControlSearchNumeric_resx>();
+    userControlSearchNumeric_resx.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlSearchNumeric.resx",true);
+    
+    UserControlSearchNumericMobile userControlSearchNumericMobile = this.Create<UserControlSearchNumericMobile>();
+    userControlSearchNumericMobile.Licence = Licence;
+    userControlSearchNumericMobile.NameSpaceUI = NameSpaceCommonUI;
+    userControlSearchNumericMobile.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlSearchNumericMobile.cs",true);
+    
+    UserControlSearchNumericMobile_Designer userControlSearchNumericMobile_Designer = this.Create<UserControlSearchNumericMobile_Designer>();
+    userControlSearchNumericMobile_Designer.Licence = Licence;
+    userControlSearchNumericMobile_Designer.NameSpaceUI = NameSpaceCommonUI;
+    userControlSearchNumericMobile_Designer.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlSearchNumericMobile.Designer.cs",true);
+    
+    UserControlSearchNumericMobile_resx userControlSearchNumericMobile_resx = this.Create<UserControlSearchNumericMobile_resx>();
+    userControlSearchNumericMobile_resx.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlSearchNumericMobile.resx",true);
+      
+    UserControlSearchText userControlSearchText = this.Create<UserControlSearchText>();
+    userControlSearchText.Licence = Licence;
+    userControlSearchText.NameSpaceUI = NameSpaceCommonUI;
+    userControlSearchText.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlSearchText.cs",true);
+    
+    UserControlSearchText_Designer userControlSearchText_Designer = this.Create<UserControlSearchText_Designer>();
+    userControlSearchText_Designer.Licence = Licence;
+    userControlSearchText_Designer.NameSpaceUI = NameSpaceCommonUI;
+    userControlSearchText_Designer.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlSearchText.Designer.cs",true);
+    
+    UserControlSearchText_resx userControlSearchText_resx = this.Create<UserControlSearchText_resx>();
+    userControlSearchText_resx.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserControlSearchText.resx",true);
+    
+    UserPopupSearch userPopupSearch = this.Create<UserPopupSearch>();
+    userPopupSearch.Licence = Licence;
+    userPopupSearch.NameSpaceUI = NameSpaceCommonUI;
+    userPopupSearch.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserPopupSearch.cs",true);
+    
+    UserPopupSearch_Designer userPopupSearch_Designer = this.Create<UserPopupSearch_Designer>();
+    userPopupSearch_Designer.Licence = Licence;
+    userPopupSearch_Designer.NameSpaceUI = NameSpaceCommonUI;
+    userPopupSearch_Designer.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserPopupSearch.Designer.cs",true);
+    
+    UserPopupSearch_resx userPopupSearch_resx = this.Create<UserPopupSearch_resx>();
+    userPopupSearch_resx.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserPopupSearch.resx",true);
+      
+    UserPopupSearchMobile userPopupSearchMobile = this.Create<UserPopupSearchMobile>();
+    userPopupSearchMobile.Licence = Licence;
+    userPopupSearchMobile.NameSpaceUI = NameSpaceCommonUI;
+    userPopupSearchMobile.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserPopupSearchMobile.cs",true);
+    
+    UserPopupSearchMobile_Designer userPopupSearchMobile_Designer = this.Create<UserPopupSearchMobile_Designer>();
+    userPopupSearchMobile_Designer.Licence = Licence;
+    userPopupSearchMobile_Designer.NameSpaceUI = NameSpaceCommonUI;
+    userPopupSearchMobile_Designer.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserPopupSearch.Designer.cs",true);
+    
+    UserPopupSearchMobile_resx  userPopupSearchMobile_resx = this.Create< UserPopupSearchMobile_resx>();
+    userPopupSearchMobile_resx.RenderToFile(this.OutPutDirCommonUI+"\\Controls\\"+"UserPopupSearchMobile.resx",true);
+    
+
+      
+    //2021-04-20//
       
     HelperDataTableToExcelTemplate helperDataTableToExcelTemplate = this.Create<HelperDataTableToExcelTemplate>();
     helperDataTableToExcelTemplate.NameSpaceUI = NameSpaceCommonUI;
